@@ -5,8 +5,8 @@ const fs = require('fs');
 const solc = require('solc');
 
 // const nodeUrl = 'http://localhost:8545';
-const greeterPath = path.resolve(__dirname, 'contracts', 'greeter.sol');
-const source = fs.readFileSync(greeterPath, 'UTF-8');
+const helloPath = path.resolve(__dirname, 'contracts', 'hello.sol');
+const source = fs.readFileSync(helloPath, 'UTF-8');
 
 console.log(solc.compile(source, 1));
 
