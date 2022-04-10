@@ -35,6 +35,7 @@ class TestStuff extends React.Component {
           <Table.Body>
             {this.props.stuffs.map((stuff) => <StuffItem key={stuff._id} stuff={stuff} />)}
           </Table.Body>
+          <Button red onClick={this.submitButton}>Click me!</Button>
         </Table>
       </Container>
     );
