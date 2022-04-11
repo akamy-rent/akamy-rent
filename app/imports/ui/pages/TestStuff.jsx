@@ -7,10 +7,17 @@ import { Stuffs } from '../../api/stuff/Stuff';
 import StuffItem from '../components/StuffItem';
 import { postTest } from '../../startup/client/connect2Compiler';
 
+let contracts = [];
+
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class TestStuff extends React.Component {
   submitButton() {
-    postTest();
+    postTest(contracts);
+  }
+
+  checkButton() {
+    console.log(contracts[0]);
+    contracts = [];
   }
 
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
@@ -36,7 +43,8 @@ class TestStuff extends React.Component {
             {this.props.stuffs.map((stuff) => <StuffItem key={stuff._id} stuff={stuff} />)}
           </Table.Body>
         </Table>
-        <Button color={'red'} onClick={this.submitButton}>Click me!</Button>
+        <Button color={'red'} onClick={this.submitButton}>Click me first</Button>
+        <Button color={'blue'} onClick={this.checkButton}>Click me!second</Button>
       </Container>
     );
   }
