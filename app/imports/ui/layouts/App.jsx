@@ -9,6 +9,7 @@ import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import AddSmartContract from '../pages/AddSmartContract';
 import EditSmartContract from '../pages/EditSmartContract';
+import EditProfile from '../pages/EditProfile';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
@@ -32,6 +33,7 @@ class App extends React.Component {
             <ProtectedRoute path="/dashboard" component={Dashboard}/>
             <ProtectedRoute path="/add" component={AddSmartContract}/>
             <ProtectedRoute path="/edit/:_id" component={EditSmartContract}/>
+            <ProtectedRoute path="/edit/:_id" component={EditProfile}/>
             <Route component={NotFound}/>
           </Switch>
           <Footer/>
