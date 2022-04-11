@@ -14,6 +14,7 @@ import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import Dashboard from '../pages/ListDashboard';
+import Messenger from '../pages/Messenger';
 import TestContract from '../pages/TestContract';
 import ViewProfile from '../pages/ViewProfile';
 import EditProfile from '../pages/EditProfile';
@@ -34,6 +35,7 @@ class App extends React.Component {
             <ProtectedRoute path="/dashboard" component={Dashboard}/>
             <ProtectedRoute path="/add" component={AddSmartContract}/>
             <ProtectedRoute path="/edit/:_id" component={EditSmartContract}/>
+            <ProtectedRoute path="/chat" component={Messenger}/>
             <ProtectedRoute path="/editProfile/:_id" component={EditProfile}/>
             <ProtectedRoute path="/viewProfile" component={ViewProfile}/>
             <Route component={NotFound}/>
