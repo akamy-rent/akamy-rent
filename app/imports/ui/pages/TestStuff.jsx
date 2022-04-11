@@ -5,12 +5,12 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
 import StuffItem from '../components/StuffItem';
-import { printContract } from '../../startup/client/ethersFunctions';
+import { postTest } from '../../startup/client/connect2Compiler';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class TestStuff extends React.Component {
   submitButton() {
-    printContract();
+    postTest();
   }
 
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
@@ -35,8 +35,8 @@ class TestStuff extends React.Component {
           <Table.Body>
             {this.props.stuffs.map((stuff) => <StuffItem key={stuff._id} stuff={stuff} />)}
           </Table.Body>
-          <Button red onClick={this.submitButton}>Click me!</Button>
         </Table>
+        <Button color={'red'} onClick={this.submitButton}>Click me!</Button>
       </Container>
     );
   }

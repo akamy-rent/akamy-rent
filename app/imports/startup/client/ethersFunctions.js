@@ -1,14 +1,8 @@
-// import { ethers } from 'ethers';
+import { ethers } from 'ethers';
 
-const path = require('path');
-const fs = require('fs');
-const solc = require('solc');
-
-// const nodeUrl = 'http://localhost:8545';
-const helloPath = path.resolve(__dirname, 'contracts', 'hello.sol');
-const source = fs.readFileSync(helloPath, 'UTF-8');
-
-console.log(solc.compile(source, 1));
+const nodeUrl = 'http://localhost:8545';
 
 // A Provider is an abstraction of a connection to the Ethereum network, providing a concise, consistent interface to standard Ethereum node functionality.
-// const nodeConnection = new ethers.providers.JsonRpcProvider(nodeUrl);
+const provider = new ethers.providers.JsonRpcProvider(nodeUrl);
+
+
