@@ -20,8 +20,7 @@
     "sweetalert": "^2.1.2",
     "uniforms": "^3.8.1",
     "uniforms-bridge-simple-schema-2": "^3.8.1",
-    "uniforms-semantic": "^3.8.1",
-    "ethers": "^5.6.2"
+    "uniforms-semantic": "^3.8.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

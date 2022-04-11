@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
 import StuffItem from '../components/StuffItem';
 import { postTest } from '../../startup/client/connect2Compiler';
+import { deployContract } from '../../startup/client/ethersFunctions';
 
 let contracts = [];
 
@@ -16,7 +17,7 @@ class TestStuff extends React.Component {
   }
 
   checkButton() {
-    console.log(contracts[0]);
+    deployContract(contracts);
     contracts = [];
   }
 

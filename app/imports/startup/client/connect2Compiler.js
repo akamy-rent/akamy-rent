@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const contractString = 'pragma solidity >= 0.4.0;contract Hello {string public message;function Hello (string initialMessage) public { message = initialMessage;}function setMessage (string newMessage) public {message = newMessage;}}';
+const contractString = 'pragma solidity >= 0.7.0;contract Greeter{string private _greeting = "Hello, World!";function greet() external pure returns(string memory) {return "Hello, World!";}}';
 
 export async function postTest(contracts) {
   const payload = { data: contractString };
