@@ -164,7 +164,7 @@ The application implements a simple CRUD application for managing "Stuff", which
 
 By default, each user only sees the Stuff that they have created.  However, the settings file enables you to define default accounts.  If you define a user with the role "admin", then that user gets access to a special page which lists all the Stuff defined by all users.
 
-#### Landing page
+#### ListDashboard page
 
 When you retrieve the app at http://localhost:3000, this is what should be displayed:
 
@@ -185,7 +185,7 @@ Alternatively, clicking on the Login link, then on the Sign Up menu item display
 ![](https://raw.githubusercontent.com/ics-software-engineering/meteor-application-template-react/master/doc/register-page.png)
 
 
-#### Landing (after Login) page, non-Admin user
+#### ListDashboard (after Login) page, non-Admin user
 
 Once you log in (either to an existing account or by creating a new one), the navbar changes as follows:
 
@@ -213,7 +213,7 @@ After clicking on the "Edit" link associated with an item, this page displays th
 
 ![](https://raw.githubusercontent.com/ics-software-engineering/meteor-application-template-react/master/doc/edit-stuff-page.png)
 
-#### Landing (after Login), Admin user
+#### ListDashboard (after Login), Admin user
 
 You can define an "admin" user in the settings.json file. This user, after logging in, gets a special entry in the navbar:
 
