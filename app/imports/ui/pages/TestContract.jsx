@@ -6,7 +6,7 @@ import { deployContract } from '../../api/ethers/ethersFunctions';
 let contracts = [];
 
 /** Test page to compile a smart contract with the python script and */
-class TestStuff extends React.Component {
+class TestContract extends React.Component {
   submitButton() {
     postTest(contracts);
   }
@@ -28,4 +28,4 @@ class TestStuff extends React.Component {
 }
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-export default TestStuff;
+export default TestContract;
