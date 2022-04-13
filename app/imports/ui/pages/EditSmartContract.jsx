@@ -74,8 +74,8 @@ class EditSmartContract extends React.Component {
 
   // On successful submit, insert the data.
   submit(data) {
-    const { name, email, phoneNumber, role, numberOfTenets, stance, billingAddress, bankAccountNumber, bankAccountRoutingNumber, signature, _id } = data;
-    Stuffs.collection.update(_id, { $set: { name, email, phoneNumber, role, numberOfTenets, stance, billingAddress, bankAccountNumber, bankAccountRoutingNumber, signature } }, (error) => (error ?
+    const { name, email, phoneNumber, role, unitAddress, numberOfTenets, monthlyRent, stance, signature, _id } = data;
+    Stuffs.collection.update(_id, { $set: { name, email, phoneNumber, role, unitAddress, numberOfTenets, monthlyRent, stance, signature } }, (error) => (error ?
       swal('Error', error.message, 'error') :
       swal('Success', 'Information updated successfully', 'success')));
   }
