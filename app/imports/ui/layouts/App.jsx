@@ -33,6 +33,20 @@ const personDataSchema = new SimpleSchema({
 
 const bridge = new SimpleSchema2Bridge(personDataSchema);
 
+// Create a schema to specify structure of party member to appear in the form
+const personDataSchema = new SimpleSchema({
+  name: String,
+  email: String,
+  phoneNumber: String,
+  role: {
+    type: String,
+    allowedValues: ['Tenet', 'Homeowner'],
+    defaultValue: 'Tenet',
+  },
+});
+
+const bridge = new SimpleSchema2Bridge(personDataSchema);
+
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
   render() {
