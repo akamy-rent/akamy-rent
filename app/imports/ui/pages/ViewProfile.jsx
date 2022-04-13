@@ -1,7 +1,8 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Grid, Header, Image, Loader,Label } from 'semantic-ui-react';
+import { Container, Grid, Header, Image, Loader, Menu } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
+import { withRouter, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
 import StuffItem from '../components/StuffItem';
@@ -27,7 +28,11 @@ class ViewProfile extends React.Component {
                 Username
               </Grid.Column>
               <Grid.Column>
-                Button
+                <Menu text>
+                  <Menu.Item as={NavLink} exact to="/edit/:_id" key='add' link color='red'>
+                Edit Profile
+                  </Menu.Item>
+                </Menu>
               </Grid.Column>
             </Grid>
 
@@ -38,7 +43,6 @@ class ViewProfile extends React.Component {
           <Grid.Row>
             Wallet Address
           </Grid.Row>
-
 
         </Grid>
       </Container>
