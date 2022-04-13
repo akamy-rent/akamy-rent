@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import 'semantic-ui-css/semantic.css';
 import { Roles } from 'meteor/alanning:roles';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import SimpleSchema from 'simpl-schema';
+// import SimpleSchema from 'simpl-schema';
 // import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
@@ -20,7 +20,7 @@ import Signout from '../pages/Signout';
 import TestContract from '../pages/TestContract';
 
 // Create a schema to specify structure of party member to appear in the form
-const personDataSchema = new SimpleSchema({
+/* const personDataSchema = new SimpleSchema({
   name: String,
   email: String,
   phoneNumber: String,
@@ -29,7 +29,7 @@ const personDataSchema = new SimpleSchema({
     allowedValues: ['Tenet', 'Homeowner'],
     defaultValue: 'Tenet',
   },
-});
+}); */
 
 // const bridge = new SimpleSchema2Bridge(personDataSchema);
 
