@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Segment, Header, Tab, Table } from 'semantic-ui-react';
 import { AutoForm, ErrorsField, SelectField, SubmitField, TextField, NumField } from 'uniforms-semantic';
 import swal from 'sweetalert';
@@ -17,39 +17,42 @@ const contractSchema = new SimpleSchema({
     allowedValues: ['Tenet', 'Homeowner'],
     defaultValue: 'Tenet',
   },
+  unitAddress: String,
   numberOfTenets: Number,
+  monthlyRent: Number,
   stance: {
     type: String,
     allowedValues: ['I do not agree to the terms and conditions', 'I agree to the terms and conditions'],
     defaultValue: 'I do not agree to the terms and conditions',
   },
-  billingAddress: String,
-  bankAccountNumber: String,
-  bankAccountRoutingNumber: String,
   signature: String,
 });
 
 const panes = [
-  { menuItem: 'Parties Involved', render: () => <Tab.Pane>
-    <TextField name='name'/>
-    <TextField name='email'/>
-    <TextField name='phoneNumber'/>
-    <SelectField name='role'/>
+  { menuItem: 'Smart Contract Type', render: () => <Tab.Pane>
+    <TextField name='unitAddress'/>
+    <NumField name='numberOfTenets' decimal={false}/>
+    <NumField name='monthlyRent' decimal={true}/>
     <SubmitField value='Save'/>
   </Tab.Pane> },
-  { menuItem: 'Smart Contract Type', render: () => <Tab.Pane>
-    <NumField name='NumberOfTenets' decimal={false}/>
-    <SubmitField value='Save'/>
+  { menuItem: 'Parties Involved', render: () => <Tab.Pane>
+    <Segment>
+      <TextField name='name'/>
+      <TextField name='email'/>
+      <TextField name='phoneNumber'/>
+      <SelectField name='role'/>
+    </Segment>
+    <Segment>
+      <TextField name='name'/>
+      <TextField name='email'/>
+      <TextField name='phoneNumber'/>
+      <SelectField name='role'/>
+      <SubmitField value='Save'/>
+    </Segment>
   </Tab.Pane> },
   { menuItem: 'Terms & Conditions', render: () => <Tab.Pane>
     <p>Terms and conditions for smart contract with __ number of tenets. Cost, frequency of payment, parties involved.</p>
     <SelectField name='stance'/>
-    <SubmitField value='Save'/>
-  </Tab.Pane> },
-  { menuItem: 'Payment Information', render: () => <Tab.Pane>
-    <TextField name='billingAddress'/>
-    <TextField name='bankAccountNumber'/>
-    <TextField name='bankAccountRoutingNumber'/>
     <SubmitField value='Save'/>
   </Tab.Pane> },
   { menuItem: 'Party Review Status', render: () => <Tab.Pane>
@@ -95,9 +98,9 @@ class AddSmartContract extends React.Component {
 
   // On submit, insert the data.
   submit(data, formRef) {
-    const { name, email, phoneNumber, role, numberOfTenets, stance, billingAddress, bankAccountNumber, bankAccountRoutingNumber, signature } = data;
+    const { name, email, phoneNumber, role, unitAddress, numberOfTenets, monthlyRent, stance, signature } = data;
     const owner = Meteor.user().username;
-    Stuffs.collection.insert({ name, email, phoneNumber, role, numberOfTenets, stance, billingAddress, bankAccountNumber, bankAccountRoutingNumber, signature, owner },
+    Stuffs.collection.insert({ name, email, phoneNumber, role, unitAddress, numberOfTenets, monthlyRent, stance, signature, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
