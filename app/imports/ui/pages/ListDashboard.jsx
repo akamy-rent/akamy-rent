@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Grid, Header, Image, Loader, Table } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Icon, Image, Loader, Table } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -8,7 +8,6 @@ import {dashboard} from '../../api/dashboard/dashboard';
 
 /** A simple static component to render some text for the landing page. */
 class ListDashboard extends React.Component {
-
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
@@ -20,20 +19,20 @@ class ListDashboard extends React.Component {
         <Grid.Row columns={3}>
           <Grid.Column>
             <br></br>
-            <Header as='h1' inverted>3</Header>
-            <Header as='h2' inverted>Active Contracts</Header>
+            <Header as='h1' >3</Header>
+            <Header as='h2' >Active Contracts</Header>
           </Grid.Column>
 
           <Grid.Column>
             <br></br>
-            <Header as='h1' inverted>$ 400</Header>
-            <Header as='h2' inverted>Total Income</Header>
+            <Header as='h1' >$ 400</Header>
+            <Header as='h2' >Total Income</Header>
           </Grid.Column>
 
           <Grid.Column>
             <br></br>
-            <Header as='h1' inverted> $ 300</Header>
-            <Header as='h2' inverted>Total Expenses</Header>
+            <Header as='h1' > $ 300</Header>
+            <Header as='h2' >Total Expenses</Header>
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -41,14 +40,18 @@ class ListDashboard extends React.Component {
           <br></br>
           <br></br>
           <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
 
-          <Header as='h1' inverted>Smart Contracts</Header>
-
-          <Table unstackable>
+          <Header as='h1'>Smart Contracts</Header>
+          <br></br>
+          <br></br>
+          <Table color='blue' key='blue' inverted>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell width={2}>Address</Table.HeaderCell>
-                <Table.HeaderCell width={2}>Tenet</Table.HeaderCell>
+                <Table.HeaderCell width={3}>Address</Table.HeaderCell>
+                <Table.HeaderCell width={3}>Role in Contract</Table.HeaderCell>
                 <Table.HeaderCell width={2}>Created</Table.HeaderCell>
                 <Table.HeaderCell width={2}>Rate</Table.HeaderCell>
                 <Table.HeaderCell width={2}>Active</Table.HeaderCell>
@@ -83,7 +86,7 @@ class ListDashboard extends React.Component {
               </Table.Row>
             </Table.Body>
           </Table>
-
+          <br></br>
           <br></br>
           <br></br>
           <br></br>
@@ -95,20 +98,26 @@ class ListDashboard extends React.Component {
             <Grid.Row columns={3}>
               <Grid.Column>
                 <br></br>
-                <Button size="massive" color="black">Go To Contracts</Button>
+                <Button size="massive" color="black"><Icon name='file outline'></Icon>Create Contracts</Button>
               </Grid.Column>
 
               <Grid.Column>
                 <br></br>
-                <Button size="massive" color="black">Go To Messenger</Button>
+                <Button size="massive" color="black"><Icon name='envelope open outline'></Icon> Messenger</Button>
               </Grid.Column>
 
               <Grid.Column>
                 <br></br>
-                <Button size="massive" color="black">My Profile</Button>
+                <Button size="massive" color="black"><Icon name='user circle'></Icon>My Profile</Button>
               </Grid.Column>
             </Grid.Row>
           </Grid>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
           <br></br>
           <br></br>
           <br></br>

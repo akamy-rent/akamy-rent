@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Header, Icon, Loader } from 'semantic-ui-react';
+import { Container, Header, Icon, Loader, Menu } from 'semantic-ui-react';
 
 /** The Footer appears at the bottom of every page. Rendered by the App Layout component. */
 class Footer extends React.Component {
@@ -12,27 +12,14 @@ class Footer extends React.Component {
     const divStyle = { paddingTop: '15px' };
     return (
       <footer>
-        <div style={divStyle} className="ui center aligned container">
-          <hr />
-          <br/>
-          <Grid divided='vertically'>
-          <Grid.Row columns={4}>
-            <Grid.Column>
-             <Header as='h3' inverted>Akamy Rent</Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Icon name='twitter' size='big'/>
-              <Icon name='facebook' size='big'/>
-            </Grid.Column>
-            <Grid.Column>
-              <Header as='h3' inverted>Contact Us</Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Header as='h3' inverted>About</Header>
-            </Grid.Column>
-          </Grid.Row>
-          </Grid>
-        </div>
+        <Menu className="secondary">
+          <Container>
+            <Menu.Item className="left"><Header as='h3'>AkaMy-Rent</Header></Menu.Item>
+            <Menu.Item ><Icon className="twitter" size='big'/></Menu.Item>
+            <Menu.Item ><Icon className="facebook f" size='big'/></Menu.Item>
+            <Menu.Item className="right"><Header as='h3'>Contact Us</Header></Menu.Item>
+          </Container>
+        </Menu>
       </footer>
     );
   }
