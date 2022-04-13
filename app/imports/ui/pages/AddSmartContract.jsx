@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Grid, Segment, Header, Tab, Table } from 'semantic-ui-react';
 import { AutoForm, ErrorsField, SelectField, SubmitField, TextField, NumField } from 'uniforms-semantic';
 import swal from 'sweetalert';
@@ -18,7 +18,10 @@ const contractSchema = new SimpleSchema({
     defaultValue: 'Tenet',
   },
   unitAddress: String,
-  numberOfTenets: Number,
+  numberOfTenets: {
+    type: Number,
+    defaultValue: 1,
+  },
   monthlyRent: Number,
   stance: {
     type: String,
@@ -37,16 +40,16 @@ const panes = [
   </Tab.Pane> },
   { menuItem: 'Parties Involved', render: () => <Tab.Pane>
     <Segment>
+      <SelectField name='role' value='Homeowner'/>
       <TextField name='name'/>
       <TextField name='email'/>
       <TextField name='phoneNumber'/>
-      <SelectField name='role'/>
     </Segment>
     <Segment>
+      <SelectField name='role'/>
       <TextField name='name'/>
       <TextField name='email'/>
       <TextField name='phoneNumber'/>
-      <SelectField name='role'/>
       <SubmitField value='Save'/>
     </Segment>
   </Tab.Pane> },
