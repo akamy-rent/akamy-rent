@@ -7,10 +7,10 @@ import BottomHalf from '../components/BottomHalf';
 class Landing extends React.Component {
   render() {
     return (
-      <Container>
+      <div className='landingBG'>
         <TopHalf/>
         <BottomHalf/>
-      </Container>
+      </div>
     );
   }
 }

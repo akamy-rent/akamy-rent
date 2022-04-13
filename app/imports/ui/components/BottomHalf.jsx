@@ -6,8 +6,8 @@ class BottomHalf extends React.Component {
   render() {
     const gridStyle = { height: '200px', textAlign: 'left' };
     return (
-      <div className="landingBG">
-        <Grid centered>
+      <div>
+        <Grid centered container>
           <Grid.Row> <Header inverted> Smart Contract</Header></Grid.Row>
           <Grid.Row columns={3}>
             <Grid.Column>
@@ -15,8 +15,8 @@ class BottomHalf extends React.Component {
               Distributed
               </Header>
                 <Header as='h5' inverted>
-                  This address book enables any number of users to register and save their
-                  business contacts. You can only see the contacts you have created.
+                  Copied and shared across nodes in a peer-to-peer network. The resources
+                  are shared directly between nodes bypassing third party servers.
               </Header>
             </Grid.Column>
             <Grid.Column>
@@ -24,9 +24,8 @@ class BottomHalf extends React.Component {
               Immutable
               </Header>
                 <Header as='h5' inverted>
-                  This address book enables any number of users to register and save their
-                  business contacts. You can only see the contacts you have created.
-
+                  The blockchain ledger remains permanent and indelible retaining an unalterable history of transactions. This brings trust and integrity to the data on
+                  a daily basis.
               </Header>
             </Grid.Column>
             <Grid.Column>
@@ -34,8 +33,7 @@ class BottomHalf extends React.Component {
               Public
               </Header>
               <Header as='h5' inverted>
-                This address book enables any number of users to register and save their
-                business contacts. You can only see the contacts you have created.
+                No restrictions to the network.
               </Header>
             </Grid.Column>
           </Grid.Row>

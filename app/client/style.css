@@ -1,3 +1,4 @@
 .landingBG {
-  background: url("/images/landing.jpg") ;
+  background: linear-gradient(rgb(72,0,72,0.8), rgb(255,215,0,0.4)),url("/images/landing.jpg") ;
+  background-size: cover;
 }
