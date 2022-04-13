@@ -5,7 +5,7 @@ import 'semantic-ui-css/semantic.css';
 import { Roles } from 'meteor/alanning:roles';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import SimpleSchema from 'simpl-schema';
-import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+// import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
@@ -31,7 +31,7 @@ const personDataSchema = new SimpleSchema({
   },
 });
 
-const bridge = new SimpleSchema2Bridge(personDataSchema);
+// const bridge = new SimpleSchema2Bridge(personDataSchema);
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
