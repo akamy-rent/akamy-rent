@@ -7,16 +7,12 @@ import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
-import AddSmartContract from '../pages/AddSmartContract';
-import EditSmartContract from '../pages/EditSmartContract';
 import EditProfile from '../pages/EditProfile';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import ViewProfile from '../pages/ViewProfile';
-import Dashboard from '../pages/ListDashboard';
-import TestContract from '../pages/TestContract';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -30,6 +26,7 @@ class App extends React.Component {
             <Route path="/signin" component={Signin}/>
             <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>
+            <ProtectedRoute path="/view" component={ViewProfile}/>
             <ProtectedRoute path="/list" component={ViewProfile}/>
             <Route path="/test" component={TestContract}/>
             <ProtectedRoute path="/dashboard" component={Dashboard}/>

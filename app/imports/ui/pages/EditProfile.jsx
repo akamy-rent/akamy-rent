@@ -37,8 +37,7 @@ class EditProfile extends React.Component {
           <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
             <Grid columns={2} centered>
               <Grid.Column>
-                <Image size='medium' src="/images/meteor-logo.png"/>
-
+                <Image rounded size='medium' src="/images/meteor-logo.png"/>
               </Grid.Column>
               <Grid.Column>
                 <TextField name='name' />
