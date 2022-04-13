@@ -7,7 +7,7 @@ import BottomHalf from '../components/BottomHalf';
 class Landing extends React.Component {
   render() {
     return (
-      <Container >
+      <Container>
         <TopHalf/>
         <BottomHalf/>
       </Container>
