@@ -1,4 +1,3 @@
 .landingBG {
-  background: url("../public/images/landing.jpg") no-repeat center center fixed;
-  background-size: cover;
+  background: url("/images/landing.jpg") ;
 }
