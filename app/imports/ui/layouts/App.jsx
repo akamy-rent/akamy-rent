@@ -32,6 +32,7 @@ class App extends React.Component {
             <ProtectedRoute path="/dashboard" component={Dashboard}/>
             <ProtectedRoute path="/add" component={AddSmartContract}/>
             <ProtectedRoute path="/edit/:_id" component={EditSmartContract}/>
+            <ProtectedRoute path="/editProfile/:_id" component={EditProfile}/>
             <Route component={NotFound}/>
           </Switch>
           <Footer/>
