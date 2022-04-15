@@ -17,6 +17,7 @@ import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
+import Dashboard from '../pages/ListDashboard';
 import TestContract from '../pages/TestContract';
 
 // Create a schema to specify structure of party member to appear in the form
@@ -47,6 +48,9 @@ class App extends React.Component {
             <Route path="/signout" component={Signout}/>
             <Route path="/test" component={TestContract}/>
             <ProtectedRoute path="/list" component={ListStuff}/>
+            <ProtectedRoute path="/add" component={AddStuff}/>
+            <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
+            <ProtectedRoute path="/dashboard" component={Dashboard}/>
             <ProtectedRoute path="/add" component={AddSmartContract}/>
             <ProtectedRoute path="/edit/:_id" component={EditSmartContract}/>
             <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
