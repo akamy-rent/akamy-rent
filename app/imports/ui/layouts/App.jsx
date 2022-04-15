@@ -13,6 +13,10 @@ import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import ViewProfile from '../pages/ViewProfile';
+import TestContract from '../pages/TestContract';
+import Dashboard from '../components/Dashboard';
+import EditSmartContract from '../pages/EditSmartContract';
+import AddSmartContract from '../pages/AddSmartContract';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
