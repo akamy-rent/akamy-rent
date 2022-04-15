@@ -13,7 +13,7 @@
 
   "defaultDashboard": [
     { "activeContracts": 3, "totalIncome": 400, "totalExpenses": 200, "owner": "john@foo.com"}
-  ]
+  ],
   "monti": {
     "appId": "fJMZoBBNgtRAcEioF",
     "appSecret": "5a08f436-dd63-488e-9051-6dad0f4c50f1"
