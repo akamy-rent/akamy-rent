@@ -16,6 +16,7 @@ import Signout from '../pages/Signout';
 import Dashboard from '../pages/ListDashboard';
 import Messenger from '../pages/Messenger';
 import TestContract from '../pages/TestContract';
+import ListSmartContract from '../pages/ListSmartContract';
 import ViewProfile from '../pages/ViewProfile';
 import EditProfile from '../pages/EditProfile';
 
@@ -33,6 +34,7 @@ class App extends React.Component {
             <Route path="/signout" component={Signout}/>
             <Route path="/test" component={TestContract}/>
             <ProtectedRoute path="/dashboard" component={Dashboard}/>
+            <ProtectedRoute path="/list" component={ListSmartContract}/>
             <ProtectedRoute path="/add" component={AddSmartContract}/>
             <ProtectedRoute path="/edit/:_id" component={EditSmartContract}/>
             <ProtectedRoute path="/chat" component={Messenger}/>

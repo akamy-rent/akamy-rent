@@ -5,10 +5,15 @@
   ],
 
   "defaultData": [
-    { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
-    { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
-    { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
-    { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+    { "name": "John Doe", "email": "johndoe@gmail.com", "phoneNumber": "808-123-4567", "role": "Tenet", "unitAddress": "123 Kapiolani Blvd Honolulu, HI 96826",
+      "monthlyRent": 1000, "stance": "I agree to the terms and conditions", "owner": "john@foo.com"
+    },
+    { "name": "Mary Jane", "email": "jane@foo.com", "phoneNumber": "808-234-5678", "role": "Tenet", "unitAddress": "123 Kapiolani Blvd Honolulu, HI 96826",
+      "monthlyRent": 1000, "stance": "I do not agree to the terms and conditions", "owner": "jane@foo.com"
+    },
+    { "name": "Naruto Uzumaki", "email": "dattebayo@gmail.com", "phoneNumber": "808-106-9999", "role": "Homeowner", "unitAddress": "123 Kapiolani Blvd Honolulu, HI 96826",
+      "monthlyRent": 1000, "stance": "I agree to the terms and conditions", "owner": "admin@foo.com"
+    }
   ],
 
   "defaultDashboard": [
