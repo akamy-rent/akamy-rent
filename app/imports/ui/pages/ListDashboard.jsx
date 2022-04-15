@@ -3,7 +3,6 @@ import { Button, Container, Grid, Header, Icon, Image, Loader, Table } from 'sem
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-import Dashboard from '../components/Dashboard';
 import {dashboard} from '../../api/dashboard/dashboard';
 
 /** A simple static component to render some text for the landing page. */

@@ -4,13 +4,9 @@ import { Meteor } from 'meteor/meteor';
 import 'semantic-ui-css/semantic.css';
 import { Roles } from 'meteor/alanning:roles';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-// import SimpleSchema from 'simpl-schema';
-// import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
-import ListStuff from '../pages/ListStuff';
-import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AddSmartContract from '../pages/AddSmartContract';
 import EditSmartContract from '../pages/EditSmartContract';
 import NotFound from '../pages/NotFound';
@@ -19,20 +15,6 @@ import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import Dashboard from '../pages/ListDashboard';
 import TestContract from '../pages/TestContract';
-
-// Create a schema to specify structure of party member to appear in the form
-/* const personDataSchema = new SimpleSchema({
-  name: String,
-  email: String,
-  phoneNumber: String,
-  role: {
-    type: String,
-    allowedValues: ['Tenet', 'Homeowner'],
-    defaultValue: 'Tenet',
-  },
-}); */
-
-// const bridge = new SimpleSchema2Bridge(personDataSchema);
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -47,11 +29,9 @@ class App extends React.Component {
             <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>
             <Route path="/test" component={TestContract}/>
-            <ProtectedRoute path="/list" component={ListStuff}/>
             <ProtectedRoute path="/dashboard" component={Dashboard}/>
             <ProtectedRoute path="/add" component={AddSmartContract}/>
             <ProtectedRoute path="/edit/:_id" component={EditSmartContract}/>
-            <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
             <Route component={NotFound}/>
           </Switch>
           <Footer/>

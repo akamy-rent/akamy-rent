@@ -1,7 +1,6 @@
 import React from 'react';
-import { Container, Grid, Header } from 'semantic-ui-react';
-import TopHalf from '../components/TopHalf';
-import BottomHalf from '../components/BottomHalf';
+import { Grid, Header } from 'semantic-ui-react';
+
 
 /** A simple static component to render some text for the landing page. */
 class Landing extends React.Component {
