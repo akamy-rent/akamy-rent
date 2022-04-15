@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Loader, Header, Image } from 'semantic-ui-react';
 import swal from 'sweetalert';
-import { AutoField, AutoForm, SubmitField, TextField } from 'uniforms-semantic';
+import { AutoForm, SubmitField, TextField } from 'uniforms-semantic';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -17,8 +17,8 @@ class EditProfile extends React.Component {
   submit(data) {
     const { name, quantity, condition, _id } = data;
     Stuffs.collection.update(_id, { $set: { name, quantity, condition } }, (error) => (error ?
-        swal('Error', error.message, 'error') :
-        swal('Success', 'Item updated successfully', 'success')));
+      swal('Error', error.message, 'error') :
+      swal('Success', 'Item updated successfully', 'success')));
   }
 
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
@@ -29,39 +29,39 @@ class EditProfile extends React.Component {
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   renderPage() {
     return (
-        <Grid container centered>
-          <Grid.Row>
-            <Header as="h2" textAlign="center">Edit Profile</Header>
-          </Grid.Row>
-          <Grid.Row>
-            <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
-              <Grid columns={2} centered>
-                <Grid.Column>
-                  <Image rounded size='medium' src="/images/meteor-logo.png"/>
-                </Grid.Column>
-                <Grid.Column>
-                  <TextField name='name' />
-                  <TextField name='name' />
-                </Grid.Column>
-              </Grid>
-            </AutoForm>
-          </Grid.Row>
-          <Grid.Row>
-            <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
-              <Grid columns={2}>
-                <Grid.Column>
-                  <TextField name='name' />
-                </Grid.Column>
-                <Grid.Column>
-                  <TextField name='name' />
-                </Grid.Column>
-              </Grid>
-              <TextField name='name' />
-              <SubmitField value='Submit'/>
-            </AutoForm>
-          </Grid.Row>
+      <Grid container centered>
+        <Grid.Row>
+          <Header as="h2" textAlign="center">Edit Profile</Header>
+        </Grid.Row>
+        <Grid.Row>
+          <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
+            <Grid columns={2} centered>
+              <Grid.Column>
+                <Image rounded size='medium' src="/images/meteor-logo.png"/>
+              </Grid.Column>
+              <Grid.Column>
+                <TextField name='name' />
+                <TextField name='name' />
+              </Grid.Column>
+            </Grid>
+          </AutoForm>
+        </Grid.Row>
+        <Grid.Row>
+          <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
+            <Grid columns={2}>
+              <Grid.Column>
+                <TextField name='name' />
+              </Grid.Column>
+              <Grid.Column>
+                <TextField name='name' />
+              </Grid.Column>
+            </Grid>
+            <TextField name='name' />
+            <SubmitField value='Submit'/>
+          </AutoForm>
+        </Grid.Row>
 
-        </Grid>
+      </Grid>
     );
   }
 }

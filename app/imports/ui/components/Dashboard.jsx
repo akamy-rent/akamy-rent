@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Header} from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -8,22 +8,22 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-        <Grid.Row columns={3}>
-          <Grid.Column>
-            <Header as='h2' inverted>{this.props.dashboard.activeContracts}</Header>
-            <Header as='h2' inverted>Active Contracts</Header>
-          </Grid.Column>
+      <Grid.Row columns={3}>
+        <Grid.Column>
+          <Header as='h2' inverted>{this.props.dashboard.activeContracts}</Header>
+          <Header as='h2' inverted>Active Contracts</Header>
+        </Grid.Column>
 
-          <Grid.Column>
-            <Header as='h2' inverted>{this.props.dashboard.totalIncome}</Header>
-            <Header as='h2' inverted>Total Income</Header>
-          </Grid.Column>
+        <Grid.Column>
+          <Header as='h2' inverted>{this.props.dashboard.totalIncome}</Header>
+          <Header as='h2' inverted>Total Income</Header>
+        </Grid.Column>
 
-          <Grid.Column>
-            <Header as='h2' inverted>{this.props.dashboard.totalExpenses}</Header>
-            <Header as='h2' inverted>Total Expenses</Header>
-          </Grid.Column>
-        </Grid.Row>
+        <Grid.Column>
+          <Header as='h2' inverted>{this.props.dashboard.totalExpenses}</Header>
+          <Header as='h2' inverted>Total Expenses</Header>
+        </Grid.Column>
+      </Grid.Row>
     );
   }
 }

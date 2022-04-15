@@ -2,7 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Container, Grid, Header, Image, Loader, Menu } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { withRouter, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
 
@@ -17,34 +17,34 @@ class ViewProfile extends React.Component {
   // Render the page once subscriptions have been received.
   renderPage() {
     return (
-        <Container>
-          <Header as="h2" textAlign="center">View Profile </Header>
-          <Grid centered>
-            <Grid.Row>
-              <Grid columns={2} verticalAlign='middle'>
-                <Grid.Column>
-                  <Image size='medium' src="/images/meteor-logo.png" rounded/>
+      <Container>
+        <Header as="h2" textAlign="center">View Profile </Header>
+        <Grid centered>
+          <Grid.Row>
+            <Grid columns={2} verticalAlign='middle'>
+              <Grid.Column>
+                <Image size='medium' src="/images/meteor-logo.png" rounded/>
                   Username
-                </Grid.Column>
-                <Grid.Column>
-                  <Menu text>
-                    <Menu.Item as={NavLink} exact to="/edit/:_id" key='profile' link color='red'>
+              </Grid.Column>
+              <Grid.Column>
+                <Menu text>
+                  <Menu.Item as={NavLink} exact to="/editProfile/:_id" link color='red'>
                       Edit Profile
-                    </Menu.Item>
-                  </Menu>
-                </Grid.Column>
-              </Grid>
+                  </Menu.Item>
+                </Menu>
+              </Grid.Column>
+            </Grid>
 
-            </Grid.Row>
-            <Grid.Row>
+          </Grid.Row>
+          <Grid.Row>
               First and Last Names
-            </Grid.Row>
-            <Grid.Row>
+          </Grid.Row>
+          <Grid.Row>
               Wallet Address
-            </Grid.Row>
+          </Grid.Row>
 
-          </Grid>
-        </Container>
+        </Grid>
+      </Container>
     );
   }
 }

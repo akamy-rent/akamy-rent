@@ -1,11 +1,10 @@
 import React from 'react';
 import { Grid, Header } from 'semantic-ui-react';
 
-
 /** A simple static component to render some text for the landing page. */
 class Landing extends React.Component {
   render() {
-    const gridStyle = { height: '200px', fontSize: '50px', fontFamily: 'fantasy', paddingTop: '10%', color: 'white'};
+    const gridStyle = { height: '200px', fontSize: '50px', fontFamily: 'fantasy', paddingTop: '10%', color: 'white' };
     const menuStyle = { marginBottom: '50px' };
     return (
       <div className='landingBG' style={menuStyle}>
@@ -24,7 +23,7 @@ class Landing extends React.Component {
           <br/>
           <Grid.Row columns={3}>
             <Grid.Column>
-              <Header  as='h2' inverted>
+              <Header as='h2' inverted>
                 Distributed
               </Header>
               <Header as='h4' inverted>
