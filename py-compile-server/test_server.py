@@ -7,57 +7,25 @@ from solcx import compile_source
 hostName = "localhost"
 serverPort = 9000
 
-def write_contract_variables(homeowne_addr, tenants):
-    homeowner_var = f"address payable homeowner = {homeowne_addr};"
-    tenent_var_holder = ""
-    current_tenent_vars = tenent_var_holder
-
-    for tenent in tenants:
-        tenent_addr = tenent["address"]
-        tenent_var_holder =f"address tenent1 = {tenent_addr}\n;"
-        current_tenent_vars += tenent_var_holder
-
-    return homeowner_var + current_tenent_vars
-
-def write_tenent_portion(tenants):
-    tenent_num = 1
-    tenent_portion = ""
-    current_tenent_portion = tenent_portion
-    for tenent in tenants:
-        tenent = write_single_tenent_function(tenent_num)
-        current_tenent_portion+=tenent
-
-    return current_tenent_portion
-
-def write_single_tenent_function(num):
-    tenent_func = f'''
-    withdraw{num}()
-    {{ 
-        require(now + 3 seconds); 
-        msg.address{num}.transfer.address(this);
-        collect();
-    }}\n
-    '''
-    return tenent_func
 
 def write_smart_contract(data):
     contract_dictonary = json.loads(data)
-    contract_print = json.dumps(contract_dictonary, indent=2)
-   # print(contract_print)
-    homeowner_address = contract_dictonary["homeowner"]["address"]
-    print(homeowner_address)
-    #tenants = contract_dictonary["tenants"]
-
+    # contract_print = json.dumps(contract_dictonary, indent=2)
+    # print(contract_print)
+    rent = contract_dictonary["rent"]
     # write the smart contract 
-    #contract_solidity_version ="pragma solidity pragma solidity >=0.4.17;\n"
-    #contract_variables = write_contract_variables(homeowner_address,tenants)
-    #contract_function_start = "contract Agreement{\n"
-    #contract_homeowner_function = "collect(){msg.address(this).tranfer(homeowner);}"
-    #contract_tenent_portion = write_tenent_portion(tenants)
-    #contract_begin = contract_solidity_version + contract_variables + contract_function_start
-    #contract_end = contract_homeowner_function + contract_tenent_portion + "}"
-    #full_contract = contract_begin + contract_end
-    #return full_contract
+    contract_solidity_version ="// SPDX-License-Identifier: MIT\npragma solidity >0.4.17;"
+    contract_function_start = "\ncontract Agreement{\n\n"
+    contract_event ="\n    event RentCheck(address sender);"
+    contract_homeowner_function = f'''\n    function payRent(address _homeowner) external payable{{
+        emit RentCheck(_homeowner);
+        payable(_homeowner).transfer({rent});
+    }}'''
+    function_payable = f"\n\n    fallback() external payable{{}}"
+    contract_begin = contract_solidity_version + contract_function_start
+    contract_end = contract_event + contract_homeowner_function + function_payable + "\n}"
+    full_contract = contract_begin + contract_end
+    return full_contract
     
     
 
@@ -74,13 +42,13 @@ class MyServer(BaseHTTPRequestHandler):
         data = payload["data"]
         contract = write_smart_contract(data)
         print(contract)
-        #compiled_sol = compile_source(contract, output_values=['abi', 'bin'])
-        #contract_id, contract_interface = compiled_sol.popitem()
-        #bytecode = contract_interface['bin']
-        #abi = contract_interface['abi']
-        #response_dict = {"abi": abi, "bytecode": bytecode}
-        #response_string = json.dumps(response_dict)
-        #self.wfile.write(bytes(response_string, "utf-8"))
+        compiled_sol = compile_source(contract, output_values=['abi', 'bin'])
+        contract_id, contract_interface = compiled_sol.popitem()
+        bytecode = contract_interface['bin']
+        abi = contract_interface['abi']
+        response_dict = {"abi": abi, "bytecode": bytecode}
+        response_string = json.dumps(response_dict)
+        self.wfile.write(bytes(response_string, "utf-8"))
 
 
 

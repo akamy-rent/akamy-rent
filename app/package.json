@@ -8,6 +8,7 @@
     "core-js": "^3.21.1",
     "ethers": "^5.6.3",
     "graphql": "^14.5.8",
+    "lodash": "^4.17.21",
     "meteor-node-stubs": "^1.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
