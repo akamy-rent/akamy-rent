@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Segment, Header, Tab, Table } from 'semantic-ui-react';
+import { Grid, Segment, Header } from 'semantic-ui-react';
 import { AutoForm, ErrorsField, SelectField, SubmitField, TextField, NumField } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
@@ -26,44 +26,6 @@ const contractSchema = new SimpleSchema({
   },
 });
 
-const panes = [
-  { menuItem: 'Smart Contract Information', render: () => <Tab.Pane>
-
-
-  </Tab.Pane> },
-  { menuItem: 'Party Review Status', render: () => <Tab.Pane>
-    <Table definition>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell />
-          <Table.HeaderCell>Role</Table.HeaderCell>
-          <Table.HeaderCell>Terms & Conditions Approval Status</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-
-      <Table.Body>
-        <Table.Row>
-          <Table.Cell>John Doe</Table.Cell>
-          <Table.Cell>Tenet</Table.Cell>
-          <Table.Cell>Approved</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Mary Jane</Table.Cell>
-          <Table.Cell>Tenet</Table.Cell>
-          <Table.Cell>Rejected</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Naruto Uzumaki</Table.Cell>
-          <Table.Cell>Homeowner</Table.Cell>
-          <Table.Cell>Incomplete</Table.Cell>
-        </Table.Row>
-      </Table.Body>
-    </Table>
-
-    <p>I hereby accept the terms and conditions outlined in this smart contract.</p>
-    <SubmitField value='Create smart contract!'/>
-  </Tab.Pane> },
-];
 // setState: changes state of the page.
 // if don't know participants, render getParticipates
 // if know participants, render fillParticipants data
