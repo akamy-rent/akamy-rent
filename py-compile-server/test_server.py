@@ -1,7 +1,6 @@
 from calendar import month
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from web3 import Web3
 from solcx import compile_source, install_solc
 
 hostName = "206.189.2.161"
