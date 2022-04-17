@@ -15,13 +15,13 @@ def write_smart_contract(data):
     # write the smart contract 
     contract_solidity_version ="// SPDX-License-Identifier: MIT\npragma solidity >0.8.4;"
     contract_function_start = "\ncontract Agreement{\n"
-    contract_constructor = f"\n    address payable homeowner = {homeowner};"
+    contract_constructor = f"\n    address private homeowner = {homeowner};"
 
     contract_homeowner_function = f'''\n\n    function payRent(address payable _hOwner) external payable{{
         _hOwner.transfer(msg.value);
     }}'''
 
-    contract_self_destruct = f'''\n\n    function close() public {{
+    contract_self_destruct = f'''\n\n    function close() external {{
         selfdestruct(payable(homeowner));
     }}
     '''
