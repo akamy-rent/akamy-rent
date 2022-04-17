@@ -47,7 +47,6 @@ class MyServer(BaseHTTPRequestHandler):
         payload = json.loads(post_data.decode("utf-8"))
         data = payload["data"]
         contract = write_smart_contract(data)
-        install_solc("0.6.0")
         compiled_sol = compile_source(contract, output_values=['abi', 'bin'])
         contract_id, contract_interface = compiled_sol.popitem()
         bytecode = contract_interface['bin']
@@ -59,6 +58,7 @@ class MyServer(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+    install_solc("0.6.0")
     webServer = HTTPServer((hostName, serverPort), MyServer)
     print("Server started http://%s:%s" % (hostName, serverPort))
 
