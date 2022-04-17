@@ -15,7 +15,7 @@ const agreement = {
 
 export async function postTest(contracts) {
   const payload = { data: JSON.stringify(agreement) };
-  const result = await axios.post('http://localhost:9000', payload);
+  const result = await axios.post('http://167.172.38.37:9000', payload);
   const response = result.data;
   const abi = response.abi;
   const bytecode = response.bytecode;
