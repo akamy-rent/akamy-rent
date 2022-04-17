@@ -1,7 +1,4 @@
 import ethers from 'ethers';
-import lodash from 'lodash';
-
-const _ = lodash;
 const nodeUrl = 'http://localhost:8545';
 const provider = new ethers.providers.JsonRpcProvider(nodeUrl);
 
