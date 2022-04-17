@@ -22,7 +22,7 @@ def write_smart_contract(data):
     }}'''
 
     contract_self_destruct = f'''\n\n    function close() public {{
-        selfdestruct(homeowner);
+        selfdestruct(payable(homeowner));
     }}
     '''
 
