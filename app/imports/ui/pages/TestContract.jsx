@@ -3,7 +3,7 @@ import { Container, Header, Button } from 'semantic-ui-react';
 import { postTest } from '../../api/solc/connect2Compiler';
 import { deployContract, payRent, destroyContract, contractCheck } from '../../api/ethers/ethersFunctions';
 
-const contracts = [];
+let contracts = [];
 const deployedContracts = [];
 
 /** Test page to compile a smart contract with the python script and */
@@ -26,6 +26,7 @@ class TestContract extends React.Component {
 
   checkContract() {
     contractCheck();
+    contracts = [];
   }
 
   render() {

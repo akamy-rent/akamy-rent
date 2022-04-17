@@ -39,7 +39,6 @@ export async function payRent(contract) {
 
 export async function destroyContract(contract) {
   const contractInstance = new ethers.Contract(contract.address, contract.abi, contract.homeowner.signer);
-  console.log(contract.abi);
   contractInstance.close();
 }
 
