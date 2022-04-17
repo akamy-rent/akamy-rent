@@ -4,7 +4,7 @@ import json
 from web3 import Web3
 from solcx import compile_source, install_solc
 
-hostName = "167.172.38.37"
+hostName = "167.172.45.190"
 serverPort = 9000
 
 
@@ -59,7 +59,6 @@ class MyServer(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    install_solc("0.6.0")
     webServer = HTTPServer((hostName, serverPort), MyServer)
     print("Server started http://%s:%s" % (hostName, serverPort))
 
