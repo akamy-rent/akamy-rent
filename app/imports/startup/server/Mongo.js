@@ -1,15 +1,18 @@
 import { Meteor } from 'meteor/meteor';
-import { Stuffs } from '../../api/stuff/Stuff.js';
+import { Members } from '../../api/member/Member.js';
 
-function addData(data) {
+/* eslint-disable no-console */
+
+// Initialize the database with a default data document.
+function addMember(data) {
   console.log(`  Adding: ${data.name} (${data.owner})`);
-  Stuffs.collection.insert(data);
+  Members.collection.insert(data);
 }
 
-// Initialize the StuffsCollection if empty.
-if (Stuffs.collection.find().count() === 0) {
+// Initialize the MembersCollection if empty.
+if (Members.collection.find().count() === 0) {
   if (Meteor.settings.defaultData) {
     console.log('Creating default data.');
-    Meteor.settings.defaultData.map(data => addData(data));
+    Meteor.settings.defaultData.map(data => addMember(data));
   }
 }
