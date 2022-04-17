@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Header, Button } from 'semantic-ui-react';
 import { postTest } from '../../api/solc/connect2Compiler';
-import { deployContract, pay_rent } from '../../api/ethers/ethersFunctions';
+import { deployContract, payRent, destroyContract, contractCheck } from '../../api/ethers/ethersFunctions';
 
 const contracts = [];
 const deployedContracts = [];
@@ -17,7 +17,15 @@ class TestContract extends React.Component {
   }
 
   callContractButton() {
-    pay_rent(contracts[0]);
+    payRent(contracts[0]);
+  }
+
+  destroyContractButton() {
+    destroyContract(contracts[0]);
+  }
+
+  checkContract() {
+    contractCheck();
   }
 
   render() {
@@ -27,6 +35,8 @@ class TestContract extends React.Component {
         <Button color={'red'} onClick={this.compileButton}>Compile Smart contract</Button>
         <Button color={'blue'} onClick={this.deployButton}>Deploy Smart contract</Button>
         <Button color={'green'} onClick={this.callContractButton}>Test Smart contract</Button>
+        <Button color={'orange'} onClick={this.destroyContractButton}>Destroy contract</Button>
+        <Button color={'purple'} onClick={this.destroyContractButton}>Check Contract</Button>
       </Container>
     );
   }

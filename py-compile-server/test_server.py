@@ -12,18 +12,24 @@ def write_smart_contract(data):
     contract_dictonary = json.loads(data)
     # contract_print = json.dumps(contract_dictonary, indent=2)
     # print(contract_print)
-    rent = contract_dictonary["rent"]
+    homeowner = contract_dictonary["homeowner"]["address"]
     # write the smart contract 
     contract_solidity_version ="// SPDX-License-Identifier: MIT\npragma solidity >0.4.17;"
-    contract_function_start = "\ncontract Agreement{\n\n"
-    contract_event ="\n    event RentCheck(address sender);"
-    contract_homeowner_function = f'''\n    function payRent(address _homeowner) external payable{{
-        emit RentCheck(_homeowner);
-        payable(_homeowner).transfer({rent});
+    contract_function_start = "\ncontract Agreement{\n"
+    contract_constructor = f"\n    address payable private homeowner = {homeowner};"
+
+    contract_homeowner_function = f'''\n\n    function payRent(address payable _hOwner) external payable{{
+        _hOwner.transfer(msg.value);
     }}'''
+
+    contract_self_destruct = f'''\n\n    function close() public {{
+        selfdestruct(homeowner);
+    }}
+    '''
+
     function_payable = f"\n\n    fallback() external payable{{}}"
-    contract_begin = contract_solidity_version + contract_function_start
-    contract_end = contract_event + contract_homeowner_function + function_payable + "\n}"
+    contract_begin = contract_solidity_version + contract_function_start + contract_constructor
+    contract_end = contract_homeowner_function + contract_self_destruct + function_payable + "\n}"
     full_contract = contract_begin + contract_end
     return full_contract
     
