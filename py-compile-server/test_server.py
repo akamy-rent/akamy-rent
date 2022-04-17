@@ -2,7 +2,7 @@ from calendar import month
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from web3 import Web3
-from solcx import compile_source
+from solcx import compile_source, install_solc
 
 hostName = "167.172.38.37"
 serverPort = 9000
@@ -47,7 +47,7 @@ class MyServer(BaseHTTPRequestHandler):
         payload = json.loads(post_data.decode("utf-8"))
         data = payload["data"]
         contract = write_smart_contract(data)
-        print(contract)
+        install_solc("0.6.0")
         compiled_sol = compile_source(contract, output_values=['abi', 'bin'])
         contract_id, contract_interface = compiled_sol.popitem()
         bytecode = contract_interface['bin']
