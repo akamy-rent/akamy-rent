@@ -4,7 +4,7 @@ import json
 from web3 import Web3
 from solcx import compile_source, install_solc
 
-hostName = "167.172.45.190"
+hostName = "206.189.2.161"
 serverPort = 9000
 
 
