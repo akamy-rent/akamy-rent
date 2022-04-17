@@ -47,6 +47,7 @@ class MyServer(BaseHTTPRequestHandler):
         payload = json.loads(post_data.decode("utf-8"))
         data = payload["data"]
         contract = write_smart_contract(data)
+        print(contract)
         compiled_sol = compile_source(contract, output_values=['abi', 'bin'])
         contract_id, contract_interface = compiled_sol.popitem()
         bytecode = contract_interface['bin']
