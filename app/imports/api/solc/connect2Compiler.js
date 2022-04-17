@@ -20,6 +20,7 @@ export async function postTest(contracts) {
   const abi = response.abi;
   const bytecode = response.bytecode;
   const tenants = agreement.tenants;
+  console.log(bytecode);
   contracts.push({
     homeowner: agreement.homeowner,
     abi: abi,

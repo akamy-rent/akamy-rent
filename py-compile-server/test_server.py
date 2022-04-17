@@ -13,7 +13,7 @@ def write_smart_contract(data):
     # print(contract_print)
     homeowner = contract_dictonary["homeowner"]["address"]
     # write the smart contract 
-    contract_solidity_version ="// SPDX-License-Identifier: MIT\npragma solidity >0.4.17;"
+    contract_solidity_version ="// SPDX-License-Identifier: MIT\npragma solidity >0.6.0;"
     contract_function_start = "\ncontract Agreement{\n"
     contract_constructor = f"\n    address private homeowner = {homeowner};"
 
