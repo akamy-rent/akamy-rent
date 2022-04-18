@@ -1,7 +1,7 @@
 import ethers from 'ethers';
 
-const nodeUrl = 'http://localhost:8545';
-const provider = new ethers.providers.JsonRpcProvider(nodeUrl);
+// const nodeUrl = 'http://localhost:8545';
+// const provider = new ethers.providers.JsonRpcProvider(nodeUrl);
 
 export async function deployContract(contract) {
   // contract variables

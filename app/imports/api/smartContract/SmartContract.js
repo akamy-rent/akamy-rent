@@ -16,6 +16,7 @@ class SmartContractCollection {
       name: String,
       email: String,
       phoneNumber: String,
+      walletAddress: String,
       role: {
         type: String,
         allowedValues: ['Tenet', 'Homeowner'],

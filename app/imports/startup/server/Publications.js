@@ -54,3 +54,9 @@ Meteor.publish(null, function () {
   }
   return this.ready();
 });
+Meteor.publish(null, function () {
+  if (this.userId) {
+    return this.userId;
+  }
+  return this.ready();
+});
