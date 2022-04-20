@@ -3,14 +3,14 @@ import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-/** Renders a single row in the List member table. See pages/Listmember.jsx. */
+/** Renders a single row in the List smartContract table. See pages/ListsmartContract.jsx. */
 class SmartContractItemAdmin extends React.Component {
   render() {
     return (
       <Table.Row>
-        <Table.Cell>{this.props.member.name}</Table.Cell>
-        <Table.Cell>{this.props.member.role}</Table.Cell>
-        <Table.Cell>{this.props.member.stance}</Table.Cell>
+        <Table.Cell>{this.props.smartContract.name}</Table.Cell>
+        <Table.Cell>{this.props.smartContract.role}</Table.Cell>
+        <Table.Cell>{this.props.smartContract.stance}</Table.Cell>
       </Table.Row>
     );
   }
@@ -18,7 +18,7 @@ class SmartContractItemAdmin extends React.Component {
 
 // Require a document to be passed to this component.
 SmartContractItemAdmin.propTypes = {
-  member: PropTypes.shape({
+  smartContract: PropTypes.shape({
     name: PropTypes.string,
     role: PropTypes.string,
     stance: PropTypes.string,

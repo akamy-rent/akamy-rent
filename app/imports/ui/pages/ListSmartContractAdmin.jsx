@@ -4,9 +4,9 @@ import { Container, Table, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { SmartContracts } from '../../api/smartContract/SmartContract';
-import MemberItemAdmin from '../components/SmartContractItemAdmin';
+import SmartContractItemAdmin from '../components/SmartContractItemAdmin';
 
-/** Renders a table containing all of the Stuff documents. Use <MemberItem> to render each row. */
+/** Renders a table containing all of the SmartContract documents. Use <SmartContractItem> to render each row. */
 class ListSmartContractAdmin extends React.Component {
 
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
@@ -28,7 +28,7 @@ class ListSmartContractAdmin extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.props.members.map((member) => <MemberItemAdmin key={member._id} member={member} />)}
+            {this.props.smartContracts.map((smartContract) => <SmartContractItemAdmin key={smartContract._id} smartContract={smartContract} />)}
           </Table.Body>
         </Table>
       </Container>
@@ -36,22 +36,22 @@ class ListSmartContractAdmin extends React.Component {
   }
 }
 
-// Require an array of Member documents in the props.
+// Require an array of SmartContract documents in the props.
 ListSmartContractAdmin.propTypes = {
-  members: PropTypes.array.isRequired,
+  smartContracts: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
-  // Get access to Member documents.
+  // Get access to SmartContract documents.
   const subscription = Meteor.subscribe(SmartContracts.adminPublicationName);
   // Determine if the subscription is ready
   const ready = subscription.ready();
-  // Get the Member documents
-  const members = SmartContracts.collection.find({}).fetch();
+  // Get the SmartContract documents
+  const smartContracts = SmartContracts.collection.find({}).fetch();
   return {
-    members,
+    smartContracts,
     ready,
   };
 })(ListSmartContractAdmin);

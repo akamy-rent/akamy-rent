@@ -29,7 +29,7 @@ class ListSmartContract extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.props.members.map((member) => <MemberItem key={member._id} member={member} />)}
+            {this.props.smartContracts.map((smartContract) => <MemberItem key={smartContract._id} smartContract={smartContract} />)}
           </Table.Body>
         </Table>
       </Container>
@@ -39,7 +39,7 @@ class ListSmartContract extends React.Component {
 
 // Require an array of Member documents in the props.
 ListSmartContract.propTypes = {
-  members: PropTypes.array.isRequired,
+  smartContracts: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -50,9 +50,9 @@ export default withTracker(() => {
   // Determine if the subscription is ready
   const ready = subscription.ready();
   // Get the Member documents
-  const members = SmartContracts.collection.find({}).fetch();
+  const smartContracts = SmartContracts.collection.find({}).fetch();
   return {
-    members,
+    smartContracts,
     ready,
   };
 })(ListSmartContract);
