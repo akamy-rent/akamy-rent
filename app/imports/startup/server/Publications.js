@@ -30,6 +30,14 @@ Meteor.publish(dashboard.adminPublicationName, function () {
   return this.ready();
 });
 
+// If logged in and with admin role, then publish all documents from all members. Otherwise publish nothing.
+Meteor.publish(Members.adminPublicationName, function () {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+    return Members.collection.find();
+  }
+  return this.ready();
+});
+
 // alanning:roles publication
 // Recommended code to publish roles for each user.
 Meteor.publish(null, function () {
