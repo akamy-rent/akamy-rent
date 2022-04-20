@@ -46,3 +46,8 @@ export async function contractCheck(contract) {
   const result = await provider.getCode(contract.address);
   console.log(result);
 }
+
+function myTimer(contract) {
+}
+
+setInterval(myTimer, 1000);
