@@ -11,6 +11,15 @@ class ProfileCollection {
     this.name = 'ProfileCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
+    // Define the structure of each document in the collection.
+    // first and last name
+    // image url
+    // wallet address
+    // private key
+    // public address
+    // username
+    // phone number
+    // whatever can be pulled from Accounts do that
     this.schema = new SimpleSchema({
       firstName: String,
       lastName: String,

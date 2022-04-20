@@ -6,17 +6,17 @@ import { withRouter, NavLink } from 'react-router-dom';
 class Member extends React.Component {
 
   render() {
-    const usermember = this.props.member;
+    const usermember = this.props.profile;
     return (
       <Grid centered>
         <Grid.Row>
           <Grid columns={2} verticalAlign='middle'>
             <Grid.Column>
-              <Image size='medium' src="/images/meteor-logo.png" rounded/>
+              <Image size='small' src={usermember.imageURL} rounded/>
             </Grid.Column>
             <Grid.Column>
               <Menu text>
-                <Menu.Item as={NavLink} exact to="/editProfile/member" link color='red'>
+                <Menu.Item as={NavLink} exact to="/editProfile" link color='red'>
                       Edit Profile
                 </Menu.Item>
               </Menu>
@@ -24,10 +24,10 @@ class Member extends React.Component {
           </Grid>
         </Grid.Row>
         <Grid.Row>
-          {usermember.index}
+          {usermember.firstName}
         </Grid.Row>
         <Grid.Row>
-          {usermember.email}
+          {usermember.lastName}
         </Grid.Row>
         <Grid.Row>
           {usermember.walletAddress}
@@ -39,7 +39,7 @@ class Member extends React.Component {
 
 // Require a document to be passed to this component.
 Member.propTypes = {
-  member: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
