@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 
 /** Renders a single row in the List member table. See pages/Listmember.jsx. */
-class MemberItem extends React.Component {
+class SmartContractItem extends React.Component {
   render() {
     return (
       <Table.Row>
@@ -20,7 +20,7 @@ class MemberItem extends React.Component {
 }
 
 // Require a document to be passed to this component.
-MemberItem.propTypes = {
+SmartContractItem.propTypes = {
   member: PropTypes.shape({
     name: PropTypes.string,
     role: PropTypes.string,
@@ -30,4 +30,4 @@ MemberItem.propTypes = {
 };
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
-export default withRouter(MemberItem);
+export default withRouter(SmartContractItem);

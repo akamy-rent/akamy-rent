@@ -6,9 +6,9 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { Members } from '../../api/member/Member';
+import { SmartContracts } from '../../api/smartContract/SmartContract';
 
-const bridge = new SimpleSchema2Bridge(Members.schema);
+const bridge = new SimpleSchema2Bridge(SmartContracts.schema);
 
 /** Renders the Page for editing a single document. */
 class EditProfile extends React.Component {
@@ -16,7 +16,7 @@ class EditProfile extends React.Component {
   // On successful submit, insert the data.
   submit(data) {
     const { name, email, phoneNumber, _id } = data;
-    Members.collection.update(_id, { $set: { name, email, phoneNumber } }, (error) => (error ?
+    SmartContracts.collection.update(_id, { $set: { name, email, phoneNumber } }, (error) => (error ?
       swal('Error', error.message, 'error') :
       swal('Success', 'Item updated successfully', 'success')));
   }
@@ -78,11 +78,11 @@ export default withTracker(({ match }) => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const documentId = match.params._id;
   // Get access to Stuff documents.
-  const subscription = Meteor.subscribe(Members.userPublicationName);
+  const subscription = Meteor.subscribe(SmartContracts.userPublicationName);
   // Determine if the subscription is ready
   const ready = subscription.ready();
   // Get the document
-  const doc = Members.collection.findOne(documentId);
+  const doc = SmartContracts.collection.findOne(documentId);
   return {
     doc,
     ready,

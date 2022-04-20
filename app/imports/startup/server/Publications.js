@@ -1,14 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
-import { Members } from '../../api/member/Member.js';
+import { SmartContracts } from '../../api/smartContract/SmartContract.js';
 import { dashboard } from '../../api/dashboard/dashboard';
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
 
-Meteor.publish(Members.userPublicationName, function () {
+Meteor.publish(SmartContracts.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
-    return Members.collection.find({ owner: username });
+    return SmartContracts.collection.find({ owner: username });
   }
   return this.ready();
 });
@@ -26,6 +26,13 @@ Meteor.publish(dashboard.userPublicationName, function () {
 Meteor.publish(dashboard.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return dashboard.collection.find();
+  }
+  return this.ready();
+});
+
+Meteor.publish(SmartContracts.adminPublicationName, function () {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+    return SmartContracts.collection.find();
   }
   return this.ready();
 });

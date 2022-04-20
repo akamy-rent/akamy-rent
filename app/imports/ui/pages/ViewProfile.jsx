@@ -4,7 +4,7 @@ import { Container, Grid, Header, Image, Loader, Menu } from 'semantic-ui-react'
 import { withTracker } from 'meteor/react-meteor-data';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Members } from '../../api/member/Member';
+import { SmartContracts } from '../../api/smartContract/SmartContract';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ViewProfile extends React.Component {
@@ -58,11 +58,11 @@ ViewProfile.propTypes = {
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
   // Get access to Stuff documents.
-  const subscription = Meteor.subscribe(Members.userPublicationName);
+  const subscription = Meteor.subscribe(SmartContracts.userPublicationName);
   // Determine if the subscription is ready
   const ready = subscription.ready();
   // Get the Stuff documents
-  const members = Members.collection.find({}).fetch();
+  const members = SmartContracts.collection.find({}).fetch();
   return {
     members,
     ready,
