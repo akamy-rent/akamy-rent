@@ -19,7 +19,6 @@ import TestContract from '../pages/TestContract';
 import ListSmartContract from '../pages/ListSmartContract';
 import ViewProfile from '../pages/ViewProfile';
 import EditProfile from '../pages/EditProfile';
-import ListSmartContractAdmin from '../pages/ListSmartContractAdmin';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -41,7 +40,6 @@ class App extends React.Component {
             <ProtectedRoute path="/chat" component={Messenger}/>
             <ProtectedRoute path="/editProfile" component={EditProfile}/>
             <ProtectedRoute path="/viewProfile" component={ViewProfile}/>
-            <AdminProtectedRoute path="/admin" component={ListSmartContractAdmin}/>
             <Route component={NotFound}/>
           </Switch>
           <Footer/>

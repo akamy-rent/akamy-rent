@@ -3,12 +3,12 @@ import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
 /**
- * The SmartContractCollection. It encapsulates state and variable values for smartContract.
+ * The MemberCollection. It encapsulates state and variable values for member.
  */
-class SmartContractCollection {
+class MemberCollection {
   constructor() {
     // The name of this collection.
-    this.name = 'SmartContractCollection';
+    this.name = 'MemberCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
@@ -40,7 +40,7 @@ class SmartContractCollection {
 }
 
 /**
- * The singleton instance of the SmartContractCollection.
- * @type {SmartContractCollection}
+ * The singleton instance of the MemberCollection.
+ * @type {MemberCollection}
  */
-export const SmartContracts = new SmartContractCollection();
+export const Members = new MemberCollection();

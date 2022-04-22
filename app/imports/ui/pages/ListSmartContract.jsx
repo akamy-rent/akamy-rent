@@ -3,8 +3,8 @@ import { Meteor } from 'meteor/meteor';
 import { Container, Table, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import MemberItem from '../components/SmartContractItem';
-import { SmartContracts } from '../../api/smartContract/SmartContract';
+import MemberItem from '../components/MemberItem';
+import { Members } from '../../api/member/Member';
 
 /** Renders a table containing all of the Stuff documents. Use <MemberItem> to render each row. */
 class ListSmartContract extends React.Component {
@@ -29,7 +29,7 @@ class ListSmartContract extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.props.smartContracts.map((smartContract) => <MemberItem key={smartContract._id} smartContract={smartContract} />)}
+            {this.props.members.map((member) => <MemberItem key={member._id} member={member} />)}
           </Table.Body>
         </Table>
       </Container>
@@ -39,20 +39,20 @@ class ListSmartContract extends React.Component {
 
 // Require an array of Member documents in the props.
 ListSmartContract.propTypes = {
-  smartContracts: PropTypes.array.isRequired,
+  members: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
   // Get access to Member documents.
-  const subscription = Meteor.subscribe(SmartContracts.userPublicationName);
+  const subscription = Meteor.subscribe(Members.userPublicationName);
   // Determine if the subscription is ready
   const ready = subscription.ready();
   // Get the Member documents
-  const smartContracts = SmartContracts.collection.find({}).fetch();
+  const members = Members.collection.find({}).fetch();
   return {
-    smartContracts,
+    members,
     ready,
   };
 })(ListSmartContract);

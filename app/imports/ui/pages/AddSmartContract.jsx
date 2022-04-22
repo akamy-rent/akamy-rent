@@ -5,7 +5,7 @@ import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
-import { SmartContracts } from '../../api/smartContract/SmartContract';
+import { Members } from '../../api/member/Member';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const contractSchema = new SimpleSchema({
@@ -38,7 +38,7 @@ class AddSmartContract extends React.Component {
   submit(data, formRef) {
     const { name, email, phoneNumber, role, unitAddress, numberOfTenets, monthlyRent, stance } = data;
     const owner = Meteor.user().username;
-    SmartContracts.collection.insert({ name, email, phoneNumber, role, unitAddress, numberOfTenets, monthlyRent, stance, owner },
+    Members.collection.insert({ name, email, phoneNumber, role, unitAddress, numberOfTenets, monthlyRent, stance, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
