@@ -5,14 +5,35 @@
   ],
 
   "defaultData": [
-    { "name": "John Doe", "email": "johndoe@gmail.com", "phoneNumber": "808-123-4567", "role": "Tenet", "unitAddress": "123 Kapiolani Blvd Honolulu, HI 96826",
-      "monthlyRent": 1000, "stance": "I agree to the terms and conditions", "owner": "john@foo.com"
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "phoneNumber": "808-123-4567",
+      "walletAddress": "ethereum address",
+      "imageURL": "/images/meteor-logo.png",
+      "privateKey": "private key",
+      "publicAddress": "public address",
+      "owner": "john@foo.com"
     },
-    { "name": "Mary Jane", "email": "jane@foo.com", "phoneNumber": "808-234-5678", "role": "Tenet", "unitAddress": "123 Kapiolani Blvd Honolulu, HI 96826",
-      "monthlyRent": 1000, "stance": "I do not agree to the terms and conditions", "owner": "jane@foo.com"
+    {
+      "firstName": "Mary",
+      "lastName": "Uzumaki",
+      "phoneNumber": "808-123-4567",
+      "walletAddress": "ethereum address",
+      "imageURL": "/images/meteor-logo.png",
+      "privateKey": "private key",
+      "publicAddress": "public address",
+      "owner": "jane@foo.com"
     },
-    { "name": "Naruto Uzumaki", "email": "dattebayo@gmail.com", "phoneNumber": "808-106-9999", "role": "Homeowner", "unitAddress": "123 Kapiolani Blvd Honolulu, HI 96826",
-      "monthlyRent": 1000, "stance": "I agree to the terms and conditions", "owner": "admin@foo.com"
+    {
+      "firstName": "Naruto",
+      "lastName": "Doe",
+      "phoneNumber": "808-123-4567",
+      "walletAddress": "ethereum address",
+      "imageURL": "/images/meteor-logo.png",
+      "privateKey": "private key",
+      "publicAddress": "public address",
+      "owner": "admin@foo.com"
     }
   ],
 
