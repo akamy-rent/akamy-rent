@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Header, Button } from 'semantic-ui-react';
 import { postTest } from '../../api/solc/connect2Compiler';
-import { deployContract, payRent, destroyContract, contractCheck } from '../../api/ethers/ethersFunctions';
+import { deployContract, destroyContract, contractCheck, payRentWrapper } from '../../api/ethers/ethersFunctions';
 
 let contracts = [];
 const deployedContracts = [];
@@ -17,7 +17,7 @@ class TestContract extends React.Component {
   }
 
   callContractButton() {
-    payRent(contracts[0]);
+    payRentWrapper(contracts[0]);
   }
 
   destroyContractButton() {

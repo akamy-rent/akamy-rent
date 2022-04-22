@@ -1,7 +1,10 @@
 import ethers from 'ethers';
 
-const nodeUrl = 'http://localhost:8545';
-const provider = new ethers.providers.JsonRpcProvider(nodeUrl);
+function loadProvider() {
+  const nodeUrl = 'http://localhost:8545';
+  const provider = new ethers.providers.JsonRpcProvider(nodeUrl);
+  return provider;
+}
 
 export async function deployContract(contract) {
   // contract variables
@@ -9,6 +12,7 @@ export async function deployContract(contract) {
   const abi = contract.abi;
   const bytecode = contract.bytecode;
   const homeownerAddress = contract.homeowner.address;
+  const provider = loadProvider();
 
   // building contract instance
   const signer = provider.getSigner(homeownerAddress);
@@ -25,16 +29,33 @@ export async function deployContract(contract) {
   wallet.sendTransaction(tx);
 }
 
-export async function payRent(contract) {
-  const tenants = contract.tenants;
-  const tenant = tenants.tenant1;
+function payRent(contract) {
+  const tenant = contract.tenants[0];
   const dollarToEth = (contract.rent / 3000);
   const rentEth = ethers.utils.parseEther(dollarToEth.toString());
+
+  // load provider
+  const provider = loadProvider();
+  //  tenent is new signer of next contract call
   const signer = provider.getSigner(tenant.address);
+  // create new contract instance
   const contractInstance = new ethers.Contract(contract.address, contract.abi, signer);
+  // call contract to pay rent
   contractInstance.payRent(contract.homeowner.address, { value: rentEth });
-  const contractBalance = await provider.getBalance(contract.address);
-  console.log(`eth in contract: ${ethers.utils.formatUnits(contractBalance)}`);
+}
+
+export async function payRentWrapper(contract) {
+  let intervalId = null;
+  let varCounter = 0;
+  const varName = function () {
+    if (varCounter <= 5) {
+      varCounter++;
+      payRent(contract);
+    } else {
+      clearInterval(intervalId);
+    }
+  };
+  intervalId = setInterval(varName, 1000);
 }
 
 export async function destroyContract(contract) {
@@ -43,11 +64,7 @@ export async function destroyContract(contract) {
 }
 
 export async function contractCheck(contract) {
+  const provider = loadProvider();
   const result = await provider.getCode(contract.address);
   console.log(result);
 }
-
-function myTimer(contract) {
-}
-
-setInterval(myTimer, 1000);
