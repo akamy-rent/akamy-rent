@@ -17,7 +17,7 @@ class Profile extends React.Component {
             <Grid.Column>
               <Menu text>
                 <Menu.Item as={NavLink} exact to="/editProfile" link color='red'>
-                    Edit Profile
+                      Edit Profile
                 </Menu.Item>
               </Menu>
             </Grid.Column>
