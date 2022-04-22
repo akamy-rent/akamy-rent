@@ -55,8 +55,8 @@ function determineTotalPayments(tPayPeriod) {
 
 function payRent(contract) {
   const tenant = contract.tenants[0];
-  // 1 eth to every $3000
-  const dollarToEth = (contract.rent / 3000);
+  // 1 eth to every $3000 * 12 monthly payments
+  const dollarToEth = (contract.rent / 3000) * 12;
   // every rent payment done every period
   const payments = determineTotalPayments(tenant.period);
   const ethPerPayment = dollarToEth / payments;
