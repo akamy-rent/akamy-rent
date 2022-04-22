@@ -1,11 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { SmartContracts } from '../../api/smartContract/SmartContract.js';
+import { Groups } from '../../api/group/Group.js';
 import { dashboard } from '../../api/dashboard/dashboard';
 import { Profiles } from '../../api/profile/Profile';
-// User-level publication.
-// If logged in, then publish documents owned by this user. Otherwise publish nothing.
 
+// User profiles
 Meteor.publish(Profiles.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
@@ -14,6 +14,14 @@ Meteor.publish(Profiles.userPublicationName, function () {
   return this.ready();
 });
 
+Meteor.publish(Profiles.adminPublicationName, function () {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+    return Profiles.collection.find();
+  }
+  return this.ready();
+});
+
+// Smart contracts
 Meteor.publish(SmartContracts.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
@@ -27,6 +35,30 @@ Meteor.publish(SmartContracts.userPublicationName, function () {
   return this.ready();
 });
 
+Meteor.publish(SmartContracts.adminPublicationName, function () {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+    return SmartContracts.collection.find();
+  }
+  return this.ready();
+});
+
+// Groups for messenger
+Meteor.publish(Groups.userPublicationName, function () {
+  if (this.userId) {
+    const username = Meteor.users.findOne(this.userId).username;
+    return Groups.collection.find({ members: username });
+  }
+  return this.ready();
+});
+
+Meteor.publish(Groups.adminPublicationName, function () {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+    return Groups.collection.find();
+  }
+  return this.ready();
+});
+
+// Dashboard
 Meteor.publish(dashboard.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
@@ -40,13 +72,6 @@ Meteor.publish(dashboard.userPublicationName, function () {
 Meteor.publish(dashboard.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return dashboard.collection.find();
-  }
-  return this.ready();
-});
-
-Meteor.publish(SmartContracts.adminPublicationName, function () {
-  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
-    return SmartContracts.collection.find();
   }
   return this.ready();
 });

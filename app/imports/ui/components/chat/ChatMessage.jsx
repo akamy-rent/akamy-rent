@@ -1,24 +1,20 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import { Grid, Segment } from 'semantic-ui-react';
 import { ChatMessageType } from './ChatTypes';
 
-/**
 function getMessageContent(content) {
   switch (content.type) {
-    case 'text':
-      return (
-        <p>content.text</p>
-      );
-    default:
-      return (
-        <p></p>
-      );
+  case 'text':
+    return content.text;
+  default:
+    return '';
   }
 }
- */
 
 export default function ChatMessage({ message }) {
-  const ownMessage = message.createdby === 'john@foo.com';
+  const currentUser = Meteor.user();
+  const ownMessage = message.createdby === currentUser.username;
   const backgroundColor = ownMessage ? 'blue' : 'grey';
   const floatedPosition = ownMessage ? 'right' : 'left';
 
@@ -30,12 +26,12 @@ export default function ChatMessage({ message }) {
             { message.createdby }
           </Grid.Column>
           <Grid.Column width={8} textAlign='right'>
-            { new Date(message.createdat).toLocaleString() }
+            { message.createdat.toLocaleString() }
           </Grid.Column>
         </Grid.Row>
       </Grid>
       <Segment inverted color={backgroundColor}>
-        { message.content.text }
+        { getMessageContent(message.content) }
       </Segment>
     </Segment>
   );
