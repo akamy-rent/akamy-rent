@@ -17,13 +17,13 @@ class ViewProfile extends React.Component {
   // Render the page once subscriptions have been received.
   renderPage() {
     return (
-        <Container>
-          <Header as="h2" textAlign="center">View Profile </Header>
-          {this.props.profiles.map((profile, index) => <Profile
-              key={index}
-              profile={profile}
-          />)}
-        </Container>
+      <Container>
+        <Header as="h2" textAlign="center">View Profile </Header>
+        {this.props.profiles.map((profile, index) => <Profile
+          key={index}
+          profile={profile}
+        />)}
+      </Container>
     );
   }
 }

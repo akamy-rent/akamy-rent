@@ -8,31 +8,31 @@ class Profile extends React.Component {
   render() {
     const usermember = this.props.profile;
     return (
-        <Grid centered>
-          <Grid.Row>
-            <Grid columns={2} verticalAlign='middle'>
-              <Grid.Column>
-                <Image size='small' src={usermember.imageURL} rounded/>
-              </Grid.Column>
-              <Grid.Column>
-                <Menu text>
-                  <Menu.Item as={NavLink} exact to="/editProfile" link color='red'>
+      <Grid centered>
+        <Grid.Row>
+          <Grid columns={2} verticalAlign='middle'>
+            <Grid.Column>
+              <Image size='small' src={usermember.imageURL} rounded/>
+            </Grid.Column>
+            <Grid.Column>
+              <Menu text>
+                <Menu.Item as={NavLink} exact to="/editProfile" link color='red'>
                     Edit Profile
-                  </Menu.Item>
-                </Menu>
-              </Grid.Column>
-            </Grid>
-          </Grid.Row>
-          <Grid.Row>
-            {usermember.firstName}
-          </Grid.Row>
-          <Grid.Row>
-            {usermember.lastName}
-          </Grid.Row>
-          <Grid.Row>
-            {usermember.walletAddress}
-          </Grid.Row>
-        </Grid>
+                </Menu.Item>
+              </Menu>
+            </Grid.Column>
+          </Grid>
+        </Grid.Row>
+        <Grid.Row>
+          {usermember.firstName}
+        </Grid.Row>
+        <Grid.Row>
+          {usermember.lastName}
+        </Grid.Row>
+        <Grid.Row>
+          {usermember.walletAddress}
+        </Grid.Row>
+      </Grid>
     );
   }
 }

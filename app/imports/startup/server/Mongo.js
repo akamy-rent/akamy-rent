@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { SmartContracts } from '../../api/smartContract/SmartContract.js';
-import { Profiles} from '../../api/profile/Profile';
+import { Profiles } from '../../api/profile/Profile';
 
 /* eslint-disable no-console */
 
