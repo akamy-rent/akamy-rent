@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Header, Button } from 'semantic-ui-react';
 import { postTest } from '../../api/solc/connect2Compiler';
-import { deployContract, destroyContract, contractCheck, payRentWrapper } from '../../api/ethers/ethersFunctions';
+import { deployContracts, contractCheck, payRentFunction } from '../../api/ethers/ethersFunctions';
 
 let contracts = [];
 const deployedContracts = [];
@@ -13,15 +13,11 @@ class TestContract extends React.Component {
   }
 
   deployButton() {
-    deployedContracts.push(deployContract(contracts[0]));
+    deployedContracts.push(deployContracts(contracts[0]));
   }
 
   callContractButton() {
-    payRentWrapper(contracts[0]);
-  }
-
-  destroyContractButton() {
-    destroyContract(contracts[0]);
+    payRentFunction(contracts[0]);
   }
 
   checkContract() {
@@ -36,13 +32,11 @@ class TestContract extends React.Component {
         <Button color={'red'} onClick={this.compileButton}>Compile Smart contract</Button>
         <Button color={'blue'} onClick={this.deployButton}>Deploy Smart contract</Button>
         <Button color={'green'} onClick={this.callContractButton}>Test Smart contract</Button>
-        <Button color={'orange'} onClick={this.destroyContractButton}>Destroy contract</Button>
         <Button color={'purple'} onClick={this.destroyContractButton}>Check Contract</Button>
       </Container>
     );
   }
 }
-
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default TestContract;
