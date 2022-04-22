@@ -13,19 +13,26 @@ class SmartContractCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      name: String,
-      email: String,
-      phoneNumber: String,
-      role: {
+      homeownerName: String,
+      homeownerEmail: String,
+      homeownerPhoneNumber: String,
+      tenetName: String,
+      tenetEmail: String,
+      tenetPhoneNumber: String,
+      tenetStance: {
         type: String,
-        allowedValues: ['Tenet', 'Homeowner'],
-        defaultValue: 'Tenet',
+        allowedValues: ['I do not agree to the terms and conditions', 'I agree to the terms and conditions', 'Select one'],
+        defaultValue: 'Select one',
       },
       unitAddress: String,
       monthlyRent: Number,
-      stance: {
+      status: {
         type: String,
-        allowedValues: ['I do not agree to the terms and conditions', 'I agree to the terms and conditions', ''],
+        allowedValues: ['Pending', 'Active', 'Terminated'],
+        defaultValue: 'Pending',
+      },
+      termsAndConditions: {
+        type: String,
         defaultValue: '',
       },
       owner: String,

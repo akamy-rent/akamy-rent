@@ -1,10 +1,12 @@
 {
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
-    { "email": "john@foo.com", "password": "changeme" }
+    { "email": "john@foo.com", "password": "changeme" },
+    { "email": "naruto@foo.com", "password": "changeme" },
+    { "email": "jane@foo.com", "password": "changeme" }
   ],
 
-  "defaultData": [
+  "defaultProfiles": [
     {
       "firstName": "John",
       "lastName": "Doe",
@@ -16,8 +18,18 @@
       "owner": "john@foo.com"
     },
     {
-      "firstName": "Mary",
+      "firstName": "Naruto",
       "lastName": "Uzumaki",
+      "phoneNumber": "808-123-4567",
+      "walletAddress": "ethereum address",
+      "imageURL": "/images/meteor-logo.png",
+      "privateKey": "private key",
+      "publicAddress": "public address",
+      "owner": "naruto@foo.com"
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Smith",
       "phoneNumber": "808-123-4567",
       "walletAddress": "ethereum address",
       "imageURL": "/images/meteor-logo.png",
@@ -26,8 +38,8 @@
       "owner": "jane@foo.com"
     },
     {
-      "firstName": "Naruto",
-      "lastName": "Doe",
+      "firstName": "Joe",
+      "lastName": "Donald",
       "phoneNumber": "808-123-4567",
       "walletAddress": "ethereum address",
       "imageURL": "/images/meteor-logo.png",
@@ -37,9 +49,15 @@
     }
   ],
 
+  "defaultSmartContract": [
+    { "homeownerName": "Naruto Uzumaki", "homeownerEmail": "naruto@foo.com", "homeownerPhoneNumber": "808-106-9999", "tenetName": "John Doe", "tenetEmail": "john@foo.com", "tenetPhoneNumber": "808-234-5678", "tenetStance": "Select one", "unitAddress": "123 Kapiolani Blvd Honolulu, HI 96826", "monthlyRent": 1000, "status": "Pending", "termsAndConditions": "Terms and conditions for smart contract with 1 tenet. Cost, frequency of payment, parties involved.", "owner": "naruto@foo.com"
+    }
+  ],
+
   "defaultDashboard": [
     { "activeContracts": 3, "totalIncome": 400, "totalExpenses": 200, "owner": "john@foo.com"}
   ],
+
   "monti": {
     "appId": "fJMZoBBNgtRAcEioF",
     "appSecret": "5a08f436-dd63-488e-9051-6dad0f4c50f1"

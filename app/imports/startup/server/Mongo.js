@@ -10,11 +10,11 @@ function addMember(data) {
   SmartContracts.collection.insert(data);
 }
 
-// Initialize the MembersCollection if empty.
+// Initialize the SmartContractsCollection if empty.
 if (SmartContracts.collection.find().count() === 0) {
-  if (Meteor.settings.defaultData) {
-    console.log('Creating default data.');
-    Meteor.settings.defaultData.map(data => addMember(data));
+  if (Meteor.settings.defaultSmartContract) {
+    console.log('Creating default smart contracts.');
+    Meteor.settings.defaultSmartContract.map(data => addMember(data));
   }
 }
 
@@ -23,10 +23,10 @@ function addProfile(data) {
   Profiles.collection.insert(data);
 }
 
-// Initialize the MembersCollection if empty.
+// Initialize the ProfilesCollection if empty.
 if (Profiles.collection.find().count() === 0) {
-  if (Meteor.settings.defaultData) {
-    console.log('Creating default data.');
-    Meteor.settings.defaultData.map(data => addProfile(data));
+  if (Meteor.settings.defaultProfiles) {
+    console.log('Creating default profiles.');
+    Meteor.settings.defaultProfiles.map(data => addProfile(data));
   }
 }

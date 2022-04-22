@@ -18,6 +18,7 @@ class ListSmartContractAdmin extends React.Component {
   renderPage() {
     return (
       <Container>
+        <br/>
         <Header as="h2" textAlign="center">List Smart Contracts (Homeowner)</Header>
         <Table celled>
           <Table.Header>
