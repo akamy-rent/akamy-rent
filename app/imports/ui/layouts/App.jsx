@@ -39,7 +39,7 @@ class App extends React.Component {
             <ProtectedRoute path="/add" component={AddSmartContract}/>
             <ProtectedRoute path="/edit/:_id" component={EditSmartContract}/>
             <ProtectedRoute path="/chat" component={Messenger}/>
-            <ProtectedRoute path="/editProfile/:_id" component={EditProfile}/>
+            <ProtectedRoute path="/editProfile" component={EditProfile}/>
             <ProtectedRoute path="/viewProfile" component={ViewProfile}/>
             <AdminProtectedRoute path="/admin" component={ListSmartContractAdmin}/>
             <Route component={NotFound}/>
