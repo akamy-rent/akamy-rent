@@ -17,7 +17,12 @@ Meteor.publish(Profiles.userPublicationName, function () {
 Meteor.publish(SmartContracts.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
-    return SmartContracts.collection.find({ owner: username });
+    return SmartContracts.collection.find({
+      $or: [
+        { owner: username },
+        { tenetEmail: username },
+      ],
+    });
   }
   return this.ready();
 });

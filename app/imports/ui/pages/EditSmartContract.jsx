@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Loader, Header, Segment } from 'semantic-ui-react';
 import swal from 'sweetalert';
-import { AutoForm, ErrorsField, NumField, SelectField, SubmitField, TextField } from 'uniforms-semantic';
+import {AutoForm, ErrorsField, LongTextField, NumField, SubmitField, TextField} from 'uniforms-semantic';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -15,8 +15,8 @@ class EditSmartContract extends React.Component {
 
   // On successful submit, insert the data.
   submit(data) {
-    const { name, email, phoneNumber, role, unitAddress, numberOfTenets, monthlyRent, stance, _id } = data;
-    SmartContracts.collection.update(_id, { $set: { name, email, phoneNumber, role, unitAddress, numberOfTenets, monthlyRent, stance } }, (error) => (error ?
+    const { homeownerName, homeownerEmail, homeownerPhoneNumber, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, unitAddress, monthlyRent, status, _id } = data;
+    SmartContracts.collection.update(_id, { $set: { homeownerName, homeownerEmail, homeownerPhoneNumber, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, unitAddress, monthlyRent, status } }, (error) => (error ?
       swal('Error', error.message, 'error') :
       swal('Success', 'Information updated successfully', 'success')));
   }
@@ -31,27 +31,23 @@ class EditSmartContract extends React.Component {
     return (
       <Grid container centered>
         <Grid.Column>
+          <br/>
           <Header as="h2" textAlign="center">Edit Smart Contract (Draft)</Header>
           <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
             <Segment>
               <TextField name='unitAddress'/>
               <NumField name='monthlyRent' decimal={true}/>
               <Segment>
-                <SelectField name='role' value='Homeowner'/>
-                <TextField name='name'/>
-                <TextField name='email'/>
-                <TextField name='phoneNumber'/>
+                <TextField name='homeownerName'/>
+                <TextField name='homeownerEmail'/>
+                <TextField name='homeownerPhoneNumber'/>
               </Segment>
               <Segment>
-                <SelectField name='role'/>
-                <TextField name='name'/>
-                <TextField name='email'/>
-                <TextField name='phoneNumber'/>
+                <TextField name='tenetName'/>
+                <TextField name='tenetEmail'/>
+                <TextField name='tenetPhoneNumber'/>
               </Segment>
-              <br/>
-              <p>Terms and conditions for smart contract with __ number of tenets. Cost, frequency of payment, parties
-                involved.</p>
-              <SelectField name='stance'/>
+              <LongTextField name='termsAndConditions'/>
               <SubmitField value='Save'/>
               <ErrorsField/>
             </Segment>

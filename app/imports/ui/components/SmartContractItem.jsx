@@ -8,9 +8,10 @@ class SmartContractItem extends React.Component {
   render() {
     return (
       <Table.Row>
-        <Table.Cell>{this.props.smartContract.name}</Table.Cell>
-        <Table.Cell>{this.props.smartContract.role}</Table.Cell>
-        <Table.Cell>{this.props.smartContract.stance}</Table.Cell>
+        <Table.Cell>{this.props.smartContract.unitAddress}</Table.Cell>
+        <Table.Cell>{this.props.smartContract.homeownerName}</Table.Cell>
+        <Table.Cell>{this.props.smartContract.tenetName}</Table.Cell>
+        <Table.Cell>{this.props.smartContract.tenetStance}</Table.Cell>
         <Table.Cell>
           <Link to={`/edit/${this.props.smartContract._id}`}>Edit</Link>
         </Table.Cell>
@@ -22,9 +23,10 @@ class SmartContractItem extends React.Component {
 // Require a document to be passed to this component.
 SmartContractItem.propTypes = {
   smartContract: PropTypes.shape({
-    name: PropTypes.string,
-    role: PropTypes.string,
-    stance: PropTypes.string,
+    unitAddress: PropTypes.string,
+    homeownerName: PropTypes.string,
+    tenetName: PropTypes.string,
+    tenetStance: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
 };
