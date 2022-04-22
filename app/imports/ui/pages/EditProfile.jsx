@@ -33,7 +33,7 @@ class EditProfile extends React.Component {
     return (
       <Grid container centered style={gridStyle}>
         <Grid.Row>
-          <Header> Edit Profile {Meteor.user().username} </Header>
+          <Header> Edit Profile </Header>
         </Grid.Row>
         <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={
           this.props.profiles[0]} >
