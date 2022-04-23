@@ -16,6 +16,10 @@ class SmartContractCollection {
       homeownerName: String,
       homeownerEmail: String,
       homeownerPhoneNumber: String,
+      homeownerSignature: {
+        type: String,
+        defaultValue: '',
+      },
       tenetName: String,
       tenetEmail: String,
       tenetPhoneNumber: String,
@@ -23,6 +27,10 @@ class SmartContractCollection {
         type: String,
         allowedValues: ['I do not agree to the terms and conditions', 'I agree to the terms and conditions', 'Select one'],
         defaultValue: 'Select one',
+      },
+      tenetSignature: {
+        type: String,
+        defaultValue: '',
       },
       unitAddress: String,
       monthlyRent: Number,

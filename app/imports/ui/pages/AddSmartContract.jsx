@@ -39,9 +39,9 @@ class AddSmartContract extends React.Component {
 
   // On submit, insert the data.
   submit(data, formRef) {
-    const { homeownerName, homeownerEmail, homeownerPhoneNumber, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, unitAddress, monthlyRent, termsAndConditions, status } = data;
+    const { homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, tenetSignature, unitAddress, monthlyRent, termsAndConditions, status } = data;
     const owner = Meteor.user().username;
-    SmartContracts.collection.insert({ homeownerName, homeownerEmail, homeownerPhoneNumber, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, unitAddress, monthlyRent, termsAndConditions, status, owner },
+    SmartContracts.collection.insert({ homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, tenetSignature, unitAddress, monthlyRent, termsAndConditions, status, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');

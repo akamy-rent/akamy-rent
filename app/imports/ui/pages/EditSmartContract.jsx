@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Loader, Header, Segment } from 'semantic-ui-react';
 import swal from 'sweetalert';
-import {AutoForm, ErrorsField, LongTextField, NumField, SubmitField, TextField} from 'uniforms-semantic';
+import { AutoForm, ErrorsField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-semantic';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -15,8 +15,10 @@ class EditSmartContract extends React.Component {
 
   // On successful submit, insert the data.
   submit(data) {
-    const { homeownerName, homeownerEmail, homeownerPhoneNumber, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, unitAddress, monthlyRent, status, _id } = data;
-    SmartContracts.collection.update(_id, { $set: { homeownerName, homeownerEmail, homeownerPhoneNumber, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, unitAddress, monthlyRent, status } }, (error) => (error ?
+    const { homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, tenetSignature, unitAddress, monthlyRent, status, _id } = data;
+    SmartContracts.collection.update(_id, { $set: { homeownerName, homeownerEmail, homeownerPhoneNumber,
+      homeownerSignature, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, tenetSignature, unitAddress,
+      monthlyRent, status } }, (error) => (error ?
       swal('Error', error.message, 'error') :
       swal('Success', 'Information updated successfully', 'success')));
   }

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Table, Header, Loader } from 'semantic-ui-react';
+import { Header, Loader, Grid } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import SmartContractItem from '../components/SmartContractItem';
+import SignSmartContractItem from '../components/SignSmartContractItem';
 import { SmartContracts } from '../../api/smartContract/SmartContract';
 
 /** Renders a table containing all of the Stuff documents. Use <SmartContractItem> to render each row. */
-class ListSmartContract extends React.Component {
+class SignSmartContract extends React.Component {
 
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
   render() {
@@ -17,33 +17,17 @@ class ListSmartContract extends React.Component {
   // Render the page once subscriptions have been received.
   renderPage() {
     return (
-      <Container>
+      <Grid container centered>
         <br/>
-        <Header as="h2" textAlign="center">List Smart Contracts</Header>
-        <Table celled>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Unit Address</Table.HeaderCell>
-              <Table.HeaderCell>Homeowner</Table.HeaderCell>
-              <Table.HeaderCell>Tenet</Table.HeaderCell>
-              <Table.HeaderCell>Tenet Stance</Table.HeaderCell>
-              <Table.HeaderCell>Tenet Signature</Table.HeaderCell>
-              <Table.HeaderCell>Homeowner Signature</Table.HeaderCell>
-              <Table.HeaderCell>Edit</Table.HeaderCell>
-              <Table.HeaderCell>Sign</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {this.props.smartContracts.map((smartContract) => <SmartContractItem key={smartContract._id} smartContract={smartContract} />)}
-          </Table.Body>
-        </Table>
-      </Container>
+        <Header as="h2" textAlign="center">View and Deploy Smart Contract</Header>
+        {this.props.smartContracts.map((smartContract) => <SignSmartContractItem key={smartContract._id} smartContract={smartContract} />)}
+      </Grid>
     );
   }
 }
 
 // Require an array of SmartContract documents in the props.
-ListSmartContract.propTypes = {
+SignSmartContract.propTypes = {
   smartContracts: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
@@ -60,4 +44,4 @@ export default withTracker(() => {
     smartContracts,
     ready,
   };
-})(ListSmartContract);
+})(SignSmartContract);
