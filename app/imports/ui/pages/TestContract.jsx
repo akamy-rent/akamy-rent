@@ -1,9 +1,10 @@
 import React from 'react';
 import { Container, Header, Button } from 'semantic-ui-react';
 import { postTest } from '../../api/solc/connect2Compiler';
-import { deployContracts, contractCheck, payRentFunction } from '../../api/ethers/ethersFunctions';
+import { deployContract, payRentScheduler } from '../../api/ethers/ethersFunctions';
+import { showTransactions } from '../../api/utilities/transactionUtils';
 
-let contracts = [];
+const contracts = [];
 const deployedContracts = [];
 
 /** Test page to compile a smart contract with the python script and */
@@ -13,16 +14,15 @@ class TestContract extends React.Component {
   }
 
   deployButton() {
-    deployedContracts.push(deployContracts(contracts[0]));
+    deployedContracts.push(deployContract(contracts[0]));
   }
 
   callContractButton() {
-    payRentFunction(contracts[0]);
+    payRentScheduler(contracts[0]);
   }
 
-  checkContract() {
-    contractCheck();
-    contracts = [];
+  showTransactions() {
+    showTransactions(contracts[0]);
   }
 
   render() {
@@ -32,7 +32,7 @@ class TestContract extends React.Component {
         <Button color={'red'} onClick={this.compileButton}>Compile Smart contract</Button>
         <Button color={'blue'} onClick={this.deployButton}>Deploy Smart contract</Button>
         <Button color={'green'} onClick={this.callContractButton}>Test Smart contract</Button>
-        <Button color={'purple'} onClick={this.destroyContractButton}>Check Contract</Button>
+        <Button color={'orange'} onClick={this.showTransactions}>Show transaction log</Button>
       </Container>
     );
   }

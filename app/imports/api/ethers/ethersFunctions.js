@@ -1,5 +1,6 @@
 import ethers from 'ethers';
 import moment from 'moment';
+import { determineTotalPayments, determineNextPayment, saveTransactionForRecord } from '../utilities/transactionUtils';
 
 function loadProvider() {
   const nodeUrl = 'http://localhost:8545';
@@ -7,7 +8,7 @@ function loadProvider() {
   return provider;
 }
 
-export async function deployContracts(contract) {
+export async function deployContract(contract) {
   console.log('deploying contract');
   // contract variables
   const deployedContract = contract;
@@ -26,6 +27,12 @@ export async function deployContracts(contract) {
   const tx = { to: contractInstance.address, value: startEth };
   const wallet = new ethers.Wallet(contract.homeowner.privateKey, provider);
 
+  // Transaction log string
+  deployedContract.transactionLog = [];
+  const currentDate = moment();
+  const deploymentString = `Smart contract deployed on ${contractInstance.address}`;
+  saveTransactionForRecord(deployedContract.transactionLog, currentDate, deploymentString);
+
   // need to give contract some money to send transaction
   wallet.signTransaction(tx);
   wallet.sendTransaction(tx);
@@ -33,34 +40,24 @@ export async function deployContracts(contract) {
   console.log(`Contract found at ${contractInstance.address}`);
 }
 
-function determineTotalPayments(tPayPeriod) {
-  const now = moment();
-  let totalPayments = 0;
-  // update next pay period
-  switch (tPayPeriod) {
-  case 'months':
-    totalPayments = moment(now).diff(moment(now).add('1', 'year'), 'month');
-    break;
-  case 'weeks':
-    totalPayments = moment(now).diff(moment(now).add('1', 'year'), 'week');
-    break;
-  case 'seconds':
-    totalPayments = 10;
-    break;
-  default:
-    console.log(`${tPayPeriod} is not a proper response`);
-  }
-  return totalPayments;
-}
-
-function payRent(contract) {
+function payRent(contract, currentD) {
+  // initialize variables
   const tenant = contract.tenants[0];
+  const tenantAddress = tenant.address;
+  const contractAddress = contract.address;
+  const homeownerAddress = contract.homeowner.address;
+
   // 1 eth to every $3000 * 12 monthly payments
   const dollarToEth = (contract.rent / 3000) * 12;
   // every rent payment done every period
   const payments = determineTotalPayments(tenant.period);
   const ethPerPayment = dollarToEth / payments;
+  // Ether per period
   const rentEth = ethers.utils.parseEther(ethPerPayment.toString());
+
+  // strings for logs and time format
+  const tenantToContract = `Tenant address: ${tenantAddress} paid ${rentEth} wei to contract at: ${contractAddress}`;
+  const contractToHomeowner = `Rent paid contract at ${contractAddress} paid ${rentEth} wei to Homeowner: ${homeownerAddress}`;
 
   // load provider
   const provider = loadProvider();
@@ -68,8 +65,10 @@ function payRent(contract) {
   const signer = provider.getSigner(tenant.address);
   // create new contract instance
   const contractInstance = new ethers.Contract(contract.address, contract.abi, signer);
+  saveTransactionForRecord(contract.transactionLog, currentD, tenantToContract);
   // call contract to pay rent
   contractInstance.payRent(contract.homeowner.address, { value: rentEth });
+  saveTransactionForRecord(contract.transactionLog, currentD, contractToHomeowner);
 }
 
 export async function destroyContract(contract) {
@@ -77,50 +76,45 @@ export async function destroyContract(contract) {
   contractInstance.close();
 }
 
-function determineNextPayment(tPayPeriod, currentD) {
-  let nextPaymentDate = null;
-  // update next pay period
-  switch (tPayPeriod) {
-  case 'months':
-    nextPaymentDate = moment(currentD).add('1', 'month');
-    break;
-  case 'weeks':
-    nextPaymentDate = moment(currentD).add('1', 'week');
-    break;
-  case 'seconds':
-    nextPaymentDate = moment(currentD).add('1', 'seconds');
-    break;
-  default:
-    console.log(`${tPayPeriod} is not a proper response`);
-  }
-  return nextPaymentDate;
-}
-
-export async function payRentFunction(contract) {
+export async function payRentScheduler(contract) {
   // Initialize variables
   const dateDeployed = moment();
   let nextPaymentDate = null;
   let currentDate = dateDeployed;
+  const tenant = contract.tenants[0];
+  const tenantPayPeriod = tenant.period;
+  let finalPaymentDate = null;
+  let counter = 1;
+  const destroyString = `Contract at ${contract.address} destroyed`;
 
-  const tenantPayPeriod = contract.tenants[0].period;
-  const finalPaymentDate = moment(dateDeployed).add('1', 'year');
+  finalPaymentDate = moment(dateDeployed).add('1', 'year');
+
+  // used for debugging
+  if (tenantPayPeriod === 'seconds') {
+    finalPaymentDate = moment(dateDeployed).add('10', 'seconds');
+  }
 
   // interval function
   const paymentInterval = function () {
+
     currentDate = nextPaymentDate;
     if (moment(currentDate).isBefore(moment(finalPaymentDate))) {
       nextPaymentDate = determineNextPayment(tenantPayPeriod, currentDate);
+      counter++;
       // pay the rent
+      console.log(`Transaction ${counter}`);
       payRent(contract);
       setTimeout(paymentInterval, moment(nextPaymentDate).diff(currentDate));
     } else {
       // final payment, destroy the contract
-      payRent(contract);
+      saveTransactionForRecord(contract.transactionLog, moment(currentDate).format(), destroyString);
       destroyContract(contract);
     }
   };
 
   // run the recursive timeout
+  payRent(contract, currentDate);
+  console.log(`Transaction ${counter}`);
   nextPaymentDate = determineNextPayment(tenantPayPeriod, currentDate);
   setTimeout(paymentInterval, moment(nextPaymentDate).diff(moment(currentDate)));
 }

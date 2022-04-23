@@ -2,10 +2,12 @@ import axios from 'axios';
 
 const agreement = {
   rent: 1500,
-  homeowner: { address: '0xefA52122A3b71Ca633A0d71762D65CBc3823e9f7',
-    privateKey: '8ae558f157a45bfcf0a99fa16cade7f92ca622d7206e4cb53f14774eb40c255c' },
-  tenants: [{ address: '0xFffFF590B16b5C1f569C7A63Cde274905A37ee67',
-    privateKey: 'a25f1099569dd7c2b973669a63834894b9718e09b74647e45f2352dbec7d3d39',
+  homeowner: { name: 'Bill',
+    address: '0x3344587E78161B9DfC44a893bC46657884ADd2B8',
+    privateKey: '435ec668288cc794b81ee9ee173317fa1c3531020811bbe39066e8c2e2099574' },
+  tenants: [{ name: 'Bob',
+    address: '0xCC1625e061aCeF77aE75cFeC46B92a52ae777652',
+    privateKey: '2e12c3399bfd2b9cb93e787bc9d729e85738dbdf21a3ff5a9bee14419b5a3ce9',
     period: 'seconds',
   }],
 };
