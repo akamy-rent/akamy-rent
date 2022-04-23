@@ -1,11 +1,6 @@
 import PropTypes from 'prop-types';
 
 /** Reusable chat prop type definitions */
-export const ChatGroupType = PropTypes.shape({
-  groupname: PropTypes.string,
-  createdat: PropTypes.string,
-});
-
 export const MessageTextType = PropTypes.shape({
   type: PropTypes.oneOf(['text']),
   text: PropTypes.string,
@@ -20,11 +15,16 @@ export const MessageFileType = PropTypes.shape({
 });
 
 export const ChatMessageType = PropTypes.shape({
-  groupname: PropTypes.string,
-  createdat: PropTypes.string,
+  createdat: PropTypes.instanceOf(Date),
   createdby: PropTypes.string,
   content: PropTypes.oneOfType([
     MessageTextType,
     MessageFileType,
-  ]),
+  ]).isRequired,
+});
+
+export const ChatGroupType = PropTypes.shape({
+  name: PropTypes.string,
+  members: PropTypes.arrayOf(String).isRequired,
+  messages: PropTypes.arrayOf(ChatMessageType).isRequired,
 });
