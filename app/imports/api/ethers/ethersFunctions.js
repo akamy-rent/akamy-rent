@@ -116,7 +116,11 @@ export async function payRentScheduler(contract) {
   payRent(contract, currentDate);
   console.log(`Transaction ${counter}`);
   nextPaymentDate = determineNextPayment(tenantPayPeriod, currentDate);
-  setTimeout(paymentInterval, moment(nextPaymentDate).diff(moment(currentDate)));
+  if (nextPaymentDate === null) {
+    console.log('error: nextPaymentDate not set, rent not paid');
+  } else {
+    setTimeout(paymentInterval, moment(nextPaymentDate).diff(moment(currentDate)));
+  }
 }
 
 export async function contractCheck(contract) {
