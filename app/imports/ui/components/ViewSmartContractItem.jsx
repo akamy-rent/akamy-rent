@@ -54,7 +54,7 @@ ViewSmartContractItem.propTypes = {
     tenetPhoneNumber: PropTypes.string,
     tenetStance: PropTypes.string,
     tenetEmail: PropTypes.string,
-    monthlyRent: PropTypes.string,
+    monthlyRent: PropTypes.number,
     termsAndConditions: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,

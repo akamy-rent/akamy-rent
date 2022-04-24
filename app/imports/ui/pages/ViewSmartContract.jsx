@@ -22,7 +22,7 @@ class ViewSmartContract extends React.Component {
           <Header as="h2" textAlign="center">View Smart Contract</Header>
           <br/>
           <br/>
-          {this.props.smartContracts.map((smartContract) => <ViewSmartContractItem key={smartContract._id} smartContract={smartContract} />)}
+          <ViewSmartContractItem key={this.props.smartContract._id} smartContract={this.props.smartContract} />
           <br/>
           <br/>
           <br/>
@@ -36,20 +36,22 @@ class ViewSmartContract extends React.Component {
 
 // Require the presence of a SmartContract document in the props object. Uniforms adds 'model' to the props, which we use.
 ViewSmartContract.propTypes = {
-  smartContracts: PropTypes.array.isRequired,
+  smartContract: PropTypes.object,
   ready: PropTypes.bool.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-export default withTracker(() => {
+export default withTracker(({ match }) => {
   // Get access to SmartContract documents.
+  const contractId = match.params._id;
+  console.log(contractId);
   const subscription = Meteor.subscribe(SmartContracts.userPublicationName);
   // Determine if the subscription is ready
   const ready = subscription.ready();
   // Get the SmartContract documents
-  const smartContracts = SmartContracts.collection.find({}).fetch();
+  const smartContract = SmartContracts.collection.findOne({ _id: contractId });
   return {
-    smartContracts,
+    smartContract,
     ready,
   };
 })(ViewSmartContract);
