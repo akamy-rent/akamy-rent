@@ -22,7 +22,6 @@ const contractSchema = new SimpleSchema({
   },
   unitAddress: String,
   monthlyRent: Number,
-  status: String,
   termsAndConditions: {
     type: String,
     defaultValue: '',
@@ -39,8 +38,9 @@ class AddSmartContract extends React.Component {
 
   // On submit, insert the data.
   submit(data, formRef) {
-    const { homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, tenetSignature, unitAddress, monthlyRent, termsAndConditions, status } = data;
+    const { homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, tenetSignature, unitAddress, monthlyRent, termsAndConditions } = data;
     const owner = Meteor.user().username;
+    const status = 'Pending';
     SmartContracts.collection.insert({ homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, tenetSignature, unitAddress, monthlyRent, termsAndConditions, status, owner },
       (error) => {
         if (error) {
