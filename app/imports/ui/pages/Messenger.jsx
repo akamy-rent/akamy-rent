@@ -65,7 +65,7 @@ export default function Messenger() {
     /** ToDo: Determine App Layout to force messenger to fill 100% of
      * screen between top navbar and footer.
      */
-    <Grid stackable padded >
+    <Grid id="messenger-page" stackable padded >
       <Grid.Row>
         <Grid.Column width={4} >
           <ChatFeed setGroupFn={handleSetGroup} groups={groups} />

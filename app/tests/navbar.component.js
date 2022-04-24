@@ -36,6 +36,12 @@ class NavBar {
     await testController.click('#login-dropdown');
     await testController.click('#login-dropdown-sign-up');
   }
+
+  /** Expect the user is logged in and then to click on messenger. */
+  async gotoMessengerPage(testController) {
+    await testController.expect(Selector('#navbar-current-user').exists).ok();
+    await testController.click('#navbar-messenger');
+  }
 }
 
 export const navBar = new NavBar();
