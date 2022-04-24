@@ -7,7 +7,7 @@ class Landing extends React.Component {
     const gridStyle = { height: '200px', fontSize: '50px', fontFamily: 'fantasy', paddingTop: '10%', color: 'white' };
     const menuStyle = { marginBottom: '50px' };
     return (
-      <div className='landingBG' style={menuStyle}>
+      <div id='landing-page' className='landingBG' style={menuStyle}>
         <div style={gridStyle}>
           <Grid centered container>
             AkaMy-Rent
