@@ -1,16 +1,10 @@
 import React from 'react';
-import { Grid, Loader, Header, Segment } from 'semantic-ui-react';
-import swal from 'sweetalert';
-import { AutoForm, ErrorsField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-semantic';
+import { Grid, Loader, Header } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { SmartContracts } from '../../api/smartContract/SmartContract';
-import SmartContractItem from '../components/SmartContractItem';
 import ViewSmartContractItem from '../components/ViewSmartContractItem';
-
-const bridge = new SimpleSchema2Bridge(SmartContracts.schema);
 
 /** Renders the Page for editing a single document. */
 class ViewSmartContract extends React.Component {
@@ -33,7 +27,6 @@ class ViewSmartContract extends React.Component {
           <br/>
           <br/>
           <br/>
-
         </Grid.Column>
       </Grid>
 

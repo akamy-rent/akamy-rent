@@ -3,7 +3,6 @@ import { Button, Container, Grid, Header, Icon, Table } from 'semantic-ui-react'
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-import { dashboard } from '../../api/dashboard/dashboard';
 import { NavLink } from 'react-router-dom';
 import SmartContractItem from '../components/SmartContractItem';
 import { SmartContracts } from '../../api/smartContract/SmartContract';
