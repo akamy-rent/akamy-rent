@@ -4,6 +4,9 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { dashboard } from '../../api/dashboard/dashboard';
+import { NavLink } from 'react-router-dom';
+import SmartContractItem from '../components/SmartContractItem';
+import { SmartContracts } from '../../api/smartContract/SmartContract';
 
 /** A simple static component to render some text for the landing page. */
 class ListDashboard extends React.Component {
@@ -46,39 +49,16 @@ class ListDashboard extends React.Component {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell width={3}>Address</Table.HeaderCell>
-              <Table.HeaderCell width={3}>Role in Contract</Table.HeaderCell>
-              <Table.HeaderCell width={2}>Created</Table.HeaderCell>
-              <Table.HeaderCell width={2}>Rate</Table.HeaderCell>
-              <Table.HeaderCell width={2}>Active</Table.HeaderCell>
+              <Table.HeaderCell width={3}>Homeowner</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Tenet</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Status</Table.HeaderCell>
               <Table.HeaderCell width={2}>View</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Edit</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
           <Table.Body>
-            <Table.Row>
-              <Table.Cell>Address</Table.Cell>
-              <Table.Cell>Homeowner</Table.Cell>
-              <Table.Cell>Created</Table.Cell>
-              <Table.Cell>Rate</Table.Cell>
-              <Table.Cell>Active</Table.Cell>
-              <Table.Cell>View</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>Address</Table.Cell>
-              <Table.Cell>Tenet</Table.Cell>
-              <Table.Cell>Created</Table.Cell>
-              <Table.Cell>Rate</Table.Cell>
-              <Table.Cell>Pending</Table.Cell>
-              <Table.Cell>View</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>Address</Table.Cell>
-              <Table.Cell>Homeowner</Table.Cell>
-              <Table.Cell>Created</Table.Cell>
-              <Table.Cell>Rate</Table.Cell>
-              <Table.Cell>Pending</Table.Cell>
-              <Table.Cell>View</Table.Cell>
-            </Table.Row>
+            {this.props.smartContracts.map((smartContract) => <SmartContractItem key={smartContract._id} smartContract={smartContract} />)}
           </Table.Body>
         </Table>
         <br></br>
@@ -93,17 +73,17 @@ class ListDashboard extends React.Component {
           <Grid.Row columns={3}>
             <Grid.Column>
               <br></br>
-              <Button size="massive" color="black"><Icon name='file outline'></Icon>Create Contracts</Button>
+              <Button as={NavLink} to="/add" size="massive" color="black"><Icon name='file outline'></Icon>Create Contracts</Button>
             </Grid.Column>
 
             <Grid.Column>
               <br></br>
-              <Button size="massive" color="black"><Icon name='envelope open outline'></Icon> Messenger</Button>
+              <Button as={NavLink} to="/chat" size="massive" color="black"><Icon name='envelope open outline'></Icon> Messenger</Button>
             </Grid.Column>
 
             <Grid.Column>
               <br></br>
-              <Button size="massive" color="black"><Icon name='user circle'></Icon>My Profile</Button>
+              <Button as={NavLink} to="/viewProfile" size="massive" color="black"><Icon name='user circle'></Icon>My Profile</Button>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -127,16 +107,19 @@ class ListDashboard extends React.Component {
 }
 
 ListDashboard.propTypes = {
-  dashboard: PropTypes.array.isRequired,
+  smartContracts: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
-  // Get access to Stuff documents.
-  const subscription = Meteor.subscribe(dashboard.userPublicationName);
-
+  // Get access to SmartContract documents.
+  const subscription = Meteor.subscribe(SmartContracts.userPublicationName);
+  // Determine if the subscription is ready
+  const ready = subscription.ready();
+  // Get the SmartContract documents
+  const smartContracts = SmartContracts.collection.find({}).fetch();
   return {
-    dashboard: dashboard.collection.find({}).fetch(),
-    ready: subscription.ready(),
+    smartContracts,
+    ready,
   };
 })(ListDashboard);
