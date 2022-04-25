@@ -5,20 +5,27 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
-import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-semantic';
+import { AutoForm, ErrorsField, SelectField, SubmitField, TextField } from 'uniforms-semantic';
 import SimpleSchema from 'simpl-schema';
 import { SmartContracts } from '../../api/smartContract/SmartContract';
 import SignSmartContractItem from '../components/SignSmartContractItem';
-// import SmartContractItem from '../components/SmartContractItem';
 
-const contractSchema = new SimpleSchema({
+const contractSchemaSignature = new SimpleSchema({
   signature: String,
 });
 
-const bridge = new SimpleSchema2Bridge(contractSchema);
+const contractSchemaTenetStance = new SimpleSchema({
+  tenetStance: {
+    type: String,
+    allowedValues: ['Unsigned', 'Agreement'],
+    defaultValue: 'Unsigned',
+  },
+});
+
+const bridgeSignature = new SimpleSchema2Bridge(contractSchemaSignature);
+const bridgeTenetStance = new SimpleSchema2Bridge(contractSchemaTenetStance);
 
 const isTenant = (contract, username) => contract.tenetEmail === username;
-
 const isHomeowner = (contract, username) => contract.homeownerEmail === username;
 
 const missingSignature = (contract, username) => (isTenant(contract, username) && contract.tenetSignature === '') || (
@@ -29,6 +36,19 @@ class SignSmartContract extends React.Component {
   // On successful submit, insert the data.
 
   submit(data) {
+    const { tenetEmail, tenetStance, _id } = data;
+    const username = this.props.user.username;
+
+    if (username === tenetEmail) {
+      SmartContracts.collection.update(_id, { $set: { tenetStance } }, (error) => (error ?
+        swal('Error', error.message, 'error') :
+        swal('Success', 'Information updated successfully', 'success')));
+    } else {
+      swal('Error', 'Tenet must fill out this field', 'error');
+    }
+  }
+
+  submitSignature(data) {
     const { signature, _id, homeownerEmail, homeownerName, tenetEmail, tenetName } = data;
     const username = this.props.user.username;
 
@@ -59,9 +79,16 @@ class SignSmartContract extends React.Component {
         { console.log(this.props.smartContract) }
         <Header as="h2" textAlign="center">View and Deploy Smart Contract</Header>
         <SignSmartContractItem key={this.props.smartContract._id} smartContract={this.props.smartContract} />
+        <Segment>
+          <AutoForm schema={bridgeTenetStance} onSubmit={data => this.submit(data)} model={this.props.smartContract}>
+            <SelectField name='tenetStance'/>
+            <SubmitField value='Save'/>
+            <ErrorsField/>
+          </AutoForm>
+        </Segment>
         {missingSignature(this.props.smartContract, this.props.user.username) &&
               <Segment>
-                <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.smartContract}>
+                <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data)} model={this.props.smartContract}>
                   <TextField name='signature'/>
                   <SubmitField value='Save'/>
                   <ErrorsField/>

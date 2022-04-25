@@ -25,8 +25,8 @@ class SmartContractCollection {
       tenetPhoneNumber: String,
       tenetStance: {
         type: String,
-        allowedValues: ['I do not agree to the terms and conditions', 'I agree to the terms and conditions', 'Select one'],
-        defaultValue: 'Select one',
+        allowedValues: ['Unsigned', 'Agreement'],
+        defaultValue: 'Unsigned',
       },
       tenetSignature: {
         type: String,

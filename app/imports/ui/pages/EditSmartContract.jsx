@@ -6,21 +6,42 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import SimpleSchema from 'simpl-schema';
 import { SmartContracts } from '../../api/smartContract/SmartContract';
 
-const bridge = new SimpleSchema2Bridge(SmartContracts.schema);
+const contractSchema = new SimpleSchema({
+  homeownerName: String,
+  homeownerEmail: String,
+  homeownerPhoneNumber: String,
+  tenetName: String,
+  tenetEmail: String,
+  tenetPhoneNumber: String,
+  unitAddress: String,
+  monthlyRent: Number,
+  termsAndConditions: {
+    type: String,
+    defaultValue: '',
+  },
+});
+
+const bridge = new SimpleSchema2Bridge(contractSchema);
 
 /** Renders the Page for editing a single document. */
 class EditSmartContract extends React.Component {
 
   // On successful submit, insert the data.
   submit(data) {
-    const { homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, tenetSignature, unitAddress, monthlyRent, status, _id } = data;
-    SmartContracts.collection.update(_id, { $set: { homeownerName, homeownerEmail, homeownerPhoneNumber,
-      homeownerSignature, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, tenetSignature, unitAddress,
-      monthlyRent, status } }, (error) => (error ?
-      swal('Error', error.message, 'error') :
-      swal('Success', 'Information updated successfully', 'success')));
+    const { homeownerName, homeownerEmail, homeownerPhoneNumber, tenetName, tenetEmail, tenetPhoneNumber, unitAddress, monthlyRent, status, _id } = data;
+    const username = this.props.user.username;
+
+    if (username === homeownerEmail) {
+      SmartContracts.collection.update(_id, { $set: { homeownerName, homeownerEmail, homeownerPhoneNumber, tenetName, tenetEmail, tenetPhoneNumber, unitAddress,
+        monthlyRent, status } }, (error) => (error ?
+        swal('Error', error.message, 'error') :
+        swal('Success', 'Information updated successfully', 'success')));
+    } else {
+      swal('Error', 'Only homeowner can edit these fields', 'error');
+    }
   }
 
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
@@ -63,6 +84,7 @@ class EditSmartContract extends React.Component {
 // Require the presence of a SmartContract document in the props object. Uniforms adds 'model' to the props, which we use.
 EditSmartContract.propTypes = {
   doc: PropTypes.object,
+  user: PropTypes.object,
   model: PropTypes.object,
   ready: PropTypes.bool.isRequired,
 };
@@ -75,10 +97,12 @@ export default withTracker(({ match }) => {
   const subscription = Meteor.subscribe(SmartContracts.userPublicationName);
   // Determine if the subscription is ready
   const ready = subscription.ready();
+  const user = Meteor.user();
   // Get the document
   const doc = SmartContracts.collection.findOne(documentId);
   return {
     doc,
+    user,
     ready,
   };
 })(EditSmartContract);
