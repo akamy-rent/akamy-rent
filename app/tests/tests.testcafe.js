@@ -4,6 +4,7 @@ import { signoutPage } from './signout.page';
 import { messengerPage } from './messenger.page';
 import { navBar } from './navbar.component';
 import { addSmartContractPage, addContractTest } from './add.smart.contract.page';
+import { testSmartContractPage } from './test.smart.contract.page';
 
 /* global fixture:false, test:false */
 
@@ -66,6 +67,6 @@ test('Test that Messenger page shows up and works', async (testController) => {
 });
 
 // eslint-disable-next-line no-unused-vars
-test('Test that contract testing page shows up', async (testController) => {
-  // ToDo: Write this @Hoku and remove the comment with eslint-disable-next-line
+test('Test that the test page exists with the 4 buttons', async (testController) => {
+  await testSmartContractPage.smartContractTesting(testController);
 });
