@@ -24,7 +24,7 @@ class AddSmartContractPage {
     await testController.expect(this.pageSelector.exists).ok();
   }
 
-  /** Signs up a new user, then checks to see that they are logged in by checking the navbar. */
+  /** Navigate to the add smart contract page via the Navbar, fill in the page, click save. */
   async addSmartContract(testController, username, add) {
     await navBar.isLoggedIn(testController, username);
     await testController.typeText('#unit-address', add.address);

@@ -27,12 +27,12 @@ class TestContract extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container id={'test-contract-page'}>
         <Header as="h2" textAlign="center">Contract Tester</Header>
-        <Button color={'red'} onClick={this.compileButton}>Compile Smart contract</Button>
-        <Button color={'blue'} onClick={this.deployButton}>Deploy Smart contract</Button>
-        <Button color={'green'} onClick={this.callContractButton}>Test Smart contract</Button>
-        <Button color={'orange'} onClick={this.showTransactions}>Show transaction log</Button>
+        <Button id={'compile'} color={'red'} onClick={this.compileButton}>Compile Smart contract</Button>
+        <Button id={'deploy'} color={'blue'} onClick={this.deployButton}>Deploy Smart contract</Button>
+        <Button id={'test'} color={'green'} onClick={this.callContractButton}>Test Smart contract</Button>
+        <Button id={'show-transactions'} color={'orange'} onClick={this.showTransactions}>Show transaction log</Button>
       </Container>
     );
   }
