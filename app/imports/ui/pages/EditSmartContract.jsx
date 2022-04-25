@@ -13,9 +13,9 @@ const contractSchema = new SimpleSchema({
   homeownerName: String,
   homeownerEmail: String,
   homeownerPhoneNumber: String,
-  tenetName: String,
-  tenetEmail: String,
-  tenetPhoneNumber: String,
+  tenantName: String,
+  tenantEmail: String,
+  tenantPhoneNumber: String,
   unitAddress: String,
   monthlyRent: Number,
   termsAndConditions: {
@@ -31,11 +31,11 @@ class EditSmartContract extends React.Component {
 
   // On successful submit, insert the data.
   submit(data) {
-    const { homeownerName, homeownerEmail, homeownerPhoneNumber, tenetName, tenetEmail, tenetPhoneNumber, unitAddress, monthlyRent, status, _id } = data;
+    const { homeownerName, homeownerEmail, homeownerPhoneNumber, tenantName, tenantEmail, tenantPhoneNumber, unitAddress, monthlyRent, status, _id } = data;
     const username = this.props.user.username;
 
     if (username === homeownerEmail) {
-      SmartContracts.collection.update(_id, { $set: { homeownerName, homeownerEmail, homeownerPhoneNumber, tenetName, tenetEmail, tenetPhoneNumber, unitAddress,
+      SmartContracts.collection.update(_id, { $set: { homeownerName, homeownerEmail, homeownerPhoneNumber, tenantName, tenantEmail, tenantPhoneNumber, unitAddress,
         monthlyRent, status } }, (error) => (error ?
         swal('Error', error.message, 'error') :
         swal('Success', 'Information updated successfully', 'success')));
@@ -66,9 +66,9 @@ class EditSmartContract extends React.Component {
                 <TextField name='homeownerPhoneNumber'/>
               </Segment>
               <Segment>
-                <TextField name='tenetName'/>
-                <TextField name='tenetEmail'/>
-                <TextField name='tenetPhoneNumber'/>
+                <TextField name='tenantName'/>
+                <TextField name='tenantEmail'/>
+                <TextField name='tenantPhoneNumber'/>
               </Segment>
               <LongTextField name='termsAndConditions'/>
               <SubmitField value='Save'/>

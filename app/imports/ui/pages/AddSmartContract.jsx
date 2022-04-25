@@ -12,9 +12,9 @@ const contractSchema = new SimpleSchema({
   homeownerName: String,
   homeownerEmail: String,
   homeownerPhoneNumber: String,
-  tenetName: String,
-  tenetEmail: String,
-  tenetPhoneNumber: String,
+  tenantName: String,
+  tenantEmail: String,
+  tenantPhoneNumber: String,
   unitAddress: String,
   monthlyRent: Number,
   termsAndConditions: {
@@ -33,10 +33,10 @@ class AddSmartContract extends React.Component {
 
   // On submit, insert the data.
   submit(data, formRef) {
-    const { homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenetName, tenetEmail, tenetPhoneNumber, tenetSignature, unitAddress, monthlyRent, termsAndConditions } = data;
+    const { homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenantName, tenantEmail, tenantPhoneNumber, tenantSignature, unitAddress, monthlyRent, termsAndConditions } = data;
     const owner = Meteor.user().username;
     const status = 'Pending';
-    SmartContracts.collection.insert({ homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenetName, tenetEmail, tenetPhoneNumber, tenetSignature, unitAddress, monthlyRent, termsAndConditions, status, owner },
+    SmartContracts.collection.insert({ homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenantName, tenantEmail, tenantPhoneNumber, tenantSignature, unitAddress, monthlyRent, termsAndConditions, status, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -65,9 +65,9 @@ class AddSmartContract extends React.Component {
                 <TextField name='homeownerPhoneNumber'/>
               </Segment>
               <Segment>
-                <TextField name='tenetName'/>
-                <TextField name='tenetEmail'/>
-                <TextField name='tenetPhoneNumber'/>
+                <TextField name='tenantName'/>
+                <TextField name='tenantEmail'/>
+                <TextField name='tenantPhoneNumber'/>
               </Segment>
               <LongTextField name='termsAndConditions'/>
               <SubmitField value='Save'/>

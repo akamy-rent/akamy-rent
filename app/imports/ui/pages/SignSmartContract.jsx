@@ -14,8 +14,8 @@ const contractSchemaSignature = new SimpleSchema({
   signature: String,
 });
 
-const contractSchemaTenetStance = new SimpleSchema({
-  tenetStance: {
+const contractSchemaTenantStance = new SimpleSchema({
+  tenantStance: {
     type: String,
     allowedValues: ['Unsigned', 'Agreement'],
     defaultValue: 'Unsigned',
@@ -23,12 +23,12 @@ const contractSchemaTenetStance = new SimpleSchema({
 });
 
 const bridgeSignature = new SimpleSchema2Bridge(contractSchemaSignature);
-const bridgeTenetStance = new SimpleSchema2Bridge(contractSchemaTenetStance);
+const bridgeTenantStance = new SimpleSchema2Bridge(contractSchemaTenantStance);
 
-const isTenant = (contract, username) => contract.tenetEmail === username;
+const isTenant = (contract, username) => contract.tenantEmail === username;
 const isHomeowner = (contract, username) => contract.homeownerEmail === username;
 
-const missingSignature = (contract, username) => (isTenant(contract, username) && contract.tenetSignature === '') || (
+const missingSignature = (contract, username) => (isTenant(contract, username) && contract.tenantSignature === '') || (
   isHomeowner(contract, username) && contract.homeownerSignature === '');
 
 /** Renders a table containing all of the Stuff documents. Use <SmartContractItem> to render each row. */
@@ -36,30 +36,34 @@ class SignSmartContract extends React.Component {
   // On successful submit, insert the data.
 
   submit(data) {
-    const { tenetEmail, tenetStance, _id } = data;
+    const { tenantEmail, tenantStance, _id } = data;
     const username = this.props.user.username;
 
-    if (username === tenetEmail) {
-      SmartContracts.collection.update(_id, { $set: { tenetStance } }, (error) => (error ?
+    if (username === tenantEmail) {
+      SmartContracts.collection.update(_id, { $set: { tenantStance } }, (error) => (error ?
         swal('Error', error.message, 'error') :
         swal('Success', 'Information updated successfully', 'success')));
     } else {
-      swal('Error', 'Tenet must fill out this field', 'error');
+      swal('Error', 'Only tenant can fill out this field', 'error');
     }
   }
 
   submitSignature(data) {
-    const { signature, _id, homeownerEmail, homeownerName, tenetEmail, tenetName } = data;
+    const { signature, _id, homeownerEmail, homeownerName, tenantEmail, tenantName, tenantStance } = data;
     const username = this.props.user.username;
 
     if (username === homeownerEmail && signature === homeownerName) {
       SmartContracts.collection.update(_id, { $set: { homeownerSignature: signature } }, (error) => (error ?
         swal('Error', error.message, 'error') :
-        swal('Success', `Information updated successfully homeowner ${signature}`, 'success')));
-    } else if (username === tenetEmail && signature === tenetName) {
-      SmartContracts.collection.update(_id, { $set: { tenetSignature: signature } }, (error) => (error ?
-        swal('Error', error.message, 'error') :
-        swal('Success', `Information updated successfully tenet ${signature}`, 'success')));
+        swal('Success', 'Smart contract successfully signed by homeowner', 'success')));
+    } else if (username === tenantEmail && signature === tenantName) {
+      if (tenantStance === 'Agreement') {
+        SmartContracts.collection.update(_id, { $set: { tenantSignature: signature } }, (error) => (error ?
+          swal('Error', error.message, 'error') :
+          swal('Success', 'Smart contract successfully signed by tenant', 'success')));
+      } else {
+        swal('Error', 'Tenet stance must be agreement before signing', 'error');
+      }
     } else {
       swal('Error', 'Signature must be full name', 'error');
     }
@@ -80,21 +84,23 @@ class SignSmartContract extends React.Component {
         <Header as="h2" textAlign="center">View and Deploy Smart Contract</Header>
         <SignSmartContractItem key={this.props.smartContract._id} smartContract={this.props.smartContract} />
         <Segment>
-          <AutoForm schema={bridgeTenetStance} onSubmit={data => this.submit(data)} model={this.props.smartContract}>
-            <SelectField name='tenetStance'/>
-            <SubmitField value='Save'/>
-            <ErrorsField/>
-          </AutoForm>
-        </Segment>
-        {missingSignature(this.props.smartContract, this.props.user.username) &&
+          <Segment>
+            <AutoForm schema={bridgeTenantStance} onSubmit={data => this.submit(data)} model={this.props.smartContract}>
+              <SelectField name='tenantStance'/>
+              <SubmitField value='Save'/>
+              <ErrorsField/>
+            </AutoForm>
+          </Segment>
+          {missingSignature(this.props.smartContract, this.props.user.username) &&
               <Segment>
-                <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data)} model={this.props.smartContract}>
+                <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data)}
+                  model={this.props.smartContract}>
                   <TextField name='signature'/>
                   <SubmitField value='Save'/>
                   <ErrorsField/>
                 </AutoForm>
               </Segment>
-        }
+          }</Segment>
       </Grid>
     );
   }

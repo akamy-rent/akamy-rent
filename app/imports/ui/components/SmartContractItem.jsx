@@ -10,9 +10,9 @@ class SmartContractItem extends React.Component {
       <Table.Row>
         <Table.Cell>{this.props.smartContract.unitAddress}</Table.Cell>
         <Table.Cell>{this.props.smartContract.homeownerName}</Table.Cell>
-        <Table.Cell>{this.props.smartContract.tenetName}</Table.Cell>
-        <Table.Cell>{this.props.smartContract.tenetStance}</Table.Cell>
-        <Table.Cell>{this.props.smartContract.tenetSignature}</Table.Cell>
+        <Table.Cell>{this.props.smartContract.tenantName}</Table.Cell>
+        <Table.Cell>{this.props.smartContract.tenantStance}</Table.Cell>
+        <Table.Cell>{this.props.smartContract.tenantSignature}</Table.Cell>
         <Table.Cell>{this.props.smartContract.homeownerSignature}</Table.Cell>
         <Table.Cell>
           <Link to={`/edit/${this.props.smartContract._id}`}>Edit</Link>
@@ -31,9 +31,9 @@ SmartContractItem.propTypes = {
     unitAddress: PropTypes.string,
     homeownerName: PropTypes.string,
     homeownerSignature: PropTypes.string,
-    tenetName: PropTypes.string,
-    tenetStance: PropTypes.string,
-    tenetSignature: PropTypes.string,
+    tenantName: PropTypes.string,
+    tenantStance: PropTypes.string,
+    tenantSignature: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
 };

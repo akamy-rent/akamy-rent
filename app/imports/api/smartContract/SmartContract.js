@@ -20,15 +20,15 @@ class SmartContractCollection {
         type: String,
         defaultValue: '',
       },
-      tenetName: String,
-      tenetEmail: String,
-      tenetPhoneNumber: String,
-      tenetStance: {
+      tenantName: String,
+      tenantEmail: String,
+      tenantPhoneNumber: String,
+      tenantStance: {
         type: String,
         allowedValues: ['Unsigned', 'Agreement'],
         defaultValue: 'Unsigned',
       },
-      tenetSignature: {
+      tenantSignature: {
         type: String,
         defaultValue: '',
       },

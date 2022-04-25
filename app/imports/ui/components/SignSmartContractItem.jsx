@@ -22,10 +22,10 @@ class SignSmartContractItem extends React.Component {
             <p>Phone number: {this.props.smartContract.homeownerPhoneNumber}</p>
           </Segment>
           <Segment>
-            <Header as="h3" textAlign="left">Tenet Info</Header>
-            <p>Name: {this.props.smartContract.tenetName}</p>
-            <p>Email: {this.props.smartContract.tenetEmail}</p>
-            <p>Phone number: {this.props.smartContract.tenetPhoneNumber}</p>
+            <Header as="h3" textAlign="left">tenant Info</Header>
+            <p>Name: {this.props.smartContract.tenantName}</p>
+            <p>Email: {this.props.smartContract.tenantEmail}</p>
+            <p>Phone number: {this.props.smartContract.tenantPhoneNumber}</p>
           </Segment>
           <Segment>
             <Header as="h3" textAlign="left">Terms and Conditions</Header>
@@ -46,14 +46,14 @@ SignSmartContractItem.propTypes = {
     homeownerEmail: PropTypes.string,
     homeownerPhoneNumber: PropTypes.string,
     homeownerSignature: PropTypes.string,
-    tenetName: PropTypes.string,
-    tenetEmail: PropTypes.string,
-    tenetPhoneNumber: PropTypes.string,
-    tenetSignature: PropTypes.string,
+    tenantName: PropTypes.string,
+    tenantEmail: PropTypes.string,
+    tenantPhoneNumber: PropTypes.string,
+    tenantSignature: PropTypes.string,
     unitAddress: PropTypes.string,
     monthlyRent: PropTypes.number,
     termsAndConditions: PropTypes.string,
-    tenetStance: PropTypes.string,
+    tenantStance: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
 };
