@@ -56,26 +56,26 @@ class AddSmartContract extends React.Component {
   render() {
     let fRef = null;
     return (
-      <Grid container centered>
+      <Grid container centered id={'add-smart-contract-page'}>
         <Grid.Column>
           <br/>
           <Header as="h2" textAlign="center">Create Smart Contract (Draft)</Header>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
             <Segment>
-              <TextField name='unitAddress'/>
-              <NumField name='monthlyRent' decimal={true}/>
+              <TextField id={'unit-address'} name='unitAddress'/>
+              <NumField id={'monthly-rent'} name='monthlyRent' decimal={true}/>
               <Segment>
-                <TextField name='homeownerName'/>
-                <TextField name='homeownerEmail'/>
-                <TextField name='homeownerPhoneNumber'/>
+                <TextField id={'homeowner-name'} name='homeownerName'/>
+                <TextField id={'homeowner-email'} name='homeownerEmail'/>
+                <TextField id={'homeowner-phone'} name='homeownerPhoneNumber'/>
               </Segment>
               <Segment>
-                <TextField name='tenetName'/>
-                <TextField name='tenetEmail'/>
-                <TextField name='tenetPhoneNumber'/>
+                <TextField id={'tenant-name'} name='tenetName'/>
+                <TextField id={'tenant-email'} name='tenetEmail'/>
+                <TextField id={'tenant-phone'} name='tenetPhoneNumber'/>
               </Segment>
-              <LongTextField name='termsAndConditions'/>
-              <SubmitField value='Save'/>
+              <LongTextField id={'t-and-c'} name='termsAndConditions'/>
+              <SubmitField id={'save'} value='Save'/>
               <ErrorsField/>
             </Segment>
           </AutoForm>
