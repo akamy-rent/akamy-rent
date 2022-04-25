@@ -3,6 +3,7 @@ import { signinPage } from './signin.page';
 import { signoutPage } from './signout.page';
 import { messengerPage } from './messenger.page';
 import { navBar } from './navbar.component';
+import { addSmartContractPage, addContractTest } from './add.smart.contract.page';
 
 /* global fixture:false, test:false */
 
@@ -38,6 +39,15 @@ test('Test that dashboard page shows up', async (testController) => {
 test('Test that smart contract page shows up', async (testController) => {
   // ToDo: Write this @Devin and remove the comment with eslint-disable-next-line
   // Probably just focus on the list conntracts instead of all 3 or 4 pages for smart contracts
+});
+
+test('Test that add contract page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoAddSmartContractPage(testController);
+  await addSmartContractPage.isDisplayed(testController);
+  // ensure feed items show up
+  await addSmartContractPage.addSmartContract(testController, credentials.username, addContractTest);
 });
 
 test('Test that Messenger page shows up and works', async (testController) => {
