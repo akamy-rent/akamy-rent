@@ -31,9 +31,6 @@ class SignSmartContract extends React.Component {
   submit(data) {
     const { signature, _id, homeownerEmail, homeownerName, tenetEmail, tenetName } = data;
     const username = this.props.user.username;
-    console.log(username);
-    console.log(`homeownerName: ${homeownerEmail}`);
-    console.log(`tenetName: ${tenetEmail}`);
 
     if (username === homeownerEmail && signature === homeownerName) {
       SmartContracts.collection.update(_id, { $set: { homeownerSignature: signature } }, (error) => (error ?
@@ -96,7 +93,6 @@ export default withTracker(({ match }) => {
   const smartContract = SmartContracts.collection.findOne(_id);
   const user = Meteor.user();
   const ready = subscriptionReady && user !== undefined;
-  console.log(smartContract);
   return {
     smartContract,
     user,
