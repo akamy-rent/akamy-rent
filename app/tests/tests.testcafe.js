@@ -30,7 +30,7 @@ test('Test that signin and signout work', async (testController) => {
 });
 
 // eslint-disable-next-line no-unused-vars
-test.only('Test that view and edit profile pages show up', async (testController) => {
+test('Test that view and edit profile pages show up', async (testController) => {
   // ToDo: Write this @Beemnet and remove the comment with eslint-disable-next-line
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
