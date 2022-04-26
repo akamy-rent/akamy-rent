@@ -8,6 +8,8 @@ import { addSmartContractPage } from './add.smart.contract.page';
 import { editSmartContractPage } from './edit.smart.contract.page';
 import { testSmartContractPage } from './test.smart.contract.page';
 import { listSmartContractPage } from './listSmartContract.page';
+import { viewProfilePage } from './viewprofile.page';
+import { editProfilePage } from './editprofile.page';
 
 /* global fixture:false, test:false */
 
@@ -31,8 +33,14 @@ test('Test that signin and signout work', async (testController) => {
 });
 
 // eslint-disable-next-line no-unused-vars
-test('Test that profile page shows up', async (testController) => {
+test('Test that view and edit profile pages show up', async (testController) => {
   // ToDo: Write this @Beemnet and remove the comment with eslint-disable-next-line
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoViewProfilePage(testController);
+  await viewProfilePage.isDisplayed(testController);
+  await navBar.gotoEditProfilePage(testController);
+  await editProfilePage.isDisplayed(testController);
 });
 
 // eslint-disable-next-line no-unused-vars

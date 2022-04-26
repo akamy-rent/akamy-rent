@@ -8,13 +8,13 @@ class Profile extends React.Component {
   render() {
     const usermember = this.props.profile;
     return (
-      <Grid>
+      <Grid id='view-profile-page'>
         <Grid.Row>
           <Grid columns={3}>
             <Grid.Column textAlign='center' >
               <Image size='medium' src={usermember.imageURL} centered />
               <br/>
-              <Menu.Item as={NavLink} exact to="/editProfile" link color='red'>
+              <Menu.Item id="toEditProfilePage" as={NavLink} exact to="/editProfile" link color='red'>
                 Edit Profile
               </Menu.Item>
             </Grid.Column>

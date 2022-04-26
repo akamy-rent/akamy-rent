@@ -31,7 +31,7 @@ class EditProfile extends React.Component {
   renderPage() {
     const gridStyle = { marginTop: '10px', marginBottom: '10px' };
     return (
-      <Grid container centered style={gridStyle}>
+      <Grid id="editProfilePage" container centered style={gridStyle}>
         <Grid.Row>
           <Header> Edit Profile </Header>
           <br/>

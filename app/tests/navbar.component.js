@@ -55,6 +55,21 @@ class NavBar {
     await testController.click('#navbar-listSmartContract');
   }
 
+  /** Expect the user is logged in and then to click on View profile. */
+  async gotoViewProfilePage(testController) {
+    await testController.expect(Selector('#navbar-current-user').exists).ok();
+    await testController.click('#navbar-current-user');
+    await testController.click('#navbar-view-profile');
+  }
+
+  /** Expect the user is logged in and then to click on Edit profile inside View Profile page. */
+  async gotoEditProfilePage(testController) {
+    await testController.expect(Selector('#navbar-current-user').exists).ok();
+    await testController.click('#navbar-current-user');
+    await testController.click('#navbar-view-profile');
+    await testController.click('#toEditProfilePage');
+  }
+
 }
 
 export const navBar = new NavBar();
