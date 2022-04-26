@@ -52,26 +52,26 @@ class EditSmartContract extends React.Component {
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   renderPage() {
     return (
-      <Grid container centered>
+      <Grid id={'edit-smart-contract-page'} container centered>
         <Grid.Column>
           <br/>
           <Header as="h2" textAlign="center">Edit Smart Contract (Draft)</Header>
           <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
             <Segment>
-              <TextField name='unitAddress'/>
-              <NumField name='monthlyRent' decimal={true}/>
+              <TextField id={'unit-address'} name='unitAddress'/>
+              <NumField id={'monthly-rent'} name='monthlyRent' decimal={true}/>
               <Segment>
-                <TextField name='homeownerName'/>
-                <TextField name='homeownerEmail'/>
-                <TextField name='homeownerPhoneNumber'/>
+                <TextField id={'homeowner-name'} name='homeownerName'/>
+                <TextField id={'homeowner-email'} name='homeownerEmail'/>
+                <TextField id={'homeowner-phone'} name='homeownerPhoneNumber'/>
               </Segment>
               <Segment>
-                <TextField name='tenantName'/>
-                <TextField name='tenantEmail'/>
-                <TextField name='tenantPhoneNumber'/>
+                <TextField id={'tenant-name'} name='tenantName'/>
+                <TextField id={'tenant-email'} name='tenantEmail'/>
+                <TextField id={'tenant-phone'} name='tenantPhoneNumber'/>
               </Segment>
-              <LongTextField name='termsAndConditions'/>
-              <SubmitField value='Save'/>
+              <LongTextField id={'t-and-c'} name='termsAndConditions'/>
+              <SubmitField id={'save'} value='Save'/>
               <ErrorsField/>
             </Segment>
           </AutoForm>

@@ -3,7 +3,9 @@ import { signinPage } from './signin.page';
 import { signoutPage } from './signout.page';
 import { messengerPage } from './messenger.page';
 import { navBar } from './navbar.component';
-import { addSmartContractPage, addContractTest } from './add.smart.contract.page';
+import { smartContractPageForm, addContractTest, editContractTest } from './smart.contract.pages.form';
+import { addSmartContractPage } from './add.smart.contract.page';
+import { editSmartContractPage } from './edit.smart.contract.page';
 import { testSmartContractPage } from './test.smart.contract.page';
 import { listSmartContractPage } from './listSmartContract.page';
 
@@ -11,6 +13,7 @@ import { listSmartContractPage } from './listSmartContract.page';
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const credentials = { username: 'john@foo.com', password: 'changeme' };
+const credentials2 = { username: 'barack@foo.com', password: 'changeme' };
 
 fixture('akamy-rent localhost test with default db')
   .page('http://localhost:3004');
@@ -44,12 +47,29 @@ test('Test that smart contract page shows up', async (testController) => {
 });
 
 test('Test that add contract page shows up and works', async (testController) => {
+  // sign in
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
+  // use navbar to go to page
   await navBar.gotoAddSmartContractPage(testController);
+  // check if component is rendered
   await addSmartContractPage.isDisplayed(testController);
-  // ensure feed items show up
-  await addSmartContractPage.addSmartContract(testController, credentials.username, addContractTest);
+  // attempt to fill out the form
+  await smartContractPageForm.fillSmartContract(testController, credentials.username, addContractTest);
+});
+
+test('Test that edit contract page shows up and works', async (testController) => {
+  // sign in
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials2.username, credentials2.password);
+  // go to the smart contract
+  await editSmartContractPage.navigateToEditSmartContractPage(testController);
+  // check if edit component works
+  await editSmartContractPage.isDisplayed(testController);
+  // remove all previous text
+  await editSmartContractPage.removeTextForEdit(testController, credentials2.username);
+  // fill out the blank forms
+  await smartContractPageForm.fillSmartContract(testController, credentials2.username, editContractTest);
 });
 
 test('Test that Messenger page shows up and works', async (testController) => {

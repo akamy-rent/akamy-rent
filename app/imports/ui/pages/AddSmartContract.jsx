@@ -65,9 +65,9 @@ class AddSmartContract extends React.Component {
                 <TextField id={'homeowner-phone'} name='homeownerPhoneNumber'/>
               </Segment>
               <Segment>
-                <TextField name='tenantName'/>
-                <TextField name='tenantEmail'/>
-                <TextField name='tenantPhoneNumber'/>
+                <TextField id={'tenant-name'} name='tenantName'/>
+                <TextField id={'tenant-email'} name='tenantEmail'/>
+                <TextField id={'tenant-phone'} name='tenantPhoneNumber'/>
               </Segment>
               <LongTextField id={'t-and-c'} name='termsAndConditions'/>
               <SubmitField id={'save'} value='Save'/>
