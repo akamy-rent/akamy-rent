@@ -34,6 +34,8 @@ class EditProfile extends React.Component {
       <Grid container centered style={gridStyle}>
         <Grid.Row>
           <Header> Edit Profile </Header>
+          <br/>
+          <br/>
         </Grid.Row>
         <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={
           this.props.profiles[0]} >
@@ -49,6 +51,12 @@ class EditProfile extends React.Component {
           <TextField name='walletAddress' />
           <TextField name='imageURL' />
           <SubmitField value='Submit'/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
         </AutoForm>
       </Grid>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Image, Menu } from 'semantic-ui-react';
+import { Button, Grid, Header, Icon, Image, Menu } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
 
@@ -8,29 +8,40 @@ class Profile extends React.Component {
   render() {
     const usermember = this.props.profile;
     return (
-      <Grid centered>
+      <Grid>
         <Grid.Row>
-          <Grid columns={2} verticalAlign='middle'>
-            <Grid.Column>
-              <Image size='small' src={usermember.imageURL} rounded/>
+          <Grid columns={3}>
+            <Grid.Column textAlign='center' >
+              <Image size='medium' src={usermember.imageURL} centered />
+              <br/>
+              <Menu.Item as={NavLink} exact to="/editProfile" link color='red'>
+                Edit Profile
+              </Menu.Item>
             </Grid.Column>
-            <Grid.Column>
-              <Menu text>
-                <Menu.Item as={NavLink} exact to="/editProfile" link color='red'>
-                    Edit Profile
-                </Menu.Item>
-              </Menu>
+            <Grid.Column textAlign='center' width={6}>
+              <Header as="h3">First Name</Header>
+              <br/>
+              {usermember.firstName}
+              <br/>
+              <Header as="h4">Phone Number</Header>
+              <p>{usermember.phoneNumber}</p>
+              <br/>
+              <br/>
+              <br/>
+              <Button as={NavLink} to="/add" size="big" color="black"><Icon name='file outline'></Icon>Create Contracts</Button>
+            </Grid.Column>
+            <Grid.Column textAlign='center' width={3}>
+              <Header as="h3">Last Name</Header>
+              <br/>
+              {usermember.lastName}
+              <Header as="h4">Wallet Address</Header>
+              <p>{usermember.walletAddress}</p>
+              <br/>
+              <br/>
+              <br/>
+              <Button as={NavLink} to="/chat" size="big" color="black"><Icon name='envelope open outline'></Icon> Messenger</Button>
             </Grid.Column>
           </Grid>
-        </Grid.Row>
-        <Grid.Row>
-          {usermember.firstName}
-        </Grid.Row>
-        <Grid.Row>
-          {usermember.lastName}
-        </Grid.Row>
-        <Grid.Row>
-          {usermember.walletAddress}
         </Grid.Row>
       </Grid>
     );
