@@ -17,7 +17,7 @@ class ListSmartContract extends React.Component {
   // Render the page once subscriptions have been received.
   renderPage() {
     return (
-      <Container>
+      <Container id='listSmartContractPage'>
         <br/>
         <Header as="h2" textAlign="center">List Smart Contracts</Header>
         <Table celled>

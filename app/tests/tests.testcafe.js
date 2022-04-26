@@ -5,6 +5,7 @@ import { messengerPage } from './messenger.page';
 import { navBar } from './navbar.component';
 import { addSmartContractPage, addContractTest } from './add.smart.contract.page';
 import { testSmartContractPage } from './test.smart.contract.page';
+import { listSmartContractPage } from './listSmartContract.page';
 
 /* global fixture:false, test:false */
 
@@ -69,4 +70,12 @@ test('Test that Messenger page shows up and works', async (testController) => {
 // eslint-disable-next-line no-unused-vars
 test('Test that the test page exists with the 4 buttons', async (testController) => {
   await testSmartContractPage.smartContractTesting(testController);
+});
+
+test('Test the ListSmartContracts page', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoListSmartContractPage(testController);
+  await listSmartContractPage.isDisplayed(testController);
+  await listSmartContractPage.hasTable(testController);
 });
