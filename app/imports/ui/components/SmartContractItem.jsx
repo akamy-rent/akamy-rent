@@ -15,10 +15,7 @@ class SmartContractItem extends React.Component {
         <Table.Cell>{this.props.smartContract.tenantSignature}</Table.Cell>
         <Table.Cell>{this.props.smartContract.homeownerSignature}</Table.Cell>
         <Table.Cell>
-          <Link to={`/view/${this.props.smartContract._id}`}><Header inverted as="h5">View</Header></Link>
-        </Table.Cell>
-        <Table.Cell>
-          <Link to={`/edit/${this.props.smartContract._id}`}><Header inverted as="h5">Edit</Header></Link>
+          <Link to={`/edit/${this.props.smartContract._id}`}>Edit</Link>
         </Table.Cell>
         <Table.Cell>
           <Link to={`/sign/${this.props.smartContract._id}`}>Sign</Link>
