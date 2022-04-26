@@ -16,13 +16,13 @@ class ListDashboard extends React.Component {
           <Grid.Row columns={3}>
             <Grid.Column>
               <br></br>
-              <Header as='h1' >3</Header>
+              <Header as='h1' >0</Header>
               <Header as='h2' >Active Contracts</Header>
             </Grid.Column>
 
             <Grid.Column>
               <br></br>
-              <Header as='h1' >$ 400</Header>
+              <Header as='h1' >$ 1000</Header>
               <Header as='h2' >Total Income</Header>
             </Grid.Column>
 

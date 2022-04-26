@@ -11,30 +11,29 @@ class ViewSmartContractItem extends React.Component {
         <Grid.Row columns={2}>
           <Grid.Column>
             <Header>Homeowner Name</Header>
-            <Header as="h4">{this.props.smartContract.homeownerName}</Header>
+            {this.props.smartContract.homeownerName}
             <Header>Homeowner Email</Header>
-            <Header as="h4">{this.props.smartContract.homeownerEmail}</Header>
+            {this.props.smartContract.homeownerEmail}
             <Header>Homeowner Phone Number</Header>
-            <Header as="h4">{this.props.smartContract.homeownerPhoneNumber}</Header>
-
+            {this.props.smartContract.homeownerPhoneNumber}
           </Grid.Column>
           <Grid.Column>
             <Header>Tenet Name</Header>
-            <Header as="h4">{this.props.smartContract.tenetName}</Header>
+            {this.props.smartContract.tenetName}
             <Header>Homeowner Email</Header>
-            <Header as="h4">{this.props.smartContract.tenetEmail}</Header>
+            {this.props.smartContract.tenetEmail}
             <Header>Homeowner Phone Number</Header>
-            <Header as="h4">{this.props.smartContract.tenetPhoneNumber}</Header>
+            {this.props.smartContract.tenetPhoneNumber}
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
             <Header>House Address</Header>
-            <Header as="h4">{this.props.smartContract.unitAddress}</Header>
+            {this.props.smartContract.unitAddress}
             <Header>Monthly Payment</Header>
-            <Header as="h4">$ {this.props.smartContract.monthlyRent}</Header>
+           $ {this.props.smartContract.monthlyRent}
             <Header>Terms and Conditions</Header>
-            <Header as="h4">{this.props.smartContract.termsAndConditions}</Header>
+            <p>{this.props.smartContract.termsAndConditions}</p>
           </Grid.Column>
         </Grid.Row>
 
@@ -50,11 +49,13 @@ ViewSmartContractItem.propTypes = {
     homeownerPhoneNumber: PropTypes.string,
     unitAddress: PropTypes.string,
     homeownerName: PropTypes.string,
+    homeownerEmail: PropTypes.string,
+    homeownerPhoneNumber: PropTypes.string,
     tenetName: PropTypes.string,
+    tenetEmail: PropTypes.string,
     tenetPhoneNumber: PropTypes.string,
     tenetStance: PropTypes.string,
-    tenetEmail: PropTypes.string,
-    monthlyRent: PropTypes.string,
+    monthlyRent: PropTypes.number,
     termsAndConditions: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
