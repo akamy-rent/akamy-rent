@@ -18,11 +18,22 @@ class ViewProfile extends React.Component {
   renderPage() {
     return (
       <Container>
+        <br/>
+        <br/>
         <Header as="h2" textAlign="center">View Profile </Header>
+        <br/>
+        <br/>
+        <br/>
         {this.props.profiles.map((profile, index) => <Profile
           key={index}
           profile={profile}
         />)}
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
       </Container>
     );
   }

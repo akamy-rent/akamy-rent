@@ -6,10 +6,10 @@ import ChatFeedItem from './ChatFeedItem';
 export default function ChatFeed({ setGroupFn, groups }) {
   return (
     <>
-      <Header as='h2'>Feed</Header>
+      <Header as='h2'>Conversations</Header>
       <hr />
       <Feed>
-        { groups.map((feedItem, index) => <ChatFeedItem key={index} group={feedItem} setGroupFn={setGroupFn} />)}
+        { groups.map((group, index) => <ChatFeedItem key={index} group={group} setGroupFn={setGroupFn} />)}
       </Feed>
     </>
   );

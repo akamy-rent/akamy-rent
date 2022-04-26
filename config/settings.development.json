@@ -71,8 +71,23 @@
     { "activeContracts": 3, "totalIncome": 400, "totalExpenses": 200, "owner": "john@foo.com"}
   ],
 
-  "monti": {
-    "appId": "fJMZoBBNgtRAcEioF",
-    "appSecret": "5a08f436-dd63-488e-9051-6dad0f4c50f1"
-  }
+  "defaultGroups": [
+    { "name":  "Default", "members":  ["john@foo.com", "admin@foo.com"], "messages": [
+      { "createdat":  "2022-04-01T014:48:00.000Z", "createdby":  "john@foo.com", "content": { "type":  "text", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas auctor tristique."}
+      }, { "createdat":  "2022-04-01", "createdby":  "admin@foo.com",
+      "content": { "type":  "text",
+        "text": "Aliquam erat volutpat. Aliquam scelerisque elementum rhoncus."
+      }}]
+    }, {
+      "name": "Smart Contract 1", "members": ["naruto@foo.com", "john@foo.com"], "messages": []
+    },
+    {
+      "name": "Smart Contract 2",
+      "members": [
+        "barack@foo.com",
+        "jane@foo.com"
+      ],
+      "messages": []
+    }
+  ]
 }

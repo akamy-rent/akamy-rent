@@ -16,11 +16,10 @@ class NavBar extends React.Component {
           <Header inverted as='h1'>AkaMy-Rent</Header>
         </Menu.Item>
         {this.props.currentUser ? (
-          [<Menu.Item as={NavLink} activeClassName="active" exact to="/add" key='add'>Add Smart Contract</Menu.Item>,
-            <Menu.Item as={NavLink} activeClassName="active" exact to="/list" key='list'>List Smart Contracts</Menu.Item>,
-            <Menu.Item as={NavLink} activeClassName="active" exact to="/dashboard" key='dashboard'>Dashboard</Menu.Item>,
+          [<Menu.Item as={NavLink} activeClassName="active" exact to="/dashboard" key='dashboard'>Dashboard</Menu.Item>,
+            <Menu.Item as={NavLink} id="navbar-add-smart-contract" activeClassName="active" exact to="/add" key='add'>Add Smart Contract</Menu.Item>,
             <Menu.Item as={NavLink} activeClassName="active" exact to="/viewProfile" key='profile'>View Profile</Menu.Item>,
-            <Menu.Item as={NavLink} activeClassName="active" exact to="/chat" key='chat'>Messenger</Menu.Item>]
+            <Menu.Item as={NavLink} id="navbar-messenger" activeClassName="active" exact to="/chat" key='chat'>Messenger</Menu.Item>]
         ) : ''}
         {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
           <Menu.Item as={NavLink} activeClassName="active" exact to="/admin" key='admin'>Homeowner Smart Contracts List</Menu.Item>
@@ -36,7 +35,7 @@ class NavBar extends React.Component {
           ) : (
             <Dropdown id="navbar-current-user" text={this.props.currentUser} pointing="top right" icon={'user'}>
               <Dropdown.Menu>
-                <Dropdown.Item id="navbar-sign-out" icon="user" text="My Profile" as={NavLink} exact to="/viewProfile"/>
+                <Dropdown.Item id="navbar-view-profile" icon="user" text="My Profile" as={NavLink} exact to="/viewProfile"/>
                 <Dropdown.Item id="navbar-sign-out" icon="sign out" text="Sign Out" as={NavLink} exact to="/signout"/>
               </Dropdown.Menu>
             </Dropdown>

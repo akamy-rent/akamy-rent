@@ -36,6 +36,19 @@ class NavBar {
     await testController.click('#login-dropdown');
     await testController.click('#login-dropdown-sign-up');
   }
+
+  /** Expect the user is logged in and then to click on messenger. */
+  async gotoMessengerPage(testController) {
+    await testController.expect(Selector('#navbar-current-user').exists).ok();
+    await testController.click('#navbar-messenger');
+  }
+
+  /** Expect the user is logged in and then to click on Add smart contract. */
+  async gotoAddSmartContractPage(testController) {
+    await testController.expect(Selector('#navbar-current-user').exists).ok();
+    await testController.click('#navbar-add-smart-contract');
+  }
+
 }
 
 export const navBar = new NavBar();
