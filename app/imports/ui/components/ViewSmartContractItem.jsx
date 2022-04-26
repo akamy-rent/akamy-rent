@@ -45,8 +45,6 @@ class ViewSmartContractItem extends React.Component {
 // Require a document to be passed to this component.
 ViewSmartContractItem.propTypes = {
   smartContract: PropTypes.shape({
-    homeownerEmail: PropTypes.string,
-    homeownerPhoneNumber: PropTypes.string,
     unitAddress: PropTypes.string,
     homeownerName: PropTypes.string,
     homeownerEmail: PropTypes.string,
