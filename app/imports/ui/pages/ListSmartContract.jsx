@@ -25,9 +25,12 @@ class ListSmartContract extends React.Component {
             <Table.Row>
               <Table.HeaderCell>Unit Address</Table.HeaderCell>
               <Table.HeaderCell>Homeowner</Table.HeaderCell>
-              <Table.HeaderCell>Tenet</Table.HeaderCell>
-              <Table.HeaderCell>Tenet Stance</Table.HeaderCell>
+              <Table.HeaderCell>Tenant</Table.HeaderCell>
+              <Table.HeaderCell>Tenant Stance</Table.HeaderCell>
+              <Table.HeaderCell>Tenant Signature</Table.HeaderCell>
+              <Table.HeaderCell>Homeowner Signature</Table.HeaderCell>
               <Table.HeaderCell>Edit</Table.HeaderCell>
+              <Table.HeaderCell>Sign</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>

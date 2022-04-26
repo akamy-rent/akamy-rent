@@ -28,7 +28,7 @@ Meteor.publish(SmartContracts.userPublicationName, function () {
     return SmartContracts.collection.find({
       $or: [
         { owner: username },
-        { tenetEmail: username },
+        { tenantEmail: username },
       ],
     });
   }

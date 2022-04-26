@@ -20,6 +20,7 @@ import ListSmartContract from '../pages/ListSmartContract';
 import ViewProfile from '../pages/ViewProfile';
 import EditProfile from '../pages/EditProfile';
 import ListSmartContractAdmin from '../pages/ListSmartContractAdmin';
+import SignSmartContract from '../pages/SignSmartContract';
 import ViewSmartContract from '../pages/ViewSmartContract';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
@@ -39,6 +40,7 @@ class App extends React.Component {
             <ProtectedRoute path="/list" component={ListSmartContract}/>
             <ProtectedRoute path="/add" component={AddSmartContract}/>
             <ProtectedRoute path="/edit/:_id" component={EditSmartContract}/>
+            <ProtectedRoute path="/sign/:_id" component={SignSmartContract}/>
             <ProtectedRoute path="/view/:_id" component={ViewSmartContract}/>
             <ProtectedRoute path="/chat" component={Messenger}/>
             <ProtectedRoute path="/editProfile" component={EditProfile}/>

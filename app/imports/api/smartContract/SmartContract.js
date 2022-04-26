@@ -16,13 +16,21 @@ class SmartContractCollection {
       homeownerName: String,
       homeownerEmail: String,
       homeownerPhoneNumber: String,
-      tenetName: String,
-      tenetEmail: String,
-      tenetPhoneNumber: String,
-      tenetStance: {
+      homeownerSignature: {
         type: String,
-        allowedValues: ['I do not agree to the terms and conditions', 'I agree to the terms and conditions', 'Select one'],
-        defaultValue: 'Select one',
+        defaultValue: '',
+      },
+      tenantName: String,
+      tenantEmail: String,
+      tenantPhoneNumber: String,
+      tenantStance: {
+        type: String,
+        allowedValues: ['Unsigned', 'Agreement'],
+        defaultValue: 'Unsigned',
+      },
+      tenantSignature: {
+        type: String,
+        defaultValue: '',
       },
       unitAddress: String,
       monthlyRent: Number,

@@ -12,14 +12,9 @@ const contractSchema = new SimpleSchema({
   homeownerName: String,
   homeownerEmail: String,
   homeownerPhoneNumber: String,
-  tenetName: String,
-  tenetEmail: String,
-  tenetPhoneNumber: String,
-  tenetStance: {
-    type: String,
-    allowedValues: ['I do not agree to the terms and conditions', 'I agree to the terms and conditions', ''],
-    defaultValue: '',
-  },
+  tenantName: String,
+  tenantEmail: String,
+  tenantPhoneNumber: String,
   unitAddress: String,
   monthlyRent: Number,
   termsAndConditions: {
@@ -38,10 +33,10 @@ class AddSmartContract extends React.Component {
 
   // On submit, insert the data.
   submit(data, formRef) {
-    const { homeownerName, homeownerEmail, homeownerPhoneNumber, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, unitAddress, monthlyRent, termsAndConditions } = data;
+    const { homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenantName, tenantEmail, tenantPhoneNumber, tenantSignature, unitAddress, monthlyRent, termsAndConditions } = data;
     const owner = Meteor.user().username;
     const status = 'Pending';
-    SmartContracts.collection.insert({ homeownerName, homeownerEmail, homeownerPhoneNumber, tenetName, tenetEmail, tenetPhoneNumber, tenetStance, unitAddress, monthlyRent, termsAndConditions, status, owner },
+    SmartContracts.collection.insert({ homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenantName, tenantEmail, tenantPhoneNumber, tenantSignature, unitAddress, monthlyRent, termsAndConditions, status, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -70,9 +65,9 @@ class AddSmartContract extends React.Component {
                 <TextField id={'homeowner-phone'} name='homeownerPhoneNumber'/>
               </Segment>
               <Segment>
-                <TextField id={'tenant-name'} name='tenetName'/>
-                <TextField id={'tenant-email'} name='tenetEmail'/>
-                <TextField id={'tenant-phone'} name='tenetPhoneNumber'/>
+                <TextField name='tenantName'/>
+                <TextField name='tenantEmail'/>
+                <TextField name='tenantPhoneNumber'/>
               </Segment>
               <LongTextField id={'t-and-c'} name='termsAndConditions'/>
               <SubmitField id={'save'} value='Save'/>
