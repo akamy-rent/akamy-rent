@@ -5,6 +5,7 @@ import { messengerPage } from './messenger.page';
 import { navBar } from './navbar.component';
 import { addSmartContractPage, addContractTest } from './add.smart.contract.page';
 import { testSmartContractPage } from './test.smart.contract.page';
+import { dashboardPage } from './dashboard.page';
 
 /* global fixture:false, test:false */
 
@@ -32,8 +33,13 @@ test('Test that profile page shows up', async (testController) => {
 });
 
 // eslint-disable-next-line no-unused-vars
-test('Test that dashboard page shows up', async (testController) => {
-  // ToDo: Write this @Yang and remove the comment with eslint-disable-next-line
+test.only('Test that dashboard page shows up', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoDashboardPage(testController);
+  await dashboardPage.isDisplayed(testController);
+  await dashboardPage.hasTable(testController);
+
 });
 
 // eslint-disable-next-line no-unused-vars

@@ -11,7 +11,7 @@ import { SmartContracts } from '../../api/smartContract/SmartContract';
 class ListDashboard extends React.Component {
   render() {
     return (
-      <Container>
+      <Container id="list-dashboard-page">
         <Grid verticalAlign='middle' textAlign='center' container>
           <Grid.Row columns={3}>
             <Grid.Column>
