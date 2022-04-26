@@ -3,7 +3,6 @@ import { Button, Container, Grid, Header, Icon, Table } from 'semantic-ui-react'
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-import { dashboard } from '../../api/dashboard/dashboard';
 import { NavLink } from 'react-router-dom';
 import SmartContractItem from '../components/SmartContractItem';
 import { SmartContracts } from '../../api/smartContract/SmartContract';
@@ -17,13 +16,13 @@ class ListDashboard extends React.Component {
           <Grid.Row columns={3}>
             <Grid.Column>
               <br></br>
-              <Header as='h1' >3</Header>
+              <Header as='h1' >0</Header>
               <Header as='h2' >Active Contracts</Header>
             </Grid.Column>
 
             <Grid.Column>
               <br></br>
-              <Header as='h1' >$ 400</Header>
+              <Header as='h1' >$ 1000</Header>
               <Header as='h2' >Total Income</Header>
             </Grid.Column>
 

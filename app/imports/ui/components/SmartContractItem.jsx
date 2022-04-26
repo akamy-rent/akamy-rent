@@ -30,6 +30,7 @@ SmartContractItem.propTypes = {
     homeownerName: PropTypes.string,
     tenetName: PropTypes.string,
     tenetStance: PropTypes.string,
+    status: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
 };

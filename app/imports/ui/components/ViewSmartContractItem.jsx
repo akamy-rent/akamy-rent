@@ -1,44 +1,44 @@
 import React from 'react';
-import { Grid, Header, Table } from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in the List smartContract table. See pages/ListsmartContract.jsx. */
 class ViewSmartContractItem extends React.Component {
   render() {
     return (
-        <Grid  divided='vertically'>
-          <Grid.Row columns={2}>
-            <Grid.Column>
-              <Header>Homeowner Name</Header>
-              <Header as="h4">{this.props.smartContract.homeownerName}</Header>
-              <Header>Homeowner Email</Header>
-              <Header as="h4">{this.props.smartContract.homeownerEmail}</Header>
-              <Header>Homeowner Phone Number</Header>
-              <Header as="h4">{this.props.smartContract.homeownerPhoneNumber}</Header>
+      <Grid divided='vertically'>
+        <Grid.Row columns={2}>
+          <Grid.Column>
+            <Header>Homeowner Name</Header>
+            {this.props.smartContract.homeownerName}
+            <Header>Homeowner Email</Header>
+            {this.props.smartContract.homeownerEmail}
+            <Header>Homeowner Phone Number</Header>
+            {this.props.smartContract.homeownerPhoneNumber}
 
-            </Grid.Column>
-            <Grid.Column>
-              <Header>Tenet Name</Header>
-              <Header as="h4">{this.props.smartContract.tenetName}</Header>
-              <Header>Homeowner Email</Header>
-              <Header as="h4">{this.props.smartContract.tenetEmail}</Header>
-              <Header>Homeowner Phone Number</Header>
-              <Header as="h4">{this.props.smartContract.tenetPhoneNumber}</Header>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
+          </Grid.Column>
+          <Grid.Column>
+            <Header>Tenet Name</Header>
+            {this.props.smartContract.tenetName}
+            <Header>Homeowner Email</Header>
+            {this.props.smartContract.tenetEmail}
+            <Header>Homeowner Phone Number</Header>
+            {this.props.smartContract.tenetPhoneNumber}
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
             <Header>House Address</Header>
-            <Header as="h4">{this.props.smartContract.unitAddress}</Header>
+            {this.props.smartContract.unitAddress}
             <Header>Monthly Payment</Header>
-            <Header as="h4">$ {this.props.smartContract.monthlyRent}</Header>
+           $ {this.props.smartContract.monthlyRent}
             <Header>Terms and Conditions</Header>
-            <Header as="h4">{this.props.smartContract.termsAndConditions}</Header>
-            </Grid.Column>
-          </Grid.Row>
+            <p>{this.props.smartContract.termsAndConditions}</p>
+          </Grid.Column>
+        </Grid.Row>
 
-        </Grid>
+      </Grid>
     );
   }
 }
@@ -48,9 +48,13 @@ ViewSmartContractItem.propTypes = {
   smartContract: PropTypes.shape({
     unitAddress: PropTypes.string,
     homeownerName: PropTypes.string,
+    homeownerEmail: PropTypes.string,
+    homeownerPhoneNumber: PropTypes.string,
     tenetName: PropTypes.string,
+    tenetEmail: PropTypes.string,
+    tenetPhoneNumber: PropTypes.string,
     tenetStance: PropTypes.string,
-    monthlyRent: PropTypes.string,
+    monthlyRent: PropTypes.number,
     termsAndConditions: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
