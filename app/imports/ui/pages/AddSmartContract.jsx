@@ -59,7 +59,7 @@ class AddSmartContract extends React.Component {
       <Grid container centered id={'add-smart-contract-page'}>
         <Grid.Column>
           <br/>
-          <Header as="h2" textAlign="center">Create Smart Contract (Draft)</Header>
+          <Header as="h2" textAlign="center">Create Smart Contract</Header>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
             <Segment>
               <TextField id={'unit-address'} name='unitAddress'/>
