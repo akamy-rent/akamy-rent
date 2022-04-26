@@ -28,7 +28,6 @@ class ViewSmartContract extends React.Component {
           <br/>
           <br/>
           <br/>
-
         </Grid.Column>
       </Grid>
 

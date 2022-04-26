@@ -16,7 +16,6 @@ class ViewSmartContractItem extends React.Component {
             {this.props.smartContract.homeownerEmail}
             <Header>Homeowner Phone Number</Header>
             {this.props.smartContract.homeownerPhoneNumber}
-
           </Grid.Column>
           <Grid.Column>
             <Header>Tenet Name</Header>
@@ -46,6 +45,8 @@ class ViewSmartContractItem extends React.Component {
 // Require a document to be passed to this component.
 ViewSmartContractItem.propTypes = {
   smartContract: PropTypes.shape({
+    homeownerEmail: PropTypes.string,
+    homeownerPhoneNumber: PropTypes.string,
     unitAddress: PropTypes.string,
     homeownerName: PropTypes.string,
     homeownerEmail: PropTypes.string,

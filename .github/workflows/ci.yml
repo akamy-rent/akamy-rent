@@ -1,4 +1,4 @@
-name: ci-meteor-application-template-react
+name: akamy-rent
 
 on:
   push:
@@ -38,3 +38,4 @@ jobs:
         run: |
           meteor npm install
           meteor npm run lint
+          meteor npm run testcafe
