@@ -61,9 +61,9 @@
   ],
 
   "defaultSmartContract": [
-    { "homeownerName": "Naruto Uzumaki", "homeownerEmail": "naruto@foo.com", "homeownerPhoneNumber": "808-106-9999", "homeownerSignature": "", "tenantName": "John Doe", "tenantEmail": "john@foo.com", "tenantPhoneNumber": "808-234-5678", "tenantStance": "Unsigned", "tenantSignature": "", "unitAddress": "123 Kapiolani Blvd Honolulu, HI 96826", "monthlyRent": 1000, "status": "Pending", "termsAndConditions": "Terms and conditions for smart contract with 1 tenet. Cost, frequency of payment, parties involved.", "owner": "naruto@foo.com"
+    { "name": "Kapiolani Blvd Unit", "homeownerName": "Naruto Uzumaki", "homeownerEmail": "naruto@foo.com", "homeownerPhoneNumber": "808-106-9999", "homeownerSignature": "", "tenantName": "John Doe", "tenantEmail": "john@foo.com", "tenantPhoneNumber": "808-234-5678", "tenantStance": "Unsigned", "tenantSignature": "", "unitAddress": "123 Kapiolani Blvd Honolulu, HI 96826", "monthlyRent": 1000, "status": "Pending", "termsAndConditions": "Terms and conditions for smart contract with 1 tenet. Cost, frequency of payment, parties involved.", "owner": "naruto@foo.com"
     },
-    { "homeownerName": "Barack Obama", "homeownerEmail": "barack@foo.com", "homeownerPhoneNumber": "808-123-4567", "homeownerSignature": "", "tenantName": "Jane Smith", "tenantEmail": "jane@foo.com", "tenantPhoneNumber": "808-123-4567", "tenantStance": "Unsigned", "tenantSignature": "", "unitAddress": "456 Mailee Way Honolulu, HI 96822", "monthlyRent": 2000, "status": "Pending", "termsAndConditions": "Terms and conditions for smart contract with 1 tenet. Cost, frequency of payment, parties involved.", "owner": "barack@foo.com"
+    { "name": "Mailee Way Unit","homeownerName": "Barack Obama", "homeownerEmail": "barack@foo.com", "homeownerPhoneNumber": "808-123-4567", "homeownerSignature": "", "tenantName": "Jane Smith", "tenantEmail": "jane@foo.com", "tenantPhoneNumber": "808-123-4567", "tenantStance": "Unsigned", "tenantSignature": "", "unitAddress": "456 Mailee Way Honolulu, HI 96822", "monthlyRent": 2000, "status": "Pending", "termsAndConditions": "Terms and conditions for smart contract with 1 tenet. Cost, frequency of payment, parties involved.", "owner": "barack@foo.com"
     }
   ],
 
@@ -73,16 +73,18 @@
 
   "defaultGroups": [
     { "name":  "Default", "members":  ["john@foo.com", "admin@foo.com"], "messages": [
-      { "createdat":  "2022-04-01T014:48:00.000Z", "createdby":  "john@foo.com", "content": { "type":  "text", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas auctor tristique."}
-      }, { "createdat":  "2022-04-01", "createdby":  "admin@foo.com",
+      {"createdby":  "john@foo.com", "content": { "type":  "text", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas auctor tristique."}
+      }, {"createdby":  "admin@foo.com",
       "content": { "type":  "text",
         "text": "Aliquam erat volutpat. Aliquam scelerisque elementum rhoncus."
       }}]
     }, {
-      "name": "Smart Contract 1", "members": ["naruto@foo.com", "john@foo.com"], "messages": []
+      "name": "Kapiolani Blvd Unit",
+      "members": ["naruto@foo.com", "john@foo.com"],
+      "messages": []
     },
     {
-      "name": "Smart Contract 2",
+      "name": "Mailee Way Unit",
       "members": [
         "barack@foo.com",
         "jane@foo.com"

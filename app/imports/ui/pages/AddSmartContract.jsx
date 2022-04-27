@@ -6,9 +6,11 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { SmartContracts } from '../../api/smartContract/SmartContract';
+import { Groups } from '../../api/group/Group';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const contractSchema = new SimpleSchema({
+  name: String,
   homeownerName: String,
   homeownerEmail: String,
   homeownerPhoneNumber: String,
@@ -31,12 +33,22 @@ const bridge = new SimpleSchema2Bridge(contractSchema);
 /** Renders the Page for adding a document. */
 class AddSmartContract extends React.Component {
 
+  createMessengerGroup(name, members) {
+    try {
+      const insertResult = Groups.collection.insert({ name, members, messages: [] });
+      return insertResult;
+    } catch (e) {
+      throw new Error(`Error occured during creation of group wit params: ${name}, ${members}`);
+    }
+  }
+
   // On submit, insert the data.
   submit(data, formRef) {
-    const { homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenantName, tenantEmail, tenantPhoneNumber, tenantSignature, unitAddress, monthlyRent, termsAndConditions } = data;
+    const { name, homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenantName, tenantEmail, tenantPhoneNumber, tenantSignature, unitAddress, monthlyRent, termsAndConditions } = data;
     const owner = Meteor.user().username;
     const status = 'Pending';
-    SmartContracts.collection.insert({ homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenantName, tenantEmail, tenantPhoneNumber, tenantSignature, unitAddress, monthlyRent, termsAndConditions, status, owner },
+    const groupid = this.createMessengerGroup(name, [homeownerEmail, tenantEmail]);
+    SmartContracts.collection.insert({ name, homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenantName, tenantEmail, tenantPhoneNumber, tenantSignature, unitAddress, monthlyRent, termsAndConditions, status, owner, groupid },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -57,6 +69,7 @@ class AddSmartContract extends React.Component {
           <Header as="h2" textAlign="center">Create Smart Contract</Header>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
             <Segment>
+              <TextField id={'contract-name'} name='name' label='Name of Contract'/>
               <TextField id={'unit-address'} name='unitAddress'/>
               <NumField id={'monthly-rent'} name='monthlyRent' decimal={true}/>
               <Segment>

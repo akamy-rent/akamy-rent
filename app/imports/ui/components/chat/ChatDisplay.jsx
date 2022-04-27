@@ -13,8 +13,8 @@ const MessageScrollClass = css({
   height: '100%',
 });
 
-export default function ChatDisplay({ groupname, inputSubmitFn }) {
-  const group = useTracker(() => Groups.collection.findOne({ name: groupname }), [groupname]);
+export default function ChatDisplay({ groupid, inputSubmitFn }) {
+  const group = useTracker(() => Groups.collection.findOne({ _id: groupid }), [groupid]);
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function ChatDisplay({ groupname, inputSubmitFn }) {
       }
       <hr/>
       <Container style={{ height: '100%' }}>
-        { groupname === undefined
+        { group === undefined
           ? <Segment placeholder>
             <Header icon>
               <Icon name='chat' />
@@ -51,7 +51,7 @@ export default function ChatDisplay({ groupname, inputSubmitFn }) {
 }
 
 ChatDisplay.propTypes = {
-  groupname: PropTypes.string,
+  groupid: PropTypes.string,
   // function to submit chat input
   inputSubmitFn: PropTypes.func,
 };

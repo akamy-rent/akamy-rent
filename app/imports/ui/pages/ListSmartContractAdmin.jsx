@@ -4,7 +4,7 @@ import { Container, Table, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { SmartContracts } from '../../api/smartContract/SmartContract';
-import SmartContractItemAdmin from '../components/SmartContractItemAdmin';
+import SmartContractItemAdmin from '../components/smart-contract/SmartContractItemAdmin';
 
 /** Renders a table containing all of the SmartContract documents. Use <SmartContractItem> to render each row. */
 class ListSmartContractAdmin extends React.Component {

@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { SmartContracts } from '../../api/smartContract/SmartContract';
-import ViewSmartContractItem from '../components/ViewSmartContractItem';
+import ViewSmartContractItem from '../components/smart-contract/ViewSmartContractItem';
 
 /** Renders the Page for editing a single document. */
 class ViewSmartContract extends React.Component {

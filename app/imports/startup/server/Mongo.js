@@ -4,20 +4,6 @@ import { Profiles } from '../../api/profile/Profile';
 import { Groups } from '../../api/group/Group.js';
 /* eslint-disable no-console */
 
-// Initialize the database with a default data document.
-function addMember(data) {
-  console.log(`  Adding: ${data.name} (${data.owner})`);
-  SmartContracts.collection.insert(data);
-}
-
-// Initialize the SmartContractsCollection if empty.
-if (SmartContracts.collection.find().count() === 0) {
-  if (Meteor.settings.defaultSmartContract) {
-    console.log('Creating default smart contracts.');
-    Meteor.settings.defaultSmartContract.map(data => addMember(data));
-  }
-}
-
 function addProfile(data) {
   console.log(`  Adding: ${data.firstName} (${data.owner})`);
   Profiles.collection.insert(data);
@@ -47,6 +33,28 @@ if (Groups.collection.find().count() === 0) {
         messages,
       });
       return null;
+    });
+  }
+}
+
+// Initialize the database with a default data document.
+function addContract(data) {
+  console.log(`  Adding: ${data.name} (${data.owner})`);
+  SmartContracts.collection.insert(data);
+}
+
+// Initialize the SmartContractsCollection if empty.
+if (SmartContracts.collection.find().count() === 0) {
+  if (Meteor.settings.defaultSmartContract) {
+    console.log('Creating default smart contracts.');
+    Meteor.settings.defaultSmartContract.map(data => {
+      const groups = Groups.collection.find({}).fetch();
+      const group = groups.find(g => g.name === data.name);
+      console.log('Group for smart contract', group);
+      if (group !== undefined) {
+        addContract({ ...data, groupid: group._id });
+      }
+      return group;
     });
   }
 }

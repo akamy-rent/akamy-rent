@@ -23,7 +23,10 @@ export const MessageFileSchema = new SimpleSchema({
 });
 
 const MessageSchema = new SimpleSchema({
-  createdat: Date,
+  createdat: {
+    type: Date,
+    defaultValue: new Date(),
+  },
   createdby: String,
   content: {
     // correct approach would be oneOf, but SimplSchema has a bug
@@ -41,6 +44,10 @@ class GroupsCollection {
     this.collection = new Mongo.Collection(this.name);
     this.schema = new SimpleSchema({
       name: String,
+      createdat: {
+        type: Date,
+        defaultValue: new Date(),
+      },
       members: [String],
       messages: [MessageSchema],
     }, { tracker: Tracker });

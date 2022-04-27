@@ -15,7 +15,6 @@ export default function Messenger() {
   }, []);
   const groups = useTracker(() => Groups.collection.find().fetch(), []);
   const user = useTracker(() => Meteor.user(), []);
-
   // State to track selected group for displaying messages
   const [group, setGroup] = useState();
   const handleSetGroup = useCallback((groupSelection) => {
@@ -71,7 +70,7 @@ export default function Messenger() {
           <ChatFeed setGroupFn={handleSetGroup} groups={groups} />
         </Grid.Column>
         <Grid.Column width={12} style={{ height: '80vh' }}>
-          <ChatDisplay groupname={group?.name} inputSubmitFn={handleInputSubmission}/>
+          <ChatDisplay groupid={group?._id} inputSubmitFn={handleInputSubmission}/>
         </Grid.Column>
       </Grid.Row>
     </Grid>

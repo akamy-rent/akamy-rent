@@ -25,9 +25,6 @@ export default function ChatInputForm({ submitFn }) {
           <Popup content='Send message' trigger={
             <Button id='messenger-submit-text' type='submit' icon='send' color='blue' inverted circular width={2} />
           } />
-          <Popup content='Add image or file content' trigger={
-            <Button icon='plus' color='blue' inverted circular width={2} />
-          } />
         </Form.Group>
       </Form>
     </>

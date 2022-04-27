@@ -5,7 +5,7 @@ import { Container, Menu, Icon, Header } from 'semantic-ui-react';
 class Footer extends React.Component {
   render() {
     return (
-      <footer>
+      <footer style={{ marginTop: '5%' }}>
         <Menu className="secondary">
           <Container>
             <Menu.Item className="left"><Header as='h3'>AkaMy-Rent</Header></Menu.Item>
