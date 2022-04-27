@@ -7,6 +7,7 @@ import { smartContractPageForm, addContractTest, editContractTest } from './smar
 import { addSmartContractPage } from './add.smart.contract.page';
 import { editSmartContractPage } from './edit.smart.contract.page';
 import { testSmartContractPage } from './test.smart.contract.page';
+import { dashboardPage } from './dashboard.page';
 import { listSmartContractPage } from './listSmartContract.page';
 import { viewProfilePage } from './viewprofile.page';
 import { editProfilePage } from './editprofile.page';
@@ -45,7 +46,11 @@ test('Test that view and edit profile pages show up', async (testController) => 
 
 // eslint-disable-next-line no-unused-vars
 test('Test that dashboard page shows up', async (testController) => {
-  // ToDo: Write this @Yang and remove the comment with eslint-disable-next-line
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoDashboardPage(testController);
+  await dashboardPage.isDisplayed(testController);
+  await dashboardPage.hasTable(testController);
 });
 
 // eslint-disable-next-line no-unused-vars

@@ -16,7 +16,7 @@ class NavBar extends React.Component {
           <Header inverted as='h1'>AkaMy-Rent</Header>
         </Menu.Item>
         {this.props.currentUser ? (
-          [<Menu.Item as={NavLink} activeClassName="active" exact to="/dashboard" key='dashboard'>Dashboard</Menu.Item>,
+          [<Menu.Item as={NavLink} id="navbar-dashboard" activeClassName="active" exact to="/dashboard" key='dashboard'>Dashboard</Menu.Item>,
             <Menu.Item as={NavLink} id="navbar-add-smart-contract" activeClassName="active" exact to="/add" key='add'>Add Smart Contract</Menu.Item>,
             <Menu.Item as={NavLink} id="navbar-listSmartContract" activeClassName="active" exact to="/list" key='list'>List Smart Contract</Menu.Item>,
             <Menu.Item as={NavLink} activeClassName="active" exact to="/viewProfile" key='profile'>View Profile</Menu.Item>,
