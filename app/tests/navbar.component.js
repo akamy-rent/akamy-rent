@@ -49,11 +49,11 @@ class NavBar {
     await testController.click('#navbar-add-smart-contract');
   }
 
-
   /** Expect the user is logged in and then to click on Dashboard. */
   async gotoDashboardPage(testController) {
     await testController.expect(Selector('#navbar-current-user').exists).ok();
     await testController.click('#navbar-dashboard');
+  }
 
   /** Expect the user is logged in and then to click on Add smart contract. */
   async gotoListSmartContractPage(testController) {
