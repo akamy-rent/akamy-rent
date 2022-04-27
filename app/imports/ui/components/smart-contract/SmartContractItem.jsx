@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import { Button, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 
@@ -14,11 +14,14 @@ class SmartContractItem extends React.Component {
         <Table.Cell>{this.props.smartContract.tenantStance}</Table.Cell>
         <Table.Cell>{this.props.smartContract.tenantSignature}</Table.Cell>
         <Table.Cell>{this.props.smartContract.homeownerSignature}</Table.Cell>
+        <Table.Cell>{this.props.smartContract.status}</Table.Cell>
         <Table.Cell>
-          <Link to={`/edit/${this.props.smartContract._id}`}>Edit</Link>
-        </Table.Cell>
-        <Table.Cell>
-          <Link to={`/sign/${this.props.smartContract._id}`}>Sign</Link>
+          <Link to={`/edit/${this.props.smartContract._id}`}>
+            <Button compact color='blue'>Edit</Button>
+          </Link>
+          <Link to={`/sign/${this.props.smartContract._id}`}>
+            <Button compact color='orange'>Sign</Button>
+          </Link>
         </Table.Cell>
       </Table.Row>
     );
@@ -34,6 +37,7 @@ SmartContractItem.propTypes = {
     tenantName: PropTypes.string,
     tenantStance: PropTypes.string,
     tenantSignature: PropTypes.string,
+    status: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
 };

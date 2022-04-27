@@ -8,7 +8,6 @@ import { addSmartContractPage } from './add.smart.contract.page';
 import { editSmartContractPage } from './edit.smart.contract.page';
 import { testSmartContractPage } from './test.smart.contract.page';
 import { dashboardPage } from './dashboard.page';
-import { listSmartContractPage } from './listSmartContract.page';
 import { viewProfilePage } from './viewprofile.page';
 import { editProfilePage } from './editprofile.page';
 
@@ -33,9 +32,7 @@ test('Test that signin and signout work', async (testController) => {
   await signoutPage.isDisplayed(testController);
 });
 
-// eslint-disable-next-line no-unused-vars
 test('Test that view and edit profile pages show up', async (testController) => {
-  // ToDo: Write this @Beemnet and remove the comment with eslint-disable-next-line
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoViewProfilePage(testController);
@@ -44,19 +41,12 @@ test('Test that view and edit profile pages show up', async (testController) => 
   await editProfilePage.isDisplayed(testController);
 });
 
-// eslint-disable-next-line no-unused-vars
 test('Test that dashboard page shows up', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoDashboardPage(testController);
   await dashboardPage.isDisplayed(testController);
   await dashboardPage.hasTable(testController);
-});
-
-// eslint-disable-next-line no-unused-vars
-test('Test that smart contract page shows up', async (testController) => {
-  // ToDo: Write this @Devin and remove the comment with eslint-disable-next-line
-  // Probably just focus on the list conntracts instead of all 3 or 4 pages for smart contracts
 });
 
 test('Test that add contract page shows up and works', async (testController) => {
@@ -103,12 +93,4 @@ test('Test that Messenger page shows up and works', async (testController) => {
 // eslint-disable-next-line no-unused-vars
 test('Test that the test page exists with the 4 buttons', async (testController) => {
   await testSmartContractPage.smartContractTesting(testController);
-});
-
-test('Test the ListSmartContracts page', async (testController) => {
-  await navBar.gotoSigninPage(testController);
-  await signinPage.signin(testController, credentials.username, credentials.password);
-  await navBar.gotoListSmartContractPage(testController);
-  await listSmartContractPage.isDisplayed(testController);
-  await listSmartContractPage.hasTable(testController);
 });

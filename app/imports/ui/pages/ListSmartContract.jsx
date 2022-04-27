@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Container, Table, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import SmartContractItem from '../components/SmartContractItem';
+import SmartContractItem from '../components/smart-contract/SmartContractItem';
 import { SmartContracts } from '../../api/smartContract/SmartContract';
 
 /** Renders a table containing all of the Stuff documents. Use <SmartContractItem> to render each row. */
@@ -29,8 +29,7 @@ class ListSmartContract extends React.Component {
               <Table.HeaderCell>Tenant Stance</Table.HeaderCell>
               <Table.HeaderCell>Tenant Signature</Table.HeaderCell>
               <Table.HeaderCell>Homeowner Signature</Table.HeaderCell>
-              <Table.HeaderCell>Edit</Table.HeaderCell>
-              <Table.HeaderCell>Sign</Table.HeaderCell>
+              <Table.HeaderCell>Actions</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
