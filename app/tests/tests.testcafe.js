@@ -33,13 +33,12 @@ test('Test that profile page shows up', async (testController) => {
 });
 
 // eslint-disable-next-line no-unused-vars
-test.only('Test that dashboard page shows up', async (testController) => {
+test('Test that dashboard page shows up', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoDashboardPage(testController);
   await dashboardPage.isDisplayed(testController);
   await dashboardPage.hasTable(testController);
-
 });
 
 // eslint-disable-next-line no-unused-vars
