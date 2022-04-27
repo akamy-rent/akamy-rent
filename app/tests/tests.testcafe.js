@@ -3,14 +3,20 @@ import { signinPage } from './signin.page';
 import { signoutPage } from './signout.page';
 import { messengerPage } from './messenger.page';
 import { navBar } from './navbar.component';
-import { addSmartContractPage, addContractTest } from './add.smart.contract.page';
+import { smartContractPageForm, addContractTest, editContractTest } from './smart.contract.pages.form';
+import { addSmartContractPage } from './add.smart.contract.page';
+import { editSmartContractPage } from './edit.smart.contract.page';
 import { testSmartContractPage } from './test.smart.contract.page';
 import { dashboardPage } from './dashboard.page';
+import { listSmartContractPage } from './listSmartContract.page';
+import { viewProfilePage } from './viewprofile.page';
+import { editProfilePage } from './editprofile.page';
 
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const credentials = { username: 'john@foo.com', password: 'changeme' };
+const credentials2 = { username: 'barack@foo.com', password: 'changeme' };
 
 fixture('akamy-rent localhost test with default db')
   .page('http://localhost:3004');
@@ -28,8 +34,14 @@ test('Test that signin and signout work', async (testController) => {
 });
 
 // eslint-disable-next-line no-unused-vars
-test('Test that profile page shows up', async (testController) => {
+test('Test that view and edit profile pages show up', async (testController) => {
   // ToDo: Write this @Beemnet and remove the comment with eslint-disable-next-line
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoViewProfilePage(testController);
+  await viewProfilePage.isDisplayed(testController);
+  await navBar.gotoEditProfilePage(testController);
+  await editProfilePage.isDisplayed(testController);
 });
 
 // eslint-disable-next-line no-unused-vars
@@ -48,12 +60,29 @@ test('Test that smart contract page shows up', async (testController) => {
 });
 
 test('Test that add contract page shows up and works', async (testController) => {
+  // sign in
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
+  // use navbar to go to page
   await navBar.gotoAddSmartContractPage(testController);
+  // check if component is rendered
   await addSmartContractPage.isDisplayed(testController);
-  // ensure feed items show up
-  await addSmartContractPage.addSmartContract(testController, credentials.username, addContractTest);
+  // attempt to fill out the form
+  await smartContractPageForm.fillSmartContract(testController, credentials.username, addContractTest);
+});
+
+test('Test that edit contract page shows up and works', async (testController) => {
+  // sign in
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials2.username, credentials2.password);
+  // go to the smart contract
+  await editSmartContractPage.navigateToEditSmartContractPage(testController);
+  // check if edit component works
+  await editSmartContractPage.isDisplayed(testController);
+  // remove all previous text
+  await editSmartContractPage.removeTextForEdit(testController, credentials2.username);
+  // fill out the blank forms
+  await smartContractPageForm.fillSmartContract(testController, credentials2.username, editContractTest);
 });
 
 test('Test that Messenger page shows up and works', async (testController) => {
@@ -74,4 +103,12 @@ test('Test that Messenger page shows up and works', async (testController) => {
 // eslint-disable-next-line no-unused-vars
 test('Test that the test page exists with the 4 buttons', async (testController) => {
   await testSmartContractPage.smartContractTesting(testController);
+});
+
+test('Test the ListSmartContracts page', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoListSmartContractPage(testController);
+  await listSmartContractPage.isDisplayed(testController);
+  await listSmartContractPage.hasTable(testController);
 });
