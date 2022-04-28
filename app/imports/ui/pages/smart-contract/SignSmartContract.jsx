@@ -36,13 +36,48 @@ const missingSignature = (contract, username) => (isTenant(contract, username) &
 
 /** Renders a table containing all of the Stuff documents. Use <SmartContractItem> to render each row. */
 class SignSmartContract extends React.Component {
-  // On successful submit, insert the data.
+
   // check if the contract has been signed by both parties
+  createContractObjs(profiles, data) {
+    const { homeownerEmail, tenantEmail } = data;
+    // create the objects to store data
+    const hOwner = createHomeowner(profiles, homeownerEmail);
+    const tNant = createTenant(profiles, tenantEmail);
+    console.log(hOwner, tNant);
+  }
+
+  signatureCheck(profiles, username, data) {
+    // update the contract and check if both people are signed, this should never run unless both are signed, or if I'm not a tenant nor homeowner
+    const { _id, homeownerEmail, tenantEmail } = data;
+    const newlySignedContract = SmartContracts.collection.findOne(_id);
+    // check if both signatures are signed
+    if (bothSigned(newlySignedContract)) {
+      SmartContracts.collection.update(_id, { $set: { status: 'Active' } }, function (error) {
+        if (error) {
+          swal('Error', error.message, 'Contract was not updated');
+        } else if (homeownerEmail === username) {
+          swal('Success', 'Smart contract successfully signed by homeowner and smart contract created', 'success');
+          this.createContractObjs(profiles, homeownerEmail, tenantEmail);
+        } else if (tenantEmail === username) {
+          swal('Success', 'Smart contract successfully signed by tenant and smart contract created', 'success');
+          this.createContractObjs(profiles, homeownerEmail, tenantEmail);
+        }
+      });
+    } else { // this means that both are not signed
+      if (homeownerEmail === username) {
+        swal('Success', 'Smart contract successfully signed by homeowner', 'success');
+      }
+      if (tenantEmail === username) {
+        swal('Success', 'Smart contract successfully signed by tenant', 'success');
+      } else {
+        console.log('why am I here?');
+      }
+    }
+  }
 
   submit(data) {
     const { tenantEmail, tenantStance, _id } = data;
     const username = this.props.user.username;
-
     if (username === tenantEmail) {
       SmartContracts.collection.update(_id, { $set: { tenantStance } }, (error) => (error ?
         swal('Error', error.message, 'error') :
@@ -52,42 +87,34 @@ class SignSmartContract extends React.Component {
     }
   }
 
+  // On successful submit, insert the data.
   submitSignature(data) {
     const { signature, _id, homeownerEmail, homeownerName, tenantEmail, tenantName, tenantStance } = data;
     const username = this.props.user.username;
     const profiles = this.props.profile;
     // homeowner check and sign
     if (username === homeownerEmail && signature === homeownerName) {
-      SmartContracts.collection.update(_id, { $set: { homeownerSignature: signature } }, (error) => (error ?
-        swal('Error', error.message, 'error') :
-        swal('Success', 'Smart contract successfully signed by homeowner', 'success')));
-    }
-
-    // if I'm not a homeowner I should be the tenant
-    if (username === tenantEmail && signature === tenantName) {
+      SmartContracts.collection.update(_id, { $set: { homeownerSignature: signature } },
+        function (error) {
+          if (error) {
+            swal('Error', error.message, 'error');
+          }
+        });
+      // check if both signatures are now signed, will create the contract if both are now signed
+      this.signatureCheck(profiles, username, data);
+    } else if (username === tenantEmail && signature === tenantName) {
       if (tenantStance === 'Agreement') {
-        SmartContracts.collection.update(_id, { $set: { tenantSignature: signature } }, (error) => (error ?
-          swal('Error', error.message, 'error') :
-          swal('Success', 'Smart contract successfully signed by tenant', 'success')));
+        SmartContracts.collection.update(_id, { $set: { homeownerSignature: signature } },
+          function (error) {
+            if (error) {
+              swal('Error', error.message, 'error');
+            }
+          });
+        // check if both signatures are now signed, will create the contract if both are now signed
+        this.signatureCheck(profiles, username, data);
       } else {
         swal('Error', 'Tenet stance must be agreement before signing', 'error');
       }
-    }
-    // update the contract and check if both people are signed, this should never run unless both are signed, or if I'm not a tenant nor homeowner
-    const newlySignedContract = SmartContracts.collection.findOne(_id);
-    if (bothSigned(newlySignedContract)) {
-      SmartContracts.collection.update(_id, { $set: { status: 'Active' } }, function (error) {
-        if (error) {
-          swal('Error', error.message, 'Contract was not updated');
-        } else {
-          swal('Success', 'Smart contract successfully signed by homeowner', 'success');
-          // create the objects to store data
-          const hOwner = createHomeowner(profiles, homeownerEmail);
-          const tNant = createTenant(profiles, tenantEmail);
-          console.log(hOwner, tNant);
-        }
-      });
-    // something got messed up
     } else {
       swal('Error', 'Signature must be full name', 'error');
     }

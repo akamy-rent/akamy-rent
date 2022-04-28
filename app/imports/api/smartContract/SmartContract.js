@@ -2,6 +2,26 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
+const homeownerSchema = new SimpleSchema({
+  address: String,
+  privateKey: String,
+});
+
+const tenantSchema = new SimpleSchema({
+  address: String,
+  privateKey: String,
+  period: String,
+});
+
+const transactionLogSchema = new SimpleSchema({
+  date: String,
+  action: String,
+});
+
+
+
+
+
 /**
  * The SmartContractCollection. It encapsulates state and variable values for smartContract.
  */
