@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Header, Button } from 'semantic-ui-react';
-import { postTest } from '../../api/solc/connect2Compiler';
-import { deployContract, payRentScheduler } from '../../api/ethers/ethersFunctions';
-import { showTransactions } from '../../api/utilities/transactionUtils';
+import { postTest } from '../../../api/solc/connect2Compiler';
+import { deployContract, payRentScheduler } from '../../../api/ethers/ethersFunctions';
+import { showTransactions } from '../../../api/utilities/transactionUtils';
 
 const contracts = [];
 const deployedContracts = [];

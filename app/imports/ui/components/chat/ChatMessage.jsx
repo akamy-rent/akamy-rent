@@ -2,6 +2,8 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Grid, Segment } from 'semantic-ui-react';
 import { ChatMessageType } from './ChatTypes';
+import DisplayUserName from '../profile/DisplayUserName';
+import { displayRelativeTime } from '../common/CommonUtils';
 
 function getMessageContent(content) {
   switch (content.type) {
@@ -23,10 +25,10 @@ export default function ChatMessage({ message }) {
       <Grid>
         <Grid.Row>
           <Grid.Column width={8} textAlign='left'>
-            { message.createdby }
+            <DisplayUserName email={message.createdby} />
           </Grid.Column>
           <Grid.Column width={8} textAlign='right'>
-            { message.createdat.toLocaleString() }
+            { displayRelativeTime(message.createdat) }
           </Grid.Column>
         </Grid.Row>
       </Grid>

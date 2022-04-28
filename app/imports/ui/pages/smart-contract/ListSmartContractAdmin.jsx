@@ -3,11 +3,11 @@ import { Meteor } from 'meteor/meteor';
 import { Container, Table, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import SmartContractItem from '../components/smart-contract/SmartContractItem';
-import { SmartContracts } from '../../api/smartContract/SmartContract';
+import { SmartContracts } from '../../../api/smartContract/SmartContract';
+import SmartContractItemAdmin from '../../components/smart-contract/SmartContractItemAdmin';
 
-/** Renders a table containing all of the Stuff documents. Use <SmartContractItem> to render each row. */
-class ListSmartContract extends React.Component {
+/** Renders a table containing all of the SmartContract documents. Use <SmartContractItem> to render each row. */
+class ListSmartContractAdmin extends React.Component {
 
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
   render() {
@@ -17,23 +17,19 @@ class ListSmartContract extends React.Component {
   // Render the page once subscriptions have been received.
   renderPage() {
     return (
-      <Container id='listSmartContractPage'>
+      <Container>
         <br/>
-        <Header as="h2" textAlign="center">List Smart Contracts</Header>
+        <Header as="h2" textAlign="center">List Smart Contracts (Homeowner)</Header>
         <Table celled>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Unit Address</Table.HeaderCell>
-              <Table.HeaderCell>Homeowner</Table.HeaderCell>
-              <Table.HeaderCell>Tenant</Table.HeaderCell>
-              <Table.HeaderCell>Tenant Stance</Table.HeaderCell>
-              <Table.HeaderCell>Tenant Signature</Table.HeaderCell>
-              <Table.HeaderCell>Homeowner Signature</Table.HeaderCell>
-              <Table.HeaderCell>Actions</Table.HeaderCell>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Role</Table.HeaderCell>
+              <Table.HeaderCell>Stance</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.props.smartContracts.map((smartContract) => <SmartContractItem key={smartContract._id} smartContract={smartContract} />)}
+            {this.props.smartContracts.map((smartContract) => <SmartContractItemAdmin key={smartContract._id} smartContract={smartContract} />)}
           </Table.Body>
         </Table>
       </Container>
@@ -42,7 +38,7 @@ class ListSmartContract extends React.Component {
 }
 
 // Require an array of SmartContract documents in the props.
-ListSmartContract.propTypes = {
+ListSmartContractAdmin.propTypes = {
   smartContracts: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
@@ -50,7 +46,7 @@ ListSmartContract.propTypes = {
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
   // Get access to SmartContract documents.
-  const subscription = Meteor.subscribe(SmartContracts.userPublicationName);
+  const subscription = Meteor.subscribe(SmartContracts.adminPublicationName);
   // Determine if the subscription is ready
   const ready = subscription.ready();
   // Get the SmartContract documents
@@ -59,4 +55,4 @@ export default withTracker(() => {
     smartContracts,
     ready,
   };
-})(ListSmartContract);
+})(ListSmartContractAdmin);

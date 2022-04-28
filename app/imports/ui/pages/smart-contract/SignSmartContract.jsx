@@ -7,8 +7,8 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, ErrorsField, SelectField, SubmitField, TextField } from 'uniforms-semantic';
 import SimpleSchema from 'simpl-schema';
-import { SmartContracts } from '../../api/smartContract/SmartContract';
-import SignSmartContractItem from '../components/smart-contract/SignSmartContractItem';
+import { SmartContracts } from '../../../api/smartContract/SmartContract';
+import SignSmartContractItem from '../../components/smart-contract/SignSmartContractItem';
 
 const contractSchemaSignature = new SimpleSchema({
   signature: String,

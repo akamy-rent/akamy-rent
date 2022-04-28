@@ -5,8 +5,8 @@ import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
-import { SmartContracts } from '../../api/smartContract/SmartContract';
-import { Groups } from '../../api/group/Group';
+import { SmartContracts } from '../../../api/smartContract/SmartContract';
+import { Groups } from '../../../api/group/Group';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const contractSchema = new SimpleSchema({

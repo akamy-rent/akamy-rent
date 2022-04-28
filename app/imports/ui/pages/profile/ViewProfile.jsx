@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Container, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Profiles } from '../../api/profile/Profile';
-import Profile from '../components/Profile';
+import { Profiles } from '../../../api/profile/Profile';
+import Profile from '../../components/profile/Profile';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ViewProfile extends React.Component {
@@ -16,24 +16,17 @@ class ViewProfile extends React.Component {
 
   // Render the page once subscriptions have been received.
   renderPage() {
+    const pt = (pct) => ({ paddingTop: `${pct}%` });
+    const pb = (pct) => ({ paddingBottom: `${pct}%` });
     return (
       <Container>
         <br/>
         <br/>
-        <Header as="h2" textAlign="center">View Profile </Header>
-        <br/>
-        <br/>
-        <br/>
+        <Header style={{ ...pt(2), ...pb(2) }} as="h2" textAlign="center">View Profile </Header>
         {this.props.profiles.map((profile, index) => <Profile
           key={index}
           profile={profile}
         />)}
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
       </Container>
     );
   }
