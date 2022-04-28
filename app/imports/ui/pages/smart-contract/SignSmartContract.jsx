@@ -84,7 +84,6 @@ class SignSmartContract extends React.Component {
           // create the objects to store data
           const hOwner = createHomeowner(profiles, homeownerEmail);
           const tNant = createTenant(profiles, tenantEmail);
-          // create contract data
           console.log(hOwner, tNant);
         }
       });
