@@ -15,7 +15,6 @@
       "walletAddress": "ethereum address",
       "imageURL": "/images/meteor-logo.png",
       "privateKey": "private key",
-      "publicAddress": "public address",
       "owner": "john@foo.com"
     },
     {
@@ -25,7 +24,6 @@
       "walletAddress": "ethereum address",
       "imageURL": "/images/meteor-logo.png",
       "privateKey": "private key",
-      "publicAddress": "public address",
       "owner": "naruto@foo.com"
     },
     {
@@ -35,7 +33,6 @@
       "walletAddress": "ethereum address",
       "imageURL": "/images/meteor-logo.png",
       "privateKey": "private key",
-      "publicAddress": "public address",
       "owner": "jane@foo.com"
     },
     {
@@ -45,7 +42,6 @@
       "walletAddress": "ethereum address",
       "imageURL": "/images/meteor-logo.png",
       "privateKey": "private key",
-      "publicAddress": "public address",
       "owner": "admin@foo.com"
     },
     {
@@ -55,7 +51,6 @@
       "walletAddress": "ethereum address",
       "imageURL": "/images/meteor-logo.png",
       "privateKey": "private key",
-      "publicAddress": "public address",
       "owner": "barack@foo.com"
     }
   ],
