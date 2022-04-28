@@ -7,21 +7,21 @@ import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
-import AddSmartContract from '../pages/AddSmartContract';
-import EditSmartContract from '../pages/EditSmartContract';
+import AddSmartContract from '../pages/smart-contract/AddSmartContract';
+import EditSmartContract from '../pages/smart-contract/EditSmartContract';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
-import Dashboard from '../pages/ListDashboard';
+import Dashboard from '../pages/Dashboard';
 import Messenger from '../pages/Messenger';
-import TestContract from '../pages/TestContract';
-import ListSmartContract from '../pages/ListSmartContract';
-import ViewProfile from '../pages/ViewProfile';
-import EditProfile from '../pages/EditProfile';
-import ListSmartContractAdmin from '../pages/ListSmartContractAdmin';
-import SignSmartContract from '../pages/SignSmartContract';
-import ViewSmartContract from '../pages/ViewSmartContract';
+import TestContract from '../pages/smart-contract/TestContract';
+import ListSmartContract from '../pages/smart-contract/ListSmartContract';
+import ViewProfile from '../pages/profile/ViewProfile';
+import EditProfile from '../pages/profile/EditProfile';
+import ListSmartContractAdmin from '../pages/smart-contract/ListSmartContractAdmin';
+import SignSmartContract from '../pages/smart-contract/SignSmartContract';
+import ViewSmartContract from '../pages/smart-contract/ViewSmartContract';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {

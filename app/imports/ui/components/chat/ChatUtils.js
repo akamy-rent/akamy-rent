@@ -11,10 +11,14 @@ export function getContent80(message) {
   }
 }
 
-export function getLastContent80(messages) {
+export function getLastMessage(messages) {
   const count = messages.length;
   if (count === 0) {
     return '';
   }
-  return getContent80(messages[count - 1].content);
+  return messages[count - 1];
+}
+
+export function getLastContent80(messages) {
+  return getContent80(getLastMessage(messages)?.content ?? '');
 }

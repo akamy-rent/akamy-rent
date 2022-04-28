@@ -7,7 +7,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
-import { SmartContracts } from '../../api/smartContract/SmartContract';
+import { SmartContracts } from '../../../api/smartContract/SmartContract';
 
 const contractSchema = new SimpleSchema({
   homeownerName: String,

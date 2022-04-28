@@ -10,7 +10,7 @@ import SmartContractList from '../components/smart-contract/SmartContractList';
 const paddingStyle = { paddingTop: '5%' };
 
 /** A simple static component to render some text for the landing page. */
-class ListDashboard extends React.Component {
+class Dashboard extends React.Component {
   render() {
     return (
       <Container id="list-dashboard-page">
@@ -56,7 +56,7 @@ class ListDashboard extends React.Component {
   }
 }
 
-ListDashboard.propTypes = {
+Dashboard.propTypes = {
   smartContracts: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
@@ -72,4 +72,4 @@ export default withTracker(() => {
     smartContracts,
     ready,
   };
-})(ListDashboard);
+})(Dashboard);

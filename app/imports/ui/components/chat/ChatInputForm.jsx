@@ -22,9 +22,7 @@ export default function ChatInputForm({ submitFn }) {
       <Form onSubmit={handleFormSubmission}>
         <Form.Group unstackable>
           <Form.Input id='messenger-text-input' value={textInput} onChange={handleFieldChange} placeholder='Text message' width={14}/>
-          <Popup content='Send message' trigger={
-            <Button id='messenger-submit-text' type='submit' icon='send' color='blue' inverted circular width={2} />
-          } />
+          <Button id='messenger-submit-text' type='submit' icon='send' color='blue' inverted circular width={2} />
         </Form.Group>
       </Form>
     </>
