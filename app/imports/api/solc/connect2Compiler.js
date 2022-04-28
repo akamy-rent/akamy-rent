@@ -12,7 +12,7 @@ const agreement = {
   }],
 };
 
-export async function postTest(contracts) {
+export async function createAndCompileContract(contracts) {
   const payload = { data: JSON.stringify(agreement) };
   const result = await axios.post('http://206.189.2.161:9000', payload);
   const response = result.data;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Header, Button } from 'semantic-ui-react';
-import { postTest } from '../../../api/solc/connect2Compiler';
+import { createAndCompileContract } from '../../../api/solc/connect2Compiler';
 import { deployContract, payRentScheduler } from '../../../api/ethers/ethersFunctions';
 import { showTransactions } from '../../../api/utilities/transactionUtils';
 
@@ -10,7 +10,7 @@ const deployedContracts = [];
 /** Test page to compile a smart contract with the python script and */
 class TestContract extends React.Component {
   compileButton() {
-    postTest(contracts);
+    createAndCompileContract(contracts);
   }
 
   deployButton() {

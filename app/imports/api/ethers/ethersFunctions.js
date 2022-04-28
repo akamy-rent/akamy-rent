@@ -22,7 +22,6 @@ export async function deployContract(contract) {
   const factory = new ethers.ContractFactory(abi, bytecode, signer);
   const contractInstance = await factory.deploy();
   deployedContract.address = contractInstance.address;
-  deployedContract.homeowner.signer = signer;
   const startEth = ethers.utils.parseUnits('1.0', 'mwei');
   const tx = { to: contractInstance.address, value: startEth };
   const wallet = new ethers.Wallet(contract.homeowner.privateKey, provider);
@@ -42,7 +41,7 @@ export async function deployContract(contract) {
 
 function payRent(contract, currentD) {
   // initialize variables
-  const tenant = contract.tenants[0];
+  const tenant = contract.tenant;
   const tenantAddress = tenant.address;
   const contractAddress = contract.address;
   const homeownerAddress = contract.homeowner.address;
@@ -61,7 +60,7 @@ function payRent(contract, currentD) {
 
   // load provider
   const provider = loadProvider();
-  //  tenent is new signer of next contract call
+  //  tenant is new signer of next contract call
   const signer = provider.getSigner(tenant.address);
   // create new contract instance
   const contractInstance = new ethers.Contract(contract.address, contract.abi, signer);
@@ -72,7 +71,11 @@ function payRent(contract, currentD) {
 }
 
 export async function destroyContract(contract) {
-  const contractInstance = new ethers.Contract(contract.address, contract.abi, contract.homeowner.signer);
+  // load provider
+  const provider = loadProvider();
+  //  tenant is new signer of next contract call
+  const signer = provider.getSigner(contract.homeowner.address);
+  const contractInstance = new ethers.Contract(contract.address, contract.abi, signer);
   contractInstance.close();
 }
 
@@ -81,7 +84,7 @@ export async function payRentScheduler(contract) {
   const dateDeployed = moment();
   let nextPaymentDate = null;
   let currentDate = dateDeployed;
-  const tenant = contract.tenants[0];
+  const tenant = contract.tenant;
   const tenantPayPeriod = tenant.period;
   let finalPaymentDate = null;
   let counter = 1;
