@@ -47,14 +47,6 @@ class SmartContractCollection {
       name: String,
       // this is the id of the chat for this smart contract
       groupid: String,
-      // information needed for the smart contract
-      transactionLog: Object.array,
-      homeowner: Object,
-      tenant: Object,
-      byteCode: String,
-      abi: String,
-      address: String,
-      rent: Number,
     }, { tracker: Tracker });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);

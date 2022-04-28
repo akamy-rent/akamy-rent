@@ -1,4 +1,4 @@
-import { lodash } from 'lodash/seq';
+const _ = require('lodash');
 
 export function bothSigned(contract) {
   const hSignature = contract.homeownerSignature;
@@ -14,7 +14,7 @@ export function bothSigned(contract) {
 }
 
 export function createHomeowner(profiles, hEmail) {
-  const profile = lodash.filter(profiles, { email: hEmail });
+  const profile = _.filter(profiles, { email: hEmail });
   const homeowner = {};
   homeowner.address = profile.address;
   homeowner.privateKey = profile.privateKey;
@@ -22,7 +22,7 @@ export function createHomeowner(profiles, hEmail) {
 }
 
 export function createTenant(profiles, tEmail) {
-  const profile = lodash.filter(profiles, { email: tEmail });
+  const profile = _.filter(profiles, { email: tEmail });
   const tenant = {};
   tenant.address = profile.address;
   tenant.privateKey = profile.privateKey;
