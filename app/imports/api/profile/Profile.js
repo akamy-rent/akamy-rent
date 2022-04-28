@@ -18,7 +18,6 @@ class ProfileCollection {
       walletAddress: String,
       imageURL: String,
       privateKey: String,
-      publicAddress: String,
       owner: String,
     }, { tracker: Tracker });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.

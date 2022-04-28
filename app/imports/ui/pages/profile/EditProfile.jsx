@@ -16,10 +16,10 @@ class EditProfile extends React.Component {
   // On successful submit, insert the data.
   submit(data) {
     const memberId = this.props.profiles[0]._id;
-    const { firstName, lastName, imageURL, phoneNumber, walletAddress, publicAddress } = data;
-    Profiles.collection.update(memberId, { $set: { firstName, lastName, imageURL, phoneNumber, walletAddress, publicAddress } }, (error) => (error ?
+    const { firstName, lastName, imageURL, phoneNumber, walletAddress } = data;
+    Profiles.collection.update(memberId, { $set: { firstName, lastName, imageURL, phoneNumber, walletAddress } }, (error) => (error ?
       swal('Error', error.message, 'error') :
-      swal('Success', 'Item updated successfully', 'success')));
+      swal('Success', 'Profile updated successfully', 'success')));
   }
 
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
@@ -49,6 +49,7 @@ class EditProfile extends React.Component {
           </Grid>
           <TextField name='phoneNumber' />
           <TextField name='walletAddress' />
+          <TextField name='privateKey' />
           <TextField name='imageURL' />
           <SubmitField value='Submit'/>
           <br/>
