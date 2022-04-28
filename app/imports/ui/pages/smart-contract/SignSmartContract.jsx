@@ -56,11 +56,22 @@ class SignSmartContract extends React.Component {
     const { signature, _id, homeownerEmail, homeownerName, tenantEmail, tenantName, tenantStance } = data;
     const username = this.props.user.username;
     const profiles = this.props.profile;
-    // I shouldn't be both the homeowner and the tenant, so this should run
+    // homeowner check and sign
     if (username === homeownerEmail && signature === homeownerName) {
       SmartContracts.collection.update(_id, { $set: { homeownerSignature: signature } }, (error) => (error ?
         swal('Error', error.message, 'error') :
         swal('Success', 'Smart contract successfully signed by homeowner', 'success')));
+    }
+
+    // if I'm not a homeowner I should be the tenant
+    if (username === tenantEmail && signature === tenantName) {
+      if (tenantStance === 'Agreement') {
+        SmartContracts.collection.update(_id, { $set: { tenantSignature: signature } }, (error) => (error ?
+          swal('Error', error.message, 'error') :
+          swal('Success', 'Smart contract successfully signed by tenant', 'success')));
+      } else {
+        swal('Error', 'Tenet stance must be agreement before signing', 'error');
+      }
     }
     // update the contract and check if both people are signed, this should never run unless both are signed, or if I'm not a tenant nor homeowner
     const newlySignedContract = SmartContracts.collection.findOne(_id);
@@ -74,10 +85,10 @@ class SignSmartContract extends React.Component {
           const hOwner = createHomeowner(profiles, homeownerEmail);
           const tNant = createTenant(profiles, tenantEmail);
           // create contract data
-          console.log(hOwner,tNant);
+          console.log(hOwner, tNant);
         }
       });
-      // something got messed up
+    // something got messed up
     } else {
       swal('Error', 'Signature must be full name', 'error');
     }
