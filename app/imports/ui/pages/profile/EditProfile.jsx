@@ -89,9 +89,9 @@ export default withTracker(() => {
       firstName: 'John',
       lastName: 'Doe',
       phoneNumber: '111-222-3333',
-      walletAddress: 'ethereum address',
+      walletAddress: 'ethereum address must be min 20 characters',
       imageURL: '/images/meteor-logo.png',
-      privateKey: 'private key',
+      privateKey: 'Do not share this key with anyone',
       publicAddress: 'public address',
       owner: getUserName,
     };
