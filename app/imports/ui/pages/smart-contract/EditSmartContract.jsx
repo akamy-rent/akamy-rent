@@ -93,9 +93,11 @@ export default withTracker(({ match }) => {
   const documentId = match.params._id;
   // Get access to SmartContract documents.
   const subscription = Meteor.subscribe(SmartContracts.userPublicationName);
-  // Determine if the subscription is ready
-  const ready = subscription.ready();
+
   const user = Meteor.user();
+  // Determine if the subscription is ready
+  const ready = subscription.ready() && user !== undefined;
+
   // Get the document
   const doc = SmartContracts.collection.findOne(documentId);
   return {
