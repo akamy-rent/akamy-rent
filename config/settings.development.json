@@ -15,7 +15,6 @@
       "walletAddress": "ethereum address",
       "imageURL": "/images/meteor-logo.png",
       "privateKey": "private key",
-      "publicAddress": "public address",
       "owner": "john@foo.com"
     },
     {
@@ -25,7 +24,6 @@
       "walletAddress": "ethereum address",
       "imageURL": "/images/meteor-logo.png",
       "privateKey": "private key",
-      "publicAddress": "public address",
       "owner": "naruto@foo.com"
     },
     {
@@ -34,8 +32,8 @@
       "phoneNumber": "808-123-4567",
       "walletAddress": "0x50A483b663dD5c5e18ACc99720d25e43DF7FF363",
       "imageURL": "/images/meteor-logo.png",
-      "privateKey": "5e64be9102203a394bc7142180050770e13513dc295643b68b3151c6ec388e41",
       "publicAddress": "public address",
+      "privateKey": "private key",
       "owner": "jane@foo.com"
     },
     {
@@ -45,7 +43,6 @@
       "walletAddress": "ethereum address",
       "imageURL": "/images/meteor-logo.png",
       "privateKey": "private key",
-      "publicAddress": "public address",
       "owner": "admin@foo.com"
     },
     {
@@ -54,8 +51,8 @@
       "phoneNumber": "808-123-4567",
       "walletAddress": "0x18ab864362Ea20A9080A120BC340da31840b9D59",
       "imageURL": "/images/meteor-logo.png",
-      "privateKey": "485cb19c08ae9231678bbb0301a5e723f6b2d619daa01708dd4311b8f6b23291",
       "publicAddress": "public address",
+      "privateKey": "private key",
       "owner": "barack@foo.com"
     }
   ],
