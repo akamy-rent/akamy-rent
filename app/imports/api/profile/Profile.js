@@ -21,7 +21,6 @@ class ProfileCollection {
       walletAddress: {
         type: String,
         min: 20,
-        max: 20,
       },
       imageURL: String,
       privateKey: {
