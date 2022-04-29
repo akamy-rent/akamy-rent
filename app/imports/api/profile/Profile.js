@@ -14,8 +14,14 @@ class ProfileCollection {
     this.schema = new SimpleSchema({
       firstName: String,
       lastName: String,
-      phoneNumber: String,
-      walletAddress: String,
+      phoneNumber: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Phone,
+      },
+      walletAddress: {
+        type: String,
+        min: 20,
+      },
       imageURL: String,
       privateKey: String,
       owner: String,
