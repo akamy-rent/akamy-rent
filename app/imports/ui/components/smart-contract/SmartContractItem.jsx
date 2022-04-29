@@ -4,8 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Button, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
-
-const isHomeowner = (contract, username) => contract.homeownerEmail === username;
+import { isHomeowner } from './SmartContractUtils';
 
 /** Renders a single row in the List smartContract table. See pages/ListsmartContract.jsx. */
 class SmartContractItem extends React.Component {

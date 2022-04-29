@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { SmartContracts } from '../../../api/smartContract/SmartContract';
+import { isHomeowner } from '../../components/smart-contract/SmartContractUtils';
 
 const contractSchema = new SimpleSchema({
   homeownerName: String,
@@ -34,7 +35,7 @@ class EditSmartContract extends React.Component {
     const { homeownerName, homeownerEmail, homeownerPhoneNumber, tenantName, tenantEmail, tenantPhoneNumber, unitAddress, monthlyRent, status, _id } = data;
     const username = this.props.user.username;
 
-    if (username === homeownerEmail) {
+    if (isHomeowner(data, username)) {
       SmartContracts.collection.update(_id, { $set: { homeownerName, homeownerEmail, homeownerPhoneNumber, tenantName, tenantEmail, tenantPhoneNumber, unitAddress,
         monthlyRent, status } }, (error) => (error ?
         swal('Error', error.message, 'error') :

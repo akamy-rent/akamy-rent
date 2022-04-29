@@ -9,6 +9,7 @@ import { AutoForm, ErrorsField, SelectField, SubmitField, TextField } from 'unif
 import SimpleSchema from 'simpl-schema';
 import { SmartContracts } from '../../../api/smartContract/SmartContract';
 import SignSmartContractItem from '../../components/smart-contract/SignSmartContractItem';
+import { isHomeowner, isTenant } from '../../components/smart-contract/SmartContractUtils';
 
 const contractSchemaSignature = new SimpleSchema({
   signature: String,
@@ -24,9 +25,6 @@ const contractSchemaTenantStance = new SimpleSchema({
 
 const bridgeSignature = new SimpleSchema2Bridge(contractSchemaSignature);
 const bridgeTenantStance = new SimpleSchema2Bridge(contractSchemaTenantStance);
-
-const isTenant = (contract, username) => contract.tenantEmail === username;
-const isHomeowner = (contract, username) => contract.homeownerEmail === username;
 
 const missingSignature = (contract, username) => (isTenant(contract, username) && contract.tenantSignature === '') || (
   isHomeowner(contract, username) && contract.homeownerSignature === '');
