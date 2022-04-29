@@ -14,6 +14,7 @@ export async function deployContract(contract) {
   const deployedContract = contract;
   const abi = contract.abi;
   const bytecode = contract.bytecode;
+  console.log(contract.homeowner);
   const homeownerAddress = contract.homeowner.address;
   const provider = loadProvider();
 
@@ -21,7 +22,6 @@ export async function deployContract(contract) {
   const signer = provider.getSigner(homeownerAddress);
   const factory = new ethers.ContractFactory(abi, bytecode, signer);
   const contractInstance = await factory.deploy();
-  deployedContract.address = contractInstance.address;
   const startEth = ethers.utils.parseUnits('1.0', 'mwei');
   const tx = { to: contractInstance.address, value: startEth };
   const wallet = new ethers.Wallet(contract.homeowner.privateKey, provider);
@@ -33,10 +33,10 @@ export async function deployContract(contract) {
   saveTransactionForRecord(deployedContract.transactionLog, currentDate, deploymentString);
 
   // need to give contract some money to send transaction
-  wallet.signTransaction(tx);
-  wallet.sendTransaction(tx);
-
+  await wallet.signTransaction(tx);
+  await wallet.sendTransaction(tx);
   console.log(`Contract found at ${contractInstance.address}`);
+  return contractInstance.address;
 }
 
 function payRent(contract, currentD) {
