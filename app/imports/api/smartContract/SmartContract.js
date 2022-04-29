@@ -77,7 +77,7 @@ class SmartContractCollection {
         type: tenantSchema,
         optional: true,
       },
-      byteCode: {
+      bytecode: {
         type: String,
         optional: true,
       },

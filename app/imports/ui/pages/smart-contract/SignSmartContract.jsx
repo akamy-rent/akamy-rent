@@ -51,8 +51,7 @@ class SignSmartContract extends React.Component {
         console.log(response);
         const { abi, bytecode } = response.data;
         if (response.status === 200) {
-          console.log(bytecode);
-          SmartContracts.collection.update(_id, { $set: { status: 'Active', abi: abi, bytecode: bytecode.toString() } }, function (error) {
+          SmartContracts.collection.update(_id, { $set: { status: 'Active', abi: abi, bytecode: bytecode } }, function (error) {
             if (error) {
               swal('Error', error.message, 'Contract was not updated');
             } else {
@@ -60,7 +59,7 @@ class SignSmartContract extends React.Component {
               swal('Success', `Smart contract successfully signed by ${signerType}.\nContract creation and deployment successful`, 'success');
             }
           });
-          console.log(newlySignedContract);
+          console.log(SmartContracts.collection.findOne(_id).bytecode);
         } else {
           swal('Error', 'Network Error', 'Contract was not compiled');
         }
@@ -147,7 +146,7 @@ class SignSmartContract extends React.Component {
                 <ErrorsField/>
               </AutoForm>
             </Segment>}
-          {missingSignature(this.props.smartContract, this.props.user.username) &&
+          {
             <Segment>
               <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data)}
                 model={this.props.smartContract}>
