@@ -55,7 +55,7 @@ class EditSmartContract extends React.Component {
       <Grid id={'edit-smart-contract-page'} container centered>
         <Grid.Column>
           <br/>
-          <Header as="h2" textAlign="center">Edit Smart Contract (Draft)</Header>
+          <Header as="h2" textAlign="center">Edit Smart Contract</Header>
           <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
             <Segment>
               <TextField id={'unit-address'} name='unitAddress'/>

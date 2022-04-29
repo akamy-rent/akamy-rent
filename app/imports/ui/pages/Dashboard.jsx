@@ -23,19 +23,19 @@ class Dashboard extends React.Component {
 
             <Grid.Column>
               <Header as='h1' >$ 1000</Header>
-              <Header as='h2' >Total Income</Header>
+              <Header as='h2' >Monthly Income</Header>
             </Grid.Column>
 
             <Grid.Column>
               <Header as='h1' > $ 300</Header>
-              <Header as='h2' >Total Expenses</Header>
+              <Header as='h2' >Monthly Payment</Header>
             </Grid.Column>
           </Grid.Row>
         </Grid>
 
-        <Header style={paddingStyle} as='h1'>Smart Contracts</Header>
+        <Header style={paddingStyle} as='h2'>Smart Contracts</Header>
         <SmartContractList smartContracts={this.props.smartContracts} />
-
+        <br/>
         <Grid style={paddingStyle} verticalAlign='middle' textAlign='center' container>
           <Grid.Row columns={3}>
             <Grid.Column>

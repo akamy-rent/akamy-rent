@@ -18,8 +18,7 @@ class NavBar extends React.Component {
         {this.props.currentUser ? (
           [<Menu.Item as={NavLink} id="navbar-dashboard" activeClassName="active" exact to="/dashboard" key='dashboard'>Dashboard</Menu.Item>,
             <Menu.Item as={NavLink} id="navbar-add-smart-contract" activeClassName="active" exact to="/add" key='add'>Add Smart Contract</Menu.Item>,
-            <Menu.Item as={NavLink} id="navbar-messenger" activeClassName="active" exact to="/chat" key='chat'>Messenger</Menu.Item>,
-            <Menu.Item as={NavLink} activeClassName="active" exact to="/viewProfile" key='profile'>View Profile</Menu.Item>]
+            <Menu.Item as={NavLink} id="navbar-messenger" activeClassName="active" exact to="/chat" key='chat'>Messenger</Menu.Item>]
         ) : ''}
         {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
           <Menu.Item as={NavLink} activeClassName="active" exact to="/admin" key='admin'>Homeowner Smart Contracts List</Menu.Item>
