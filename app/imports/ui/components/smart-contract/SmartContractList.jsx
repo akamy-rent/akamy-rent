@@ -8,7 +8,7 @@ class SmartContractList extends React.Component {
   // Render the page once subscriptions have been received.
   render() {
     return (
-      <Table celled>
+      <Table celled color="blue" inverted>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Unit Address</Table.HeaderCell>
