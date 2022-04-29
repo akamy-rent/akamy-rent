@@ -3,7 +3,7 @@ export function bothSigned(contract) {
   const tSignature = contract.tenantSignature;
   const hSigned = hSignature !== '';
   const tSigned = tSignature !== '';
-  console.log(`h:${hSigned}{${hSignature}}, t${tSigned}{${tSignature}}`);
+  console.log(`h:${hSigned}{${hSignature}}, t${tSigned}{${tSignature}} value: ${hSigned && tSigned}`);
   return hSigned && tSigned;
 }
 

@@ -11,6 +11,7 @@ import SignSmartContractItem from '../../components/smart-contract/SignSmartCont
 import { SmartContracts } from '../../../api/smartContract/SmartContract';
 import { Profiles } from '../../../api/profile/Profile';
 import { bothSigned, createTenant, createHomeowner } from '../../../api/smartContract/smartContractDeployment';
+import { createAndCompileContract } from '../../../api/solc/connect2Compiler';
 
 const contractSchemaSignature = new SimpleSchema({
   signature: String,
@@ -39,21 +40,36 @@ class SignSmartContract extends React.Component {
   // checks if the signatures are all filled
   signatureCheck(profiles, username, data) {
     // update the contract and check if both people are signed, this should never run unless both are signed, or if I'm not a tenant nor homeowner
-    const { _id, homeownerEmail } = data;
+    const { _id, homeownerEmail, tenantEmail, signature } = data;
     const newlySignedContract = SmartContracts.collection.findOne(_id);
     // check if both signatures are signed
     if (bothSigned(newlySignedContract)) {
-      SmartContracts.collection.update(_id, { $set: { status: 'Active' } }, function (error) {
-        if (error) {
-          swal('Error', error.message, 'Contract was not updated');
+      // both have signed, let's try to deploy it
+      newlySignedContract.tenant = createTenant(profiles, tenantEmail);
+      newlySignedContract.homeowner = createHomeowner(profiles, homeownerEmail);
+      createAndCompileContract(newlySignedContract).then(response => {
+        console.log(response);
+        const { abi, bytecode } = response.data;
+        if (response.status === 200) {
+          console.log(bytecode);
+          SmartContracts.collection.update(_id, { $set: { status: 'Active', abi: abi, bytecode: bytecode.toString() } }, function (error) {
+            if (error) {
+              swal('Error', error.message, 'Contract was not updated');
+            } else {
+              const signerType = homeownerEmail === username ? 'homeowner' : 'tenant';
+              swal('Success', `Smart contract successfully signed by ${signerType}.\nContract creation and deployment successful`, 'success');
+            }
+          });
+          console.log(newlySignedContract);
         } else {
-          // this person is whoever
-          const signerType = homeownerEmail === username ? 'homeowner' : 'tenant';
-          swal('Success', `Smart contract successfully signed by ${signerType} and smart contract created`, 'success');
+          swal('Error', 'Network Error', 'Contract was not compiled');
         }
       });
+      const newlyCompiledContract = SmartContracts.collection.findOne(_id);
+      console.log(newlyCompiledContract);
     } else { // both aren't signed
-      SmartContracts.collection.update(_id, { $set: { status: 'Active' } }, function (error) {
+      const signatureObject = homeownerEmail === username ? { homeownerSignature: signature } : { tenantSignature: signature };
+      SmartContracts.collection.update(_id, { $set: signatureObject }, function (error) {
         if (error) {
           swal('Error', error.message, 'Contract was not updated');
         } else {
@@ -131,15 +147,15 @@ class SignSmartContract extends React.Component {
                 <ErrorsField/>
               </AutoForm>
             </Segment>}
-          {missingSignature(this.props.smartContract, this.props.user.username) &&
-              <Segment>
-                <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data)}
-                  model={this.props.smartContract}>
-                  <TextField name='signature'/>
-                  <SubmitField value='Save'/>
-                  <ErrorsField/>
-                </AutoForm>
-              </Segment>
+          {
+            <Segment>
+              <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data)}
+                model={this.props.smartContract}>
+                <TextField name='signature'/>
+                <SubmitField value='Save'/>
+                <ErrorsField/>
+              </AutoForm>
+            </Segment>
           }</Segment>
       </Grid>
     );

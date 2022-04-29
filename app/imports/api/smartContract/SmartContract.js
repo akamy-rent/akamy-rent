@@ -82,7 +82,12 @@ class SmartContractCollection {
         optional: true,
       },
       abi: {
-        type: String,
+        type: Array,
+        optional: true,
+      },
+      'abi.$': {
+        type: Object,
+        blackbox: true,
         optional: true,
       },
       address: {
