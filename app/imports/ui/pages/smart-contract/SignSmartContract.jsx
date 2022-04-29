@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Header, Loader, Grid, Segment } from 'semantic-ui-react';
+import { Header, Loader, Container, Segment } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -77,7 +77,7 @@ class SignSmartContract extends React.Component {
   // Render the page once subscriptions have been received.
   renderPage() {
     return (
-      <Grid container centered>
+      <Container centered>
         { console.log(this.props.ready) }
         <br/>
         { console.log(this.props.smartContract) }
@@ -101,7 +101,7 @@ class SignSmartContract extends React.Component {
                 </AutoForm>
               </Segment>
           }</Segment>
-      </Grid>
+      </Container>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Loader, Header, Segment } from 'semantic-ui-react';
+import { Container, Loader, Header, Segment } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { AutoForm, ErrorsField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-semantic';
 import { Meteor } from 'meteor/meteor';
@@ -40,7 +40,7 @@ class EditSmartContract extends React.Component {
         swal('Error', error.message, 'error') :
         swal('Success', 'Information updated successfully', 'success')));
     } else {
-      swal('Error', 'Only homeowner can edit these fields', 'error');
+      swal('Error', 'You are not permitted to edit this smart contract', 'error');
     }
   }
 
@@ -52,31 +52,29 @@ class EditSmartContract extends React.Component {
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   renderPage() {
     return (
-      <Grid id={'edit-smart-contract-page'} container centered>
-        <Grid.Column>
-          <br/>
-          <Header as="h2" textAlign="center">Edit Smart Contract (Draft)</Header>
-          <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
+      <Container id={'edit-smart-contract-page'} container centered>
+        <br/>
+        <Header as="h2" textAlign="center">Edit Smart Contract (Draft)</Header>
+        <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
+          <Segment>
+            <TextField id={'unit-address'} name='unitAddress'/>
+            <NumField id={'monthly-rent'} name='monthlyRent' decimal={true}/>
             <Segment>
-              <TextField id={'unit-address'} name='unitAddress'/>
-              <NumField id={'monthly-rent'} name='monthlyRent' decimal={true}/>
-              <Segment>
-                <TextField id={'homeowner-name'} name='homeownerName'/>
-                <TextField id={'homeowner-email'} name='homeownerEmail'/>
-                <TextField id={'homeowner-phone'} name='homeownerPhoneNumber'/>
-              </Segment>
-              <Segment>
-                <TextField id={'tenant-name'} name='tenantName'/>
-                <TextField id={'tenant-email'} name='tenantEmail'/>
-                <TextField id={'tenant-phone'} name='tenantPhoneNumber'/>
-              </Segment>
-              <LongTextField id={'t-and-c'} name='termsAndConditions'/>
-              <SubmitField id={'save'} value='Save'/>
-              <ErrorsField/>
+              <TextField id={'homeowner-name'} name='homeownerName'/>
+              <TextField id={'homeowner-email'} name='homeownerEmail'/>
+              <TextField id={'homeowner-phone'} name='homeownerPhoneNumber'/>
             </Segment>
-          </AutoForm>
-        </Grid.Column>
-      </Grid>
+            <Segment>
+              <TextField id={'tenant-name'} name='tenantName'/>
+              <TextField id={'tenant-email'} name='tenantEmail'/>
+              <TextField id={'tenant-phone'} name='tenantPhoneNumber'/>
+            </Segment>
+            <LongTextField id={'t-and-c'} name='termsAndConditions'/>
+            <SubmitField id={'save'} value='Save'/>
+            <ErrorsField/>
+          </Segment>
+        </AutoForm>
+      </Container>
     );
   }
 }
