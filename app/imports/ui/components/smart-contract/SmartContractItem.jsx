@@ -17,10 +17,10 @@ class SmartContractItem extends React.Component {
         <Table.Cell>{this.props.smartContract.status}</Table.Cell>
         <Table.Cell>
           <Link to={`/edit/${this.props.smartContract._id}`}>
-            <Button compact color='orange'>Edit</Button>
+            <Button compact color='grey'>Edit</Button>
           </Link>
           <Link to={`/sign/${this.props.smartContract._id}`}>
-            <Button compact color='green'>Sign</Button>
+            <Button compact color='black'>Sign</Button>
           </Link>
         </Table.Cell>
       </Table.Row>
