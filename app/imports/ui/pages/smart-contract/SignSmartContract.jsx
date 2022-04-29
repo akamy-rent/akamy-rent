@@ -12,6 +12,7 @@ import { SmartContracts } from '../../../api/smartContract/SmartContract';
 import { Profiles } from '../../../api/profile/Profile';
 import { bothSigned, createTenant, createHomeowner } from '../../../api/smartContract/smartContractDeployment';
 import { createAndCompileContract } from '../../../api/solc/connect2Compiler';
+import { deployContract } from '../../../api/ethers/ethersFunctions';
 
 const contractSchemaSignature = new SimpleSchema({
   signature: String,
@@ -39,34 +40,33 @@ const missingSignature = (contract, username) => (isTenant(contract, username) &
 class SignSmartContract extends React.Component {
   // checks if the signatures are all filled
   signatureCheck(profiles, username, data) {
+    const contract = this.props.smartContract;
     // update the contract and check if both people are signed, this should never run unless both are signed, or if I'm not a tenant nor homeowner
     const { _id, homeownerEmail, tenantEmail, signature } = data;
-    const newlySignedContract = SmartContracts.collection.findOne(_id);
     // check if both signatures are signed
-    if (bothSigned(newlySignedContract)) {
+    if (bothSigned(contract)) {
       // both have signed, let's try to deploy it
-      newlySignedContract.tenant = createTenant(profiles, tenantEmail);
-      newlySignedContract.homeowner = createHomeowner(profiles, homeownerEmail);
-      createAndCompileContract(newlySignedContract).then(response => {
-        console.log(response);
+      SmartContracts.collection.update(_id, { $set: { homeowner: createHomeowner(profiles, homeownerEmail), tenant: createTenant(profiles, tenantEmail) } });
+      createAndCompileContract(contract).then(response => {
         const { abi, bytecode } = response.data;
         if (response.status === 200) {
-          console.log(bytecode);
-          SmartContracts.collection.update(_id, { $set: { status: 'Active', abi: abi, bytecode: bytecode.toString() } }, function (error) {
+          SmartContracts.collection.update(_id, { $set: { status: 'Active', abi: abi, bytecode: bytecode } }, function (error) {
             if (error) {
               swal('Error', error.message, 'Contract was not updated');
             } else {
               const signerType = homeownerEmail === username ? 'homeowner' : 'tenant';
               swal('Success', `Smart contract successfully signed by ${signerType}.\nContract creation and deployment successful`, 'success');
+              deployContract(contract).then(value => {
+                if (value) { contract.address = value; } else {
+                  swal('Error', 'Network Error', 'Contract was not deployed');
+                }
+              });
             }
           });
-          console.log(newlySignedContract);
         } else {
           swal('Error', 'Network Error', 'Contract was not compiled');
         }
-      });
-      const newlyCompiledContract = SmartContracts.collection.findOne(_id);
-      console.log(newlyCompiledContract);
+      }, error => swal('Error', error, 'Contract was not compiled'));
     } else { // both aren't signed
       const signatureObject = homeownerEmail === username ? { homeownerSignature: signature } : { tenantSignature: signature };
       SmartContracts.collection.update(_id, { $set: signatureObject }, function (error) {
