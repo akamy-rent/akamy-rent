@@ -39,35 +39,29 @@ class SignSmartContract extends React.Component {
   // checks if the signatures are all filled
   signatureCheck(profiles, username, data) {
     // update the contract and check if both people are signed, this should never run unless both are signed, or if I'm not a tenant nor homeowner
-    const { _id, homeownerEmail, tenantEmail } = data;
+    const { _id, homeownerEmail } = data;
     const newlySignedContract = SmartContracts.collection.findOne(_id);
     // check if both signatures are signed
     if (bothSigned(newlySignedContract)) {
       SmartContracts.collection.update(_id, { $set: { status: 'Active' } }, function (error) {
         if (error) {
           swal('Error', error.message, 'Contract was not updated');
-        } else if (homeownerEmail === username) {
-          swal('Success', 'Smart contract successfully signed by homeowner and smart contract created', 'success');
-          const hOwner = createHomeowner(profiles, homeownerEmail);
-          const tNant = createTenant(profiles, tenantEmail);
-          console.log(hOwner, tNant);
-        } else if (tenantEmail === username) {
-          swal('Success', 'Smart contract successfully signed by tenant and smart contract created', 'success');
-          const hOwner = createHomeowner(profiles, homeownerEmail);
-          const tNant = createTenant(profiles, tenantEmail);
-          console.log(hOwner, tNant);
+        } else {
+          // this person is whoever
+          const signerType = homeownerEmail === username ? 'homeowner' : 'tenant';
+          swal('Success', `Smart contract successfully signed by ${signerType} and smart contract created`, 'success');
         }
       });
-    } else { // this means that both are not signed
-      console.log(`h: ${username}, ${homeownerEmail}`);
-      console.log(`t: ${username}, ${tenantEmail}`);
-      if (homeownerEmail === username) {
-        swal('Success', 'Smart contract successfully signed by homeowner', 'success');
-      } else if (tenantEmail === username) {
-        swal('Success', 'Smart contract successfully signed by tenant', 'success');
-      } else {
-        console.log('why am I here?');
-      }
+    } else { // both aren't signed
+      SmartContracts.collection.update(_id, { $set: { status: 'Active' } }, function (error) {
+        if (error) {
+          swal('Error', error.message, 'Contract was not updated');
+        } else {
+          // this person is whoever
+          const signerType = homeownerEmail === username ? 'homeowner' : 'tenant';
+          swal('Success', `Smart contract successfully signed by ${signerType}`, 'success');
+        }
+      });
     }
   }
 
@@ -87,7 +81,7 @@ class SignSmartContract extends React.Component {
   submitSignature(data) {
     const { signature, _id, homeownerEmail, homeownerName, tenantEmail, tenantName, tenantStance } = data;
     const username = this.props.user.username;
-    const profiles = this.props.profile;
+    const profiles = this.props.profiles;
     // homeowner check and sign
     if (username === homeownerEmail && signature === homeownerName) {
       SmartContracts.collection.update(_id, { $set: { homeownerSignature: signature } },
@@ -157,7 +151,7 @@ SignSmartContract.propTypes = {
   smartContract: PropTypes.object,
   user: PropTypes.object,
   model: PropTypes.object,
-  profile: PropTypes.array,
+  profiles: PropTypes.array,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -173,12 +167,12 @@ export default withTracker(({ match }) => {
   // Get the SmartContract documents
   const smartContract = SmartContracts.collection.findOne(_id);
   const user = Meteor.user();
-  const profile = Profiles.collection.find({}).fetch();
+  const profiles = Profiles.collection.find({}).fetch();
   const ready = subscriptionReady && user !== undefined;
   return {
     smartContract,
     user,
-    profile,
+    profiles,
     ready,
   };
 })(SignSmartContract);

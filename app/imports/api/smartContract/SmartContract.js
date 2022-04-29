@@ -18,10 +18,6 @@ const transactionLogSchema = new SimpleSchema({
   action: String,
 });
 
-
-
-
-
 /**
  * The SmartContractCollection. It encapsulates state and variable values for smartContract.
  */
@@ -67,6 +63,36 @@ class SmartContractCollection {
       name: String,
       // this is the id of the chat for this smart contract
       groupid: String,
+      // optional contract items
+      // information needed for the smart contract
+      transactionLog: {
+        type: transactionLogSchema,
+        optional: true,
+      },
+      homeowner: {
+        type: homeownerSchema,
+        optional: true,
+      },
+      tenant: {
+        type: tenantSchema,
+        optional: true,
+      },
+      byteCode: {
+        type: String,
+        optional: true,
+      },
+      abi: {
+        type: String,
+        optional: true,
+      },
+      address: {
+        type: String,
+        optional: true,
+      },
+      rent: {
+        type: Number,
+        optional: true,
+      },
     }, { tracker: Tracker });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);

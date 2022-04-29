@@ -1,31 +1,23 @@
-const _ = require('lodash');
-
 export function bothSigned(contract) {
   const hSignature = contract.homeownerSignature;
   const tSignature = contract.tenantSignature;
-  const hNotSigned = hSignature === '';
-  const tNotSigned = tSignature === '';
-  console.log(`h: not signed: ${hNotSigned} signature: ${hSignature}`);
-  console.log(`t: not signed: ${hNotSigned} signature: ${hSignature}`);
-  if (hNotSigned || tNotSigned) {
-    return false;
-  }
-  return true;
+  const hSigned = hSignature !== '';
+  const tSigned = tSignature !== '';
+  console.log(`h:${hSigned}{${hSignature}}, t${tSigned}{${tSignature}}`);
+  return hSigned && tSigned;
 }
 
-export function createHomeowner(profiles, hEmail) {
-  const profile = profiles.filter(p => p.owner === hEmail);
-  const homeowner = {};
-  homeowner.address = profile[0].walletAddress;
-  homeowner.privateKey = profile[0].privateKey;
-  return homeowner;
+export function createHomeowner(profiles, email) {
+  const profile = profiles.find(p => p.owner === email);
+  return {
+    address: profile.walletAddress,
+    privateKey: profile.privateKey,
+  };
 }
 
-export function createTenant(profiles, tEmail) {
-  const profile = _.filter(profiles, { owner: tEmail });
-  const tenant = {};
-  tenant.address = profile[0].walletAddress;
-  tenant.privateKey = profile[0].privateKey;
-  tenant.period = 'seconds';
-  return tenant;
+export function createTenant(profiles, email) {
+  return {
+    ...createHomeowner(profiles, email),
+    period: 'seconds',
+  };
 }
