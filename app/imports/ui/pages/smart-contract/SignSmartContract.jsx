@@ -147,7 +147,7 @@ class SignSmartContract extends React.Component {
                 <ErrorsField/>
               </AutoForm>
             </Segment>}
-          {
+          {missingSignature(this.props.smartContract, this.props.user.username) &&
             <Segment>
               <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data)}
                 model={this.props.smartContract}>
