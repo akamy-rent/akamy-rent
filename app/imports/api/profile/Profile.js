@@ -14,10 +14,19 @@ class ProfileCollection {
     this.schema = new SimpleSchema({
       firstName: String,
       lastName: String,
-      phoneNumber: String,
-      walletAddress: String,
+      phoneNumber: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Phone,
+      },
+      walletAddress: {
+        type: String,
+        min: 20,
+      },
       imageURL: String,
-      privateKey: String,
+      privateKey: {
+        type: String,
+        label: 'Private Key (do not share this with anyone!!)',
+      },
       owner: String,
     }, { tracker: Tracker });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
