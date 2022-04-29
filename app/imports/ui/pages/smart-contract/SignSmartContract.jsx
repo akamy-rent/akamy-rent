@@ -7,8 +7,11 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, ErrorsField, SelectField, SubmitField, TextField } from 'uniforms-semantic';
 import SimpleSchema from 'simpl-schema';
-import { SmartContracts } from '../../../api/smartContract/SmartContract';
 import SignSmartContractItem from '../../components/smart-contract/SignSmartContractItem';
+import { SmartContracts } from '../../../api/smartContract/SmartContract';
+import { Profiles } from '../../../api/profile/Profile';
+import { bothSigned, createTenant, createHomeowner } from '../../../api/smartContract/smartContractDeployment';
+import { createAndCompileContract } from '../../../api/solc/connect2Compiler';
 
 const contractSchemaSignature = new SimpleSchema({
   signature: String,
@@ -27,18 +30,60 @@ const bridgeTenantStance = new SimpleSchema2Bridge(contractSchemaTenantStance);
 
 const isTenant = (contract, username) => contract.tenantEmail === username;
 const isHomeowner = (contract, username) => contract.homeownerEmail === username;
+const contractPending = (contract) => contract.status === 'Pending';
 
 const missingSignature = (contract, username) => (isTenant(contract, username) && contract.tenantSignature === '') || (
   isHomeowner(contract, username) && contract.homeownerSignature === '');
 
 /** Renders a table containing all of the Stuff documents. Use <SmartContractItem> to render each row. */
 class SignSmartContract extends React.Component {
-  // On successful submit, insert the data.
+  // checks if the signatures are all filled
+  signatureCheck(profiles, username, data) {
+    // update the contract and check if both people are signed, this should never run unless both are signed, or if I'm not a tenant nor homeowner
+    const { _id, homeownerEmail, tenantEmail, signature } = data;
+    const newlySignedContract = SmartContracts.collection.findOne(_id);
+    // check if both signatures are signed
+    if (bothSigned(newlySignedContract)) {
+      // both have signed, let's try to deploy it
+      newlySignedContract.tenant = createTenant(profiles, tenantEmail);
+      newlySignedContract.homeowner = createHomeowner(profiles, homeownerEmail);
+      createAndCompileContract(newlySignedContract).then(response => {
+        console.log(response);
+        const { abi, bytecode } = response.data;
+        if (response.status === 200) {
+          console.log(bytecode);
+          SmartContracts.collection.update(_id, { $set: { status: 'Active', abi: abi, bytecode: bytecode.toString() } }, function (error) {
+            if (error) {
+              swal('Error', error.message, 'Contract was not updated');
+            } else {
+              const signerType = homeownerEmail === username ? 'homeowner' : 'tenant';
+              swal('Success', `Smart contract successfully signed by ${signerType}.\nContract creation and deployment successful`, 'success');
+            }
+          });
+          console.log(newlySignedContract);
+        } else {
+          swal('Error', 'Network Error', 'Contract was not compiled');
+        }
+      });
+      const newlyCompiledContract = SmartContracts.collection.findOne(_id);
+      console.log(newlyCompiledContract);
+    } else { // both aren't signed
+      const signatureObject = homeownerEmail === username ? { homeownerSignature: signature } : { tenantSignature: signature };
+      SmartContracts.collection.update(_id, { $set: signatureObject }, function (error) {
+        if (error) {
+          swal('Error', error.message, 'Contract was not updated');
+        } else {
+          // this person is whoever
+          const signerType = homeownerEmail === username ? 'homeowner' : 'tenant';
+          swal('Success', `Smart contract successfully signed by ${signerType}`, 'success');
+        }
+      });
+    }
+  }
 
   submit(data) {
     const { tenantEmail, tenantStance, _id } = data;
     const username = this.props.user.username;
-
     if (username === tenantEmail) {
       SmartContracts.collection.update(_id, { $set: { tenantStance } }, (error) => (error ?
         swal('Error', error.message, 'error') :
@@ -48,19 +93,31 @@ class SignSmartContract extends React.Component {
     }
   }
 
+  // On successful submit, insert the data.
   submitSignature(data) {
     const { signature, _id, homeownerEmail, homeownerName, tenantEmail, tenantName, tenantStance } = data;
     const username = this.props.user.username;
-
+    const profiles = this.props.profiles;
+    // homeowner check and sign
     if (username === homeownerEmail && signature === homeownerName) {
-      SmartContracts.collection.update(_id, { $set: { homeownerSignature: signature } }, (error) => (error ?
-        swal('Error', error.message, 'error') :
-        swal('Success', 'Smart contract successfully signed by homeowner', 'success')));
+      SmartContracts.collection.update(_id, { $set: { homeownerSignature: signature } },
+        function (error) {
+          if (error) {
+            swal('Error', error.message, 'error');
+          }
+        });
+      // check if both signatures are now signed, will create the contract if both are now signed
+      this.signatureCheck(profiles, username, data);
     } else if (username === tenantEmail && signature === tenantName) {
       if (tenantStance === 'Agreement') {
-        SmartContracts.collection.update(_id, { $set: { tenantSignature: signature } }, (error) => (error ?
-          swal('Error', error.message, 'error') :
-          swal('Success', 'Smart contract successfully signed by tenant', 'success')));
+        SmartContracts.collection.update(_id, { $set: { tenantSignature: signature } },
+          function (error) {
+            if (error) {
+              swal('Error', error.message, 'error');
+            }
+          });
+        // check if both signatures are now signed, will create the contract if both are now signed
+        this.signatureCheck(profiles, username, data);
       } else {
         swal('Error', 'Tenet stance must be agreement before signing', 'error');
       }
@@ -78,28 +135,27 @@ class SignSmartContract extends React.Component {
   renderPage() {
     return (
       <Grid container centered>
-        { console.log(this.props.ready) }
         <br/>
-        { console.log(this.props.smartContract) }
         <Header as="h2" textAlign="center">View and Deploy Smart Contract</Header>
         <SignSmartContractItem key={this.props.smartContract._id} smartContract={this.props.smartContract} />
         <Segment>
-          <Segment>
-            <AutoForm schema={bridgeTenantStance} onSubmit={data => this.submit(data)} model={this.props.smartContract}>
-              <SelectField name='tenantStance'/>
-              <SubmitField value='Save'/>
-              <ErrorsField/>
-            </AutoForm>
-          </Segment>
+          {contractPending(this.props.smartContract) && isTenant(this.props.smartContract, this.props.user.username) &&
+            <Segment>
+              <AutoForm schema={bridgeTenantStance} onSubmit={data => this.submit(data)} model={this.props.smartContract}>
+                <SelectField name='tenantStance'/>
+                <SubmitField value='Save'/>
+                <ErrorsField/>
+              </AutoForm>
+            </Segment>}
           {missingSignature(this.props.smartContract, this.props.user.username) &&
-              <Segment>
-                <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data)}
-                  model={this.props.smartContract}>
-                  <TextField name='signature'/>
-                  <SubmitField value='Save'/>
-                  <ErrorsField/>
-                </AutoForm>
-              </Segment>
+            <Segment>
+              <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data)}
+                model={this.props.smartContract}>
+                <TextField name='signature'/>
+                <SubmitField value='Save'/>
+                <ErrorsField/>
+              </AutoForm>
+            </Segment>
           }</Segment>
       </Grid>
     );
@@ -111,6 +167,7 @@ SignSmartContract.propTypes = {
   smartContract: PropTypes.object,
   user: PropTypes.object,
   model: PropTypes.object,
+  profiles: PropTypes.array,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -120,15 +177,18 @@ export default withTracker(({ match }) => {
   const { _id } = match.params;
   // Get access to SmartContract documents.
   const subscription = Meteor.subscribe(SmartContracts.userPublicationName);
+  const pSubscription = Meteor.subscribe(Profiles.publicProfilePublicationName);
   // Determine if the subscription is ready
-  const subscriptionReady = subscription.ready();
+  const subscriptionReady = subscription.ready() && pSubscription.ready();
   // Get the SmartContract documents
   const smartContract = SmartContracts.collection.findOne(_id);
   const user = Meteor.user();
+  const profiles = Profiles.collection.find({}).fetch();
   const ready = subscriptionReady && user !== undefined;
   return {
     smartContract,
     user,
+    profiles,
     ready,
   };
 })(SignSmartContract);

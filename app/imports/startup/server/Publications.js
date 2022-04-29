@@ -24,7 +24,7 @@ Meteor.publish(Profiles.adminPublicationName, function () {
 // This publication provides access to "public" info from other users.
 Meteor.publish(Profiles.publicProfilePublicationName, function () {
   if (this.userId) {
-    return Profiles.collection.find({}, { firstName: 1, lastName: 1, phoneNumber: 1, imageUrl: 1, email: '$owner' });
+    return Profiles.collection.find({}, { firstName: 1, lastName: 1, phoneNumber: 1, imageUrl: 1, email: '$owner', privateKey: 1, walletAddress: 1 });
   }
   return this.ready();
 });
