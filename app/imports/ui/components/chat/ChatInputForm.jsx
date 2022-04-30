@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Form, Popup } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 export default function ChatInputForm({ submitFn }) {
@@ -11,11 +11,11 @@ export default function ChatInputForm({ submitFn }) {
     setTextInput(text);
   }, [setTextInput]);
 
-  const handleFormSubmission = (event) => {
+  const handleFormSubmission = useCallback((event) => {
     event.preventDefault();
     submitFn(textInput);
     setTextInput('');
-  };
+  }, [textInput]);
 
   return (
     <>

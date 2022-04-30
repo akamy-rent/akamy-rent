@@ -3,10 +3,7 @@ import { DateTime } from 'luxon';
 // displays timestamp like '10/14/1983, 9:30 AM'
 // see https://moment.github.io/luxon/api-docs/index.html#datetimedatetime_short
 export function displayLocalTime(jsdate) {
-  console.log(jsdate);
-  const localTime = DateTime.fromJSDate(jsdate).toFormat('M/d/yy, h:m a');
-  console.log('local time', localTime);
-  return localTime;
+  return DateTime.fromJSDate(jsdate).toFormat('M/d/yy, h:m a');
 }
 
 function getRelativeText(hours, unit) {
@@ -27,5 +24,16 @@ export function displayRelativeTime(jsdate) {
   if (hours > 2 / 60) {
     return getRelativeText(hours, 'minutes');
   }
+  if (hours > 5 / 3600) {
+    return getRelativeText(hours, 'seconds');
+  }
   return 'just now';
+}
+
+export function displayRelativeTimeFromString(datestring) {
+  const date = new Date(Date.parse(datestring));
+  if (date) {
+    return displayRelativeTime(date);
+  }
+  return datestring;
 }

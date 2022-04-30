@@ -40,7 +40,7 @@ export function determineNextPayment(tPayPeriod, currentD) {
 }
 
 export function saveTransactionForRecord(transactionArray, currentDate, action) {
-  transactionArray.push({ date: moment(currentDate).format('DD Mo YYYY'), action: action });
+  transactionArray.push({ date: moment(currentDate).toISOString(), action: action });
 }
 
 export function showTransactions(contract) {

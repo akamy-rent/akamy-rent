@@ -8,10 +8,10 @@ serverPort = 9000
 
 
 def write_smart_contract(data):
-    contract_dictonary = json.loads(data)
-    # contract_print = json.dumps(contract_dictonary, indent=2)
-    # print(contract_print)
-    homeowner = contract_dictonary["homeowner"]["address"]
+    contract_dictionary = json.loads(data)
+    contract_print = json.dumps(contract_dictionary, indent=2)
+    print(contract_print)
+    homeowner = contract_dictionary["homeowner"]["address"]
     # write the smart contract 
     contract_solidity_version ="// SPDX-License-Identifier: MIT\npragma solidity >0.8.4;"
     contract_function_start = "\ncontract Agreement{\n"

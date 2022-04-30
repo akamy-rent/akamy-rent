@@ -2,6 +2,22 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
+const homeownerSchema = new SimpleSchema({
+  address: String,
+  privateKey: String,
+});
+
+const tenantSchema = new SimpleSchema({
+  address: String,
+  privateKey: String,
+  period: String,
+});
+
+const transactionLogSchema = new SimpleSchema({
+  date: String,
+  action: String,
+});
+
 /**
  * The SmartContractCollection. It encapsulates state and variable values for smartContract.
  */
@@ -47,6 +63,41 @@ class SmartContractCollection {
       name: String,
       // this is the id of the chat for this smart contract
       groupid: String,
+      // optional contract items
+      // information needed for the smart contract
+      transactionLog: Array,
+      'transactionLog.$': {
+        type: transactionLogSchema,
+      },
+      homeowner: {
+        type: homeownerSchema,
+        optional: true,
+      },
+      tenant: {
+        type: tenantSchema,
+        optional: true,
+      },
+      bytecode: {
+        type: String,
+        optional: true,
+      },
+      abi: {
+        type: Array,
+        optional: true,
+      },
+      'abi.$': {
+        type: Object,
+        blackbox: true,
+        optional: true,
+      },
+      address: {
+        type: String,
+        optional: true,
+      },
+      rent: {
+        type: Number,
+        optional: true,
+      },
     }, { tracker: Tracker });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);

@@ -2,27 +2,34 @@ import ethers from 'ethers';
 import moment from 'moment';
 import { determineTotalPayments, determineNextPayment, saveTransactionForRecord } from '../utilities/transactionUtils';
 
-function loadProvider() {
-  const nodeUrl = 'http://localhost:8545';
+export function loadProvider() {
+  const nodeUrl = process.env.GENACHE_URL;
+  if (!nodeUrl) {
+    return {
+      provider: undefined,
+      genacheExists: false,
+    };
+  }
   const provider = new ethers.providers.JsonRpcProvider(nodeUrl);
-  return provider;
+  return {
+    provider,
+    genacheExists: true,
+  };
 }
 
-export async function deployContract(contract) {
+export async function deployContract(contract, provider) {
   console.log('deploying contract');
   // contract variables
   const deployedContract = contract;
   const abi = contract.abi;
   const bytecode = contract.bytecode;
+  console.log(contract.homeowner);
   const homeownerAddress = contract.homeowner.address;
-  const provider = loadProvider();
 
   // building contract instance
   const signer = provider.getSigner(homeownerAddress);
   const factory = new ethers.ContractFactory(abi, bytecode, signer);
   const contractInstance = await factory.deploy();
-  deployedContract.address = contractInstance.address;
-  deployedContract.homeowner.signer = signer;
   const startEth = ethers.utils.parseUnits('1.0', 'mwei');
   const tx = { to: contractInstance.address, value: startEth };
   const wallet = new ethers.Wallet(contract.homeowner.privateKey, provider);
@@ -34,15 +41,15 @@ export async function deployContract(contract) {
   saveTransactionForRecord(deployedContract.transactionLog, currentDate, deploymentString);
 
   // need to give contract some money to send transaction
-  wallet.signTransaction(tx);
-  wallet.sendTransaction(tx);
-
+  await wallet.signTransaction(tx);
+  await wallet.sendTransaction(tx);
   console.log(`Contract found at ${contractInstance.address}`);
+  return contractInstance.address;
 }
 
-function payRent(contract, currentD) {
+function payRent(contract, currentD, provider) {
   // initialize variables
-  const tenant = contract.tenants[0];
+  const tenant = contract.tenant;
   const tenantAddress = tenant.address;
   const contractAddress = contract.address;
   const homeownerAddress = contract.homeowner.address;
@@ -58,10 +65,7 @@ function payRent(contract, currentD) {
   // strings for logs and time format
   const tenantToContract = `Tenant address: ${tenantAddress} paid ${rentEth} wei to contract at: ${contractAddress}`;
   const contractToHomeowner = `Rent paid contract at ${contractAddress} paid ${rentEth} wei to Homeowner: ${homeownerAddress}`;
-
-  // load provider
-  const provider = loadProvider();
-  //  tenent is new signer of next contract call
+  //  tenant is new signer of next contract call
   const signer = provider.getSigner(tenant.address);
   // create new contract instance
   const contractInstance = new ethers.Contract(contract.address, contract.abi, signer);
@@ -71,17 +75,19 @@ function payRent(contract, currentD) {
   saveTransactionForRecord(contract.transactionLog, currentD, contractToHomeowner);
 }
 
-export async function destroyContract(contract) {
-  const contractInstance = new ethers.Contract(contract.address, contract.abi, contract.homeowner.signer);
+export async function destroyContract(contract, provider) {
+  //  tenant is new signer of next contract call
+  const signer = provider.getSigner(contract.homeowner.address);
+  const contractInstance = new ethers.Contract(contract.address, contract.abi, signer);
   contractInstance.close();
 }
 
-export async function payRentScheduler(contract) {
+export async function payRentScheduler(contract, provider) {
   // Initialize variables
   const dateDeployed = moment();
   let nextPaymentDate = null;
   let currentDate = dateDeployed;
-  const tenant = contract.tenants[0];
+  const tenant = contract.tenant;
   const tenantPayPeriod = tenant.period;
   let finalPaymentDate = null;
   let counter = 1;
@@ -108,7 +114,7 @@ export async function payRentScheduler(contract) {
     } else {
       // final payment, destroy the contract
       saveTransactionForRecord(contract.transactionLog, moment(currentDate).format(), destroyString);
-      destroyContract(contract);
+      destroyContract(contract, provider);
     }
   };
 

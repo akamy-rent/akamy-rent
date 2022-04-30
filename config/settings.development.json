@@ -12,16 +12,16 @@
       "firstName": "John",
       "lastName": "Doe",
       "phoneNumber": "808-123-4567",
-      "walletAddress": "ethereum address",
+      "walletAddress": "0x18ab864362Ea20A9080A120BC340da31840b9D59",
       "imageURL": "/images/meteor-logo.png",
-      "privateKey": "private key",
+      "privateKey": "485cb19c08ae9231678bbb0301a5e723f6b2d619daa01708dd4311b8f6b23291",
       "owner": "john@foo.com"
     },
     {
       "firstName": "Naruto",
       "lastName": "Uzumaki",
       "phoneNumber": "808-123-4567",
-      "walletAddress": "ethereum address",
+      "walletAddress": "ethereum address must be min 20 characters",
       "imageURL": "/images/meteor-logo.png",
       "privateKey": "private key",
       "owner": "naruto@foo.com"
@@ -30,16 +30,16 @@
       "firstName": "Jane",
       "lastName": "Smith",
       "phoneNumber": "808-123-4567",
-      "walletAddress": "ethereum address",
+      "walletAddress": "0x50A483b663dD5c5e18ACc99720d25e43DF7FF363",
       "imageURL": "/images/meteor-logo.png",
-      "privateKey": "private key",
+      "privateKey": "485cb19c08ae9231678bbb0301a5e723f6b2d619daa01708dd4311b8f6b23291",
       "owner": "jane@foo.com"
     },
     {
       "firstName": "Joe",
       "lastName": "Donald",
       "phoneNumber": "808-123-4567",
-      "walletAddress": "ethereum address",
+      "walletAddress": "ethereum address must be min 20 characters",
       "imageURL": "/images/meteor-logo.png",
       "privateKey": "private key",
       "owner": "admin@foo.com"
@@ -48,7 +48,7 @@
       "firstName": "Barack",
       "lastName": "Obama",
       "phoneNumber": "808-123-4567",
-      "walletAddress": "ethereum address",
+      "walletAddress": "walletAddressNeeds20Characters",
       "imageURL": "/images/meteor-logo.png",
       "privateKey": "private key",
       "owner": "barack@foo.com"
@@ -56,14 +56,11 @@
   ],
 
   "defaultSmartContract": [
-    { "name": "Kapiolani Blvd Unit", "homeownerName": "Naruto Uzumaki", "homeownerEmail": "naruto@foo.com", "homeownerPhoneNumber": "808-106-9999", "homeownerSignature": "", "tenantName": "John Doe", "tenantEmail": "john@foo.com", "tenantPhoneNumber": "808-234-5678", "tenantStance": "Unsigned", "tenantSignature": "", "unitAddress": "123 Kapiolani Blvd Honolulu, HI 96826", "monthlyRent": 1000, "status": "Pending", "termsAndConditions": "Terms and conditions for smart contract with 1 tenet. Cost, frequency of payment, parties involved.", "owner": "naruto@foo.com"
+    { "name": "Kapiolani Blvd Unit", "homeownerName": "Naruto Uzumaki", "homeownerEmail": "naruto@foo.com", "homeownerPhoneNumber": "808-106-9999", "homeownerSignature": "Naruto Uzumaki", "tenantName": "John Doe", "tenantEmail": "john@foo.com", "tenantPhoneNumber": "808-234-5678", "tenantStance": "Agreement", "tenantSignature": "John Doe", "unitAddress": "123 Kapiolani Blvd Honolulu, HI 96826", "monthlyRent": 1000, "status": "Active", "termsAndConditions": "Terms and conditions for smart contract with 1 tenet. Cost, frequency of payment, parties involved.", "owner": "naruto@foo.com" , "transactionLog": []
     },
-    { "name": "Mailee Way Unit","homeownerName": "Barack Obama", "homeownerEmail": "barack@foo.com", "homeownerPhoneNumber": "808-123-4567", "homeownerSignature": "", "tenantName": "Jane Smith", "tenantEmail": "jane@foo.com", "tenantPhoneNumber": "808-123-4567", "tenantStance": "Unsigned", "tenantSignature": "", "unitAddress": "456 Mailee Way Honolulu, HI 96822", "monthlyRent": 2000, "status": "Pending", "termsAndConditions": "Terms and conditions for smart contract with 1 tenet. Cost, frequency of payment, parties involved.", "owner": "barack@foo.com"
-    }
-  ],
+    { "name": "Mailee Way Unit","homeownerName": "John Doe", "homeownerEmail": "john@foo.com", "homeownerPhoneNumber": "808-123-4567", "homeownerSignature": "John Doe", "tenantName": "Jane Smith", "tenantEmail": "jane@foo.com", "tenantPhoneNumber": "808-123-4567", "tenantStance": "Agreement", "tenantSignature": "", "unitAddress": "456 Mailee Way Honolulu, HI 96822", "monthlyRent": 2000, "status": "Pending", "termsAndConditions": "Terms and conditions for smart contract with 1 tenet. Cost, frequency of payment, parties involved.", "owner": "john@foo.com", "transactionLog": []
 
-  "defaultDashboard": [
-    { "activeContracts": 3, "totalIncome": 400, "totalExpenses": 200, "owner": "john@foo.com"}
+    }
   ],
 
   "defaultGroups": [

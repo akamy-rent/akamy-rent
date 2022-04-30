@@ -20,9 +20,7 @@ class ViewProfile extends React.Component {
     const pb = (pct) => ({ paddingBottom: `${pct}%` });
     return (
       <Container>
-        <br/>
-        <br/>
-        <Header style={{ ...pt(2), ...pb(2) }} as="h2" textAlign="center">View Profile </Header>
+        <Header style={{ marginTop: '5%', marginBottom: '5%', ...pt(2), ...pb(2) }} as="h2" textAlign="center">View Profile </Header>
         {this.props.profiles.map((profile, index) => <Profile
           key={index}
           profile={profile}
