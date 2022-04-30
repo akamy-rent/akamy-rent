@@ -1,44 +1,29 @@
+import { faker } from '@faker-js/faker';
 import { navBar } from './navbar.component';
+import { sweetAlertModal } from './common.component.page';
 
-export const addContractTest = {
-  address: '1234 Kapiolani Blvd, Honolulu, HI, 96814',
-  rent: 1500,
-  homeownerName: 'John',
-  homeownerEmail: 'john@foo.com',
-  homeownerPhone: '808-123-4567',
-  tenantName: 'Johnny Tsunami',
-  tenantEmail: 'tsunami@foo.com',
-  tenantPhone: '990-789-1234',
-  tAndC: 'test',
-};
-
-export const editContractTest = {
-  address: '456 Mailee Way Honolulu, HI 96822',
-  rent: 1500,
-  homeownerName: 'Barack Obama',
-  homeownerEmail: 'barack@foo.com',
-  homeownerPhone: '808-123-4567',
-  tenantName: 'Naruto Uzumaki',
-  tenantEmail: 'naruto@foo.com',
-  tenantPhone: '808-106-9999',
-  tAndC: 'test',
-};
+export const addContractTest = (address) => ({
+  '#contract-name': address,
+  '#unit-address': address,
+  '#monthly-rent': `${faker.datatype.number({ min: 300, max: 1500 })}`,
+  '#tenant-name': `${faker.name.firstName()} ${faker.name.lastName()}`,
+  '#tenant-email': faker.internet.email(),
+  '#tenant-phone': faker.phone.phoneNumber('333-333-3333'),
+  '#t-and-c': faker.lorem.paragraph(1),
+});
 
 class SmartContractPagesForm {
-
   /** Navigate to the add smart contract page via the Navbar, fill in the page, click save. */
-  async fillSmartContract(testController, username, add) {
+  async fillSmartContract(testController, username, fields) {
     await navBar.isLoggedIn(testController, username);
-    await testController.typeText('#unit-address', add.address);
-    await testController.typeText('#monthly-rent', add.rent.toString());
-    await testController.typeText('#homeowner-name', add.homeownerName);
-    await testController.typeText('#homeowner-email', add.homeownerEmail);
-    await testController.typeText('#homeowner-phone', add.homeownerPhone);
-    await testController.typeText('#tenant-name', add.tenantName);
-    await testController.typeText('#tenant-email', add.tenantEmail);
-    await testController.typeText('#tenant-phone', add.tenantPhone);
-    await testController.typeText('#t-and-c', add.tAndC);
+    Object.keys(fields).forEach(async key => {
+      await testController.typeText(key, fields[key]);
+    });
     await testController.click('#save');
+    // ensure success
+    await sweetAlertModal.ensureSuccessMessage(testController);
+    // click on ok button in confirmation modal
+    await sweetAlertModal.clickToConfirm(testController);
   }
 }
 

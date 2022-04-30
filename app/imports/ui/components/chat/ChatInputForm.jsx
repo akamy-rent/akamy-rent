@@ -11,11 +11,11 @@ export default function ChatInputForm({ submitFn }) {
     setTextInput(text);
   }, [setTextInput]);
 
-  const handleFormSubmission = (event) => {
+  const handleFormSubmission = useCallback((event) => {
     event.preventDefault();
     submitFn(textInput);
     setTextInput('');
-  };
+  }, [textInput]);
 
   return (
     <>

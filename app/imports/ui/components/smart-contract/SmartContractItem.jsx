@@ -3,6 +3,15 @@ import { Button, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 
+// ToDo: After merge of issue-81, update this
+// to only say "sign" if the signature is missing,
+// else it would just say "view"
+function signButtonText(contract) {
+  if (contract.status === 'Pending') {
+    return 'Sign';
+  }
+  return 'View';
+}
 /** Renders a single row in the List smartContract table. See pages/ListsmartContract.jsx. */
 class SmartContractItem extends React.Component {
   render() {
@@ -20,7 +29,7 @@ class SmartContractItem extends React.Component {
             <Button compact color='grey'>Edit</Button>
           </Link>
           <Link to={`/sign/${this.props.smartContract._id}`}>
-            <Button compact color='black'>Sign</Button>
+            <Button compact color='black'>{signButtonText(this.props.smartContract)}</Button>
           </Link>
         </Table.Cell>
       </Table.Row>

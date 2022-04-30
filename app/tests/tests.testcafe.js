@@ -1,9 +1,10 @@
+import { faker } from '@faker-js/faker';
 import { landingPage } from './landing.page';
 import { signinPage } from './signin.page';
 import { signoutPage } from './signout.page';
 import { messengerPage } from './messenger.page';
 import { navBar } from './navbar.component';
-import { smartContractPageForm, addContractTest, editContractTest } from './smart.contract.pages.form';
+import { smartContractPageForm, addContractTest } from './smart.contract.pages.form';
 import { addSmartContractPage } from './add.smart.contract.page';
 import { editSmartContractPage } from './edit.smart.contract.page';
 import { testSmartContractPage } from './test.smart.contract.page';
@@ -15,7 +16,6 @@ import { editProfilePage } from './editprofile.page';
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const credentials = { username: 'john@foo.com', password: 'changeme' };
-const credentials2 = { username: 'barack@foo.com', password: 'changeme' };
 
 fixture('akamy-rent localhost test with default db')
   .page('http://localhost:3004');
@@ -49,7 +49,7 @@ test('Test that dashboard page shows up', async (testController) => {
   await dashboardPage.hasTable(testController);
 });
 
-test('Test that add contract page shows up and works', async (testController) => {
+test('Test that contracts can be created and edited', async (testController) => {
   // sign in
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
@@ -58,21 +58,21 @@ test('Test that add contract page shows up and works', async (testController) =>
   // check if component is rendered
   await addSmartContractPage.isDisplayed(testController);
   // attempt to fill out the form
-  await smartContractPageForm.fillSmartContract(testController, credentials.username, addContractTest);
-});
+  const address = faker.address.streetAddress(true);
+  await smartContractPageForm.fillSmartContract(testController, credentials.username, addContractTest(address));
+  // Go to dashboard and ensure that contract is there
+  await navBar.gotoDashboardPage(testController);
+  await dashboardPage.hasSmartContractWithName(testController, address);
 
-test('Test that edit contract page shows up and works', async (testController) => {
-  // sign in
-  await navBar.gotoSigninPage(testController);
-  await signinPage.signin(testController, credentials2.username, credentials2.password);
-  // go to the smart contract
-  await editSmartContractPage.navigateToEditSmartContractPage(testController);
-  // check if edit component works
-  await editSmartContractPage.isDisplayed(testController);
-  // remove all previous text
-  await editSmartContractPage.removeTextForEdit(testController, credentials2.username);
-  // fill out the blank forms
-  await smartContractPageForm.fillSmartContract(testController, credentials2.username, editContractTest);
+  // test editing
+  // navigate to edit smart contract
+  await dashboardPage.clickEditSmartContractWithName(testController, address);
+  // remove rent
+  const update = {
+    '#monthly-rent': `${faker.datatype.number({ min: 1500, max: 3000 })}`,
+  };
+  await editSmartContractPage.removeTextForEdit(testController, Object.keys(update), credentials.username);
+  await smartContractPageForm.fillSmartContract(testController, credentials.username, update);
 });
 
 test('Test that Messenger page shows up and works', async (testController) => {
