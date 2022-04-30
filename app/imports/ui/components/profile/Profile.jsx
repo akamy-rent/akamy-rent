@@ -25,10 +25,7 @@ class Profile extends React.Component {
             <br/>
             <Header as="h4">Phone Number</Header>
             <p>{usermember.phoneNumber}</p>
-            <br/>
-            <br/>
-            <br/>
-            <Button as={NavLink} to="/add" size="big" color="black"><Icon name='file outline'></Icon>Create Contracts</Button>
+            <Button style={{ marginTop: '30%' }} as={NavLink} to="/add" size="big" color="black"><Icon name='file outline'></Icon>Create Contracts</Button>
           </Grid.Column>
           <Grid.Column textAlign='center' width={4}>
             <Header as="h3">Last Name</Header>
@@ -36,10 +33,7 @@ class Profile extends React.Component {
             {usermember.lastName}
             <Header as="h4">Wallet Address</Header>
             <p>{usermember.walletAddress}</p>
-            <br/>
-            <br/>
-            <br/>
-            <Button as={NavLink} to="/chat" size="big" color="black"><Icon name='envelope open outline'></Icon> Messenger</Button>
+            <Button style={{ marginTop: '23%' }} as={NavLink} to="/chat" size="big" color="black"><Icon name='envelope open outline'></Icon> Messenger</Button>
           </Grid.Column>
         </Grid.Row>
       </Grid>
