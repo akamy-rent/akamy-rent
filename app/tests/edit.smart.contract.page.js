@@ -7,17 +7,13 @@ class EditSmartContractPage {
     this.pageSelector = Selector(this.pageId);
   }
 
-  async removeTextForEdit(testController, username) {
+  // editable fields: '#unit-address', '#monthly-rent', '#tenant-name'
+  // '#tenant-email', '#tenant-phone', '#t-and-c'
+  async removeTextForEdit(testController, fieldIds, username) {
     await navBar.isLoggedIn(testController, username);
-    await testController.click('#unit-address').pressKey('ctrl+a delete');
-    await testController.click('#monthly-rent').pressKey('ctrl+a delete');
-    await testController.click('#homeowner-name').pressKey('ctrl+a delete');
-    await testController.click('#homeowner-email').pressKey('ctrl+a delete');
-    await testController.click('#homeowner-phone').pressKey('ctrl+a delete');
-    await testController.click('#tenant-name').pressKey('ctrl+a delete');
-    await testController.click('#tenant-email').pressKey('ctrl+a delete');
-    await testController.click('#tenant-phone').pressKey('ctrl+a delete');
-    await testController.click('#t-and-c').pressKey('ctrl+a delete');
+    fieldIds.forEach(async id => {
+      await testController.click(id).pressKey('ctrl+a delete');
+    });
   }
 
   /** Checks that this page is currently displayed. */

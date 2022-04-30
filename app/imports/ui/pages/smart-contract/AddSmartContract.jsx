@@ -73,7 +73,6 @@ class AddSmartContract extends React.Component {
     let fRef = null;
     return (
       <Grid container centered id={'add-smart-contract-page'}>
-        { console.log(this.props) }
         <Grid.Column>
           <br/>
           <Header as="h2" textAlign="center">Create Smart Contract</Header>
@@ -138,7 +137,6 @@ export default withTracker(() => {
   const subscription = Meteor.subscribe(Profiles.publicProfilePublicationName);
   const ready = subscription.ready() && user !== undefined;
   const profiles = Profiles.collection.find({}).fetch();
-  console.log(profiles);
   const userProfile = profiles.find(profile => profile.owner === user?.username);
   return {
     user,

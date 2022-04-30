@@ -28,6 +28,7 @@
     "uniforms-semantic": "^3.8.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.2.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
