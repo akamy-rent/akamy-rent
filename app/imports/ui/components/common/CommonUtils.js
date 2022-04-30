@@ -29,3 +29,11 @@ export function displayRelativeTime(jsdate) {
   }
   return 'just now';
 }
+
+export function displayRelativeTimeFromString(datestring) {
+  const date = new Date(Date.parse(datestring));
+  if (date) {
+    return displayRelativeTime(date);
+  }
+  return datestring;
+}
