@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Header, Loader, Grid, Segment } from 'semantic-ui-react';
+import { Header, Loader, Container, Segment } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -8,6 +8,7 @@ import swal from 'sweetalert';
 import { AutoForm, ErrorsField, SelectField, SubmitField, TextField } from 'uniforms-semantic';
 import SimpleSchema from 'simpl-schema';
 import SignSmartContractItem from '../../components/smart-contract/SignSmartContractItem';
+import { isHomeowner, isTenant } from '../../components/smart-contract/SmartContractUtils';
 import { SmartContracts } from '../../../api/smartContract/SmartContract';
 import { Profiles } from '../../../api/profile/Profile';
 import { bothSigned, createTenant, createHomeowner } from '../../../api/smartContract/smartContractDeployment';
@@ -29,8 +30,6 @@ const contractSchemaTenantStance = new SimpleSchema({
 const bridgeSignature = new SimpleSchema2Bridge(contractSchemaSignature);
 const bridgeTenantStance = new SimpleSchema2Bridge(contractSchemaTenantStance);
 
-const isTenant = (contract, username) => contract.tenantEmail === username;
-const isHomeowner = (contract, username) => contract.homeownerEmail === username;
 const contractPending = (contract) => contract.status === 'Pending';
 
 const missingSignature = (contract, username) => (isTenant(contract, username) && contract.tenantSignature === '') || (

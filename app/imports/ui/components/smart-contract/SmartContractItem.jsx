@@ -1,7 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
+import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 import { Button, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
+import { isHomeowner } from './SmartContractUtils';
+import React, { useCallback, useState } from 'react';
 import TransactionModal from './TransactionModal';
 
 // ToDo: After merge of issue-81, update this
@@ -35,9 +39,11 @@ function SmartContractItem({ smartContract }) {
       <Table.Cell>{smartContract.homeownerSignature}</Table.Cell>
       <Table.Cell>{smartContract.status}</Table.Cell>
       <Table.Cell>
-        <Link to={`/edit/${smartContract._id}`}>
-          <Button compact color='black'>Edit</Button>
-        </Link>
+        {isHomeowner(this.props.smartContract, this.props.user?.username) &&
+                        <Link to={`/edit/${this.props.smartContract._id}`}>
+                          <Button compact color='blue'>Edit</Button>
+                        </Link>
+        }
         <Link to={`/sign/${smartContract._id}`}>
           <Button compact color='black'>{signButtonText(smartContract)}</Button>
         </Link>
@@ -60,7 +66,15 @@ SmartContractItem.propTypes = {
     status: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
+  user: PropTypes.object,
 };
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
-export default withRouter(SmartContractItem);
+export default withTracker(() => {
+  const user = Meteor.user();
+  const ready = user !== undefined;
+  return {
+    user,
+    ready,
+  };
+})(withRouter(SmartContractItem));
