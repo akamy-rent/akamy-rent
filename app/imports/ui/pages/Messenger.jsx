@@ -15,11 +15,12 @@ export default function Messenger() {
   }, []);
   const groups = useTracker(() => Groups.collection.find().fetch(), []);
   const user = useTracker(() => Meteor.user(), []);
+
   // State to track selected group for displaying messages
   const [group, setGroup] = useState();
   const handleSetGroup = useCallback((groupSelection) => {
     setGroup(groupSelection);
-  }, [setGroup]);
+  }, [group]);
 
   const handleInputSubmission = (message) => {
     if (message === '') {
@@ -33,7 +34,6 @@ export default function Messenger() {
       text: message,
     };
     const data = { createdat, createdby, content };
-    // swal('Success', `${JSON.stringify(data)}`, 'success');
     Groups.collection.update(
       { _id: group._id },
       {
@@ -51,8 +51,6 @@ export default function Messenger() {
         }
       },
     );
-    const updatedGroup = Groups.collection.findOne({ _id: group._id });
-    setGroup(updatedGroup);
   };
 
   if (!ready) {
@@ -61,15 +59,12 @@ export default function Messenger() {
     );
   }
   return (
-    /** ToDo: Determine App Layout to force messenger to fill 100% of
-     * screen between top navbar and footer.
-     */
     <Grid id="messenger-page" stackable padded >
       <Grid.Row>
         <Grid.Column width={4} >
           <ChatFeed setGroupFn={handleSetGroup} groups={groups} />
         </Grid.Column>
-        <Grid.Column width={12} style={{ height: '80vh' }}>
+        <Grid.Column width={12} style={{ height: '85vh' }}>
           <ChatDisplay groupid={group?._id} inputSubmitFn={handleInputSubmission}/>
         </Grid.Column>
       </Grid.Row>
