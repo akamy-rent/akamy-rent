@@ -13,15 +13,9 @@ class Landing extends React.Component {
             AkaMy-Rent
           </Grid>
         </div>
-        <Header as='h1' inverted textAlign='center'> Smart Contract</Header>
-        <br/>
-        <br/>
+        <Header style={{ marginBottom: '5%' }} as='h1' inverted textAlign='center'> Smart Contract</Header>
         <Grid verticalAlign='middle' textAlign='center' container>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <Grid.Row columns={3}>
+          <Grid.Row style={{ marginBottom: '10%' }} columns={3}>
             <Grid.Column>
               <Header as='h2' inverted>
                 Distributed
@@ -51,14 +45,6 @@ class Landing extends React.Component {
           </Grid.Row>
 
         </Grid>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-
       </div>
     );
   }

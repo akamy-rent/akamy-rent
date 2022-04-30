@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { SmartContracts } from '../../api/smartContract/SmartContract.js';
 import { Groups } from '../../api/group/Group.js';
-import { dashboard } from '../../api/dashboard/dashboard';
 import { Profiles } from '../../api/profile/Profile';
 
 // User profiles
@@ -65,25 +64,6 @@ Meteor.publish(Groups.adminPublicationName, function () {
   }
   return this.ready();
 });
-
-// Dashboard
-Meteor.publish(dashboard.userPublicationName, function () {
-  if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return dashboard.collection.find({ owner: username });
-  }
-  return this.ready();
-});
-
-// Admin-level publication.
-// If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.
-Meteor.publish(dashboard.adminPublicationName, function () {
-  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
-    return dashboard.collection.find();
-  }
-  return this.ready();
-});
-
 // alanning:roles publication
 // Recommended code to publish roles for each user.
 Meteor.publish(null, function () {

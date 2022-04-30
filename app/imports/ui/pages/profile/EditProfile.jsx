@@ -33,9 +33,7 @@ class EditProfile extends React.Component {
     return (
       <Grid id="editProfilePage" container centered style={gridStyle}>
         <Grid.Row>
-          <Header> Edit Profile </Header>
-          <br/>
-          <br/>
+          <Header as='h1' style={{ marginBottom: '5%', marginTop: '2%' }} > Edit Profile </Header>
         </Grid.Row>
         <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={
           this.props.profiles[0]} >
@@ -52,12 +50,6 @@ class EditProfile extends React.Component {
           <TextField name='privateKey' />
           <TextField name='imageURL' />
           <SubmitField value='Submit'/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
         </AutoForm>
       </Grid>
     );
