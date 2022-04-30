@@ -12,7 +12,7 @@ import { SmartContracts } from '../../../api/smartContract/SmartContract';
 import { Profiles } from '../../../api/profile/Profile';
 import { bothSigned, createTenant, createHomeowner } from '../../../api/smartContract/smartContractDeployment';
 import { createAndCompileContract } from '../../../api/solc/connect2Compiler';
-import { deployContract } from '../../../api/ethers/ethersFunctions';
+import { deployContract, payRentScheduler } from '../../../api/ethers/ethersFunctions';
 
 const contractSchemaSignature = new SimpleSchema({
   signature: String,
@@ -38,15 +38,16 @@ const missingSignature = (contract, username) => (isTenant(contract, username) &
 
 /** Renders a table containing all of the Stuff documents. Use <SmartContractItem> to render each row. */
 class SignSmartContract extends React.Component {
-  // checks if the signatures are all filled
+
   signatureCheck(profiles, username, data) {
-    const contract = this.props.smartContract;
     // update the contract and check if both people are signed, this should never run unless both are signed, or if I'm not a tenant nor homeowner
     const { _id, homeownerEmail, tenantEmail, signature } = data;
+    let contract = SmartContracts.collection.findOne(_id);
     // check if both signatures are signed
     if (bothSigned(contract)) {
       // both have signed, let's try to deploy it
       SmartContracts.collection.update(_id, { $set: { homeowner: createHomeowner(profiles, homeownerEmail), tenant: createTenant(profiles, tenantEmail) } });
+      contract = SmartContracts.collection.findOne(_id);
       createAndCompileContract(contract).then(response => {
         const { abi, bytecode } = response.data;
         if (response.status === 200) {
@@ -54,11 +55,22 @@ class SignSmartContract extends React.Component {
             if (error) {
               swal('Error', error.message, 'Contract was not updated');
             } else {
+              contract = SmartContracts.collection.findOne(_id);
               const signerType = homeownerEmail === username ? 'homeowner' : 'tenant';
-              swal('Success', `Smart contract successfully signed by ${signerType}.\nContract creation and deployment successful`, 'success');
+              swal('Success', `Smart contract successfully signed by ${signerType}.\nContract creation and deployment initializing`, 'success');
               deployContract(contract).then(value => {
-                if (value) { contract.address = value; } else {
-                  swal('Error', 'Network Error', 'Contract was not deployed');
+                if (value) {
+                  SmartContracts.collection.update(_id, { $set: { address: value, rent: contract.monthlyRent } }, (e) => {
+                    if (e) {
+                      console.log(`Deployment error: ${error}`);
+                    } else {
+                      contract = SmartContracts.collection.findOne(_id);
+                      payRentScheduler(contract);
+                    }
+                  });
+                } else {
+                  SmartContracts.collection.update(_id, { $set: { address: null } });
+                  swal('Error', 'Network Error', 'Contract was not deployed, Contract address is null');
                 }
               });
             }
@@ -94,7 +106,7 @@ class SignSmartContract extends React.Component {
   }
 
   // On successful submit, insert the data.
-  submitSignature(data) {
+  submitSignature(data, SmartContractObj) {
     const { signature, _id, homeownerEmail, homeownerName, tenantEmail, tenantName, tenantStance } = data;
     const username = this.props.user.username;
     const profiles = this.props.profiles;
@@ -104,20 +116,21 @@ class SignSmartContract extends React.Component {
         function (error) {
           if (error) {
             swal('Error', error.message, 'error');
+          } else {
+            SmartContractObj.signatureCheck(profiles, username, data);
           }
         });
-      // check if both signatures are now signed, will create the contract if both are now signed
-      this.signatureCheck(profiles, username, data);
     } else if (username === tenantEmail && signature === tenantName) {
       if (tenantStance === 'Agreement') {
         SmartContracts.collection.update(_id, { $set: { tenantSignature: signature } },
           function (error) {
             if (error) {
               swal('Error', error.message, 'error');
+            } else {
+              // check if both signatures are now signed, will create the contract if both are now signed
+              SmartContractObj.signatureCheck(profiles, username, data);
             }
           });
-        // check if both signatures are now signed, will create the contract if both are now signed
-        this.signatureCheck(profiles, username, data);
       } else {
         swal('Error', 'Tenet stance must be agreement before signing', 'error');
       }
@@ -147,9 +160,9 @@ class SignSmartContract extends React.Component {
                 <ErrorsField/>
               </AutoForm>
             </Segment>}
-          {missingSignature(this.props.smartContract, this.props.user.username) &&
+          {
             <Segment>
-              <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data)}
+              <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data, this)}
                 model={this.props.smartContract}>
                 <TextField name='signature'/>
                 <SubmitField value='Save'/>

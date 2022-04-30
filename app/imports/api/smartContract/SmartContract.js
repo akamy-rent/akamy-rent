@@ -65,9 +65,9 @@ class SmartContractCollection {
       groupid: String,
       // optional contract items
       // information needed for the smart contract
-      transactionLog: {
+      transactionLog: Array,
+      'transactionLog.$': {
         type: transactionLogSchema,
-        optional: true,
       },
       homeowner: {
         type: homeownerSchema,
