@@ -8,7 +8,6 @@ class SmartContractItem extends React.Component {
   render() {
     return (
       <Table.Row>
-        {console.log(this.props.smartContract)}
         <Table.Cell>{this.props.smartContract.unitAddress}</Table.Cell>
         <Table.Cell>{this.props.smartContract.homeownerName}</Table.Cell>
         <Table.Cell>{this.props.smartContract.tenantName}</Table.Cell>
