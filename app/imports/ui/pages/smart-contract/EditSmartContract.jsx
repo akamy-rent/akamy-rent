@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { SmartContracts } from '../../../api/smartContract/SmartContract';
+import { isHomeowner } from '../../components/smart-contract/SmartContractUtils';
 
 const contractSchema = new SimpleSchema({
   homeownerName: String,
@@ -34,11 +35,11 @@ class EditSmartContract extends React.Component {
     const { homeownerName, homeownerEmail, homeownerPhoneNumber, tenantName, tenantEmail, tenantPhoneNumber, unitAddress, monthlyRent, status, _id } = data;
     const username = this.props.user.username;
 
-    if (username === homeownerEmail) {
+    if (isHomeowner(data, username)) {
       SmartContracts.collection.update(_id, { $set: { homeownerName, homeownerEmail, homeownerPhoneNumber, tenantName, tenantEmail, tenantPhoneNumber, unitAddress,
-        monthlyRent, status } }, (error) => (error ?
-        swal('Error', error.message, 'error') :
-        swal('Success', 'Information updated successfully', 'success')));
+          monthlyRent, status } }, (error) => (error ?
+          swal('Error', error.message, 'error') :
+          swal('Success', 'Information updated successfully', 'success')));
     } else {
       swal('Error', 'You are not permitted to edit this smart contract', 'error');
     }
@@ -52,29 +53,29 @@ class EditSmartContract extends React.Component {
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   renderPage() {
     return (
-      <Container id={'edit-smart-contract-page'} container centered>
-        <br/>
-        <Header as="h2" textAlign="center">Edit Smart Contract (Draft)</Header>
-        <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
-          <Segment>
-            <TextField id={'unit-address'} name='unitAddress'/>
-            <NumField id={'monthly-rent'} name='monthlyRent' decimal={true}/>
+        <Container id={'edit-smart-contract-page'} container centered>
+          <br/>
+          <Header as="h2" textAlign="center">Edit Smart Contract (Draft)</Header>
+          <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
             <Segment>
-              <TextField id={'homeowner-name'} name='homeownerName'/>
-              <TextField id={'homeowner-email'} name='homeownerEmail'/>
-              <TextField id={'homeowner-phone'} name='homeownerPhoneNumber'/>
+              <TextField id={'unit-address'} name='unitAddress'/>
+              <NumField id={'monthly-rent'} name='monthlyRent' decimal={true}/>
+              <Segment>
+                <TextField id={'homeowner-name'} name='homeownerName'/>
+                <TextField id={'homeowner-email'} name='homeownerEmail'/>
+                <TextField id={'homeowner-phone'} name='homeownerPhoneNumber'/>
+              </Segment>
+              <Segment>
+                <TextField id={'tenant-name'} name='tenantName'/>
+                <TextField id={'tenant-email'} name='tenantEmail'/>
+                <TextField id={'tenant-phone'} name='tenantPhoneNumber'/>
+              </Segment>
+              <LongTextField id={'t-and-c'} name='termsAndConditions'/>
+              <SubmitField id={'save'} value='Save'/>
+              <ErrorsField/>
             </Segment>
-            <Segment>
-              <TextField id={'tenant-name'} name='tenantName'/>
-              <TextField id={'tenant-email'} name='tenantEmail'/>
-              <TextField id={'tenant-phone'} name='tenantPhoneNumber'/>
-            </Segment>
-            <LongTextField id={'t-and-c'} name='termsAndConditions'/>
-            <SubmitField id={'save'} value='Save'/>
-            <ErrorsField/>
-          </Segment>
-        </AutoForm>
-      </Container>
+          </AutoForm>
+        </Container>
     );
   }
 }
@@ -93,9 +94,11 @@ export default withTracker(({ match }) => {
   const documentId = match.params._id;
   // Get access to SmartContract documents.
   const subscription = Meteor.subscribe(SmartContracts.userPublicationName);
-  // Determine if the subscription is ready
-  const ready = subscription.ready();
+
   const user = Meteor.user();
+  // Determine if the subscription is ready
+  const ready = subscription.ready() && user !== undefined;
+
   // Get the document
   const doc = SmartContracts.collection.findOne(documentId);
   return {

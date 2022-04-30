@@ -1,10 +1,10 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 import { Button, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
-
-const isHomeowner = (contract, username) => contract.homeownerEmail === username;
+import { isHomeowner } from './SmartContractUtils';
 
 /** Renders a single row in the List smartContract table. See pages/ListsmartContract.jsx. */
 class SmartContractItem extends React.Component {
@@ -19,10 +19,10 @@ class SmartContractItem extends React.Component {
         <Table.Cell>{this.props.smartContract.homeownerSignature}</Table.Cell>
         <Table.Cell>{this.props.smartContract.status}</Table.Cell>
         <Table.Cell>
-          {isHomeowner(this.props.smartContract, this.props.user.username) &&
-                <Link to={`/edit/${this.props.smartContract._id}`}>
-                  <Button compact color='blue'>Edit</Button>
-                </Link>
+          {isHomeowner(this.props.smartContract, this.props.user?.username) &&
+                        <Link to={`/edit/${this.props.smartContract._id}`}>
+                          <Button compact color='blue'>Edit</Button>
+                        </Link>
           }
           <Link to={`/sign/${this.props.smartContract._id}`}>
             <Button compact color='orange'>Sign</Button>
@@ -45,15 +45,15 @@ SmartContractItem.propTypes = {
     status: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
-  user: PropTypes.string,
+  user: PropTypes.object,
 };
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
-export default withRouter(() => {
+export default withTracker(() => {
   const user = Meteor.user();
   const ready = user !== undefined;
   return {
     user,
     ready,
   };
-})(SmartContractItem);
+})(withRouter(SmartContractItem));

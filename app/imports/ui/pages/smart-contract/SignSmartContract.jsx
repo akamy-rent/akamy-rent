@@ -9,6 +9,7 @@ import { AutoForm, ErrorsField, SelectField, SubmitField, TextField } from 'unif
 import SimpleSchema from 'simpl-schema';
 import { SmartContracts } from '../../../api/smartContract/SmartContract';
 import SignSmartContractItem from '../../components/smart-contract/SignSmartContractItem';
+import { isHomeowner, isTenant } from '../../components/smart-contract/SmartContractUtils';
 
 const contractSchemaSignature = new SimpleSchema({
   signature: String,
@@ -24,9 +25,6 @@ const contractSchemaTenantStance = new SimpleSchema({
 
 const bridgeSignature = new SimpleSchema2Bridge(contractSchemaSignature);
 const bridgeTenantStance = new SimpleSchema2Bridge(contractSchemaTenantStance);
-
-const isTenant = (contract, username) => contract.tenantEmail === username;
-const isHomeowner = (contract, username) => contract.homeownerEmail === username;
 
 const missingSignature = (contract, username) => (isTenant(contract, username) && contract.tenantSignature === '') || (
   isHomeowner(contract, username) && contract.homeownerSignature === '');
@@ -84,13 +82,14 @@ class SignSmartContract extends React.Component {
         <Header as="h2" textAlign="center">View and Deploy Smart Contract</Header>
         <SignSmartContractItem key={this.props.smartContract._id} smartContract={this.props.smartContract} />
         <Segment>
-          <Segment>
-            <AutoForm schema={bridgeTenantStance} onSubmit={data => this.submit(data)} model={this.props.smartContract}>
-              <SelectField name='tenantStance'/>
-              <SubmitField value='Save'/>
-              <ErrorsField/>
-            </AutoForm>
-          </Segment>
+          {isTenant(this.props.smartContract, this.props.user.username) &&
+              <Segment>
+                <AutoForm schema={bridgeTenantStance} onSubmit={data => this.submit(data)} model={this.props.smartContract}>
+                  <SelectField name='tenantStance'/>
+                  <SubmitField value='Save'/>
+                  <ErrorsField/>
+                </AutoForm>
+              </Segment>}
           {missingSignature(this.props.smartContract, this.props.user.username) &&
               <Segment>
                 <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data)}
