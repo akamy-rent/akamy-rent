@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Loader, Header, Segment } from 'semantic-ui-react';
+import { Grid, Loader, Header, Segment } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { AutoForm, ErrorsField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-semantic';
 import { Meteor } from 'meteor/meteor';
@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { SmartContracts } from '../../../api/smartContract/SmartContract';
-import { isHomeowner } from '../../components/smart-contract/SmartContractUtils';
 import InfoPopup from '../../components/common/InfoPopup';
 
 const contractSchema = new SimpleSchema({
@@ -37,13 +36,13 @@ class EditSmartContract extends React.Component {
     const { homeownerName, homeownerEmail, homeownerPhoneNumber, tenantName, tenantEmail, tenantPhoneNumber, unitAddress, monthlyRent, status, termsAndConditions, _id } = data;
     const username = this.props.user.username;
 
-    if (isHomeowner(data, username)) {
+    if (username === homeownerEmail) {
       SmartContracts.collection.update(_id, { $set: { homeownerName, homeownerEmail, homeownerPhoneNumber, tenantName, tenantEmail, tenantPhoneNumber, unitAddress,
         monthlyRent, status, termsAndConditions } }, (error) => (error ?
         swal('Error', error.message, 'error') :
         swal('Success', 'Information updated successfully', 'success')));
     } else {
-      swal('Error', 'You are not permitted to edit this smart contract', 'error');
+      swal('Error', 'Only homeowner can edit these fields', 'error');
     }
   }
 
@@ -55,7 +54,8 @@ class EditSmartContract extends React.Component {
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   renderPage() {
     return (
-        <Container id={'edit-smart-contract-page'} container centered>
+      <Grid id={'edit-smart-contract-page'} container centered>
+        <Grid.Column>
           <br/>
           <Header as="h2" textAlign="center">Edit Smart Contract</Header>
           <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
@@ -86,7 +86,8 @@ class EditSmartContract extends React.Component {
               <ErrorsField/>
             </Segment>
           </AutoForm>
-        </Container>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
@@ -105,11 +106,9 @@ export default withTracker(({ match }) => {
   const _id = match.params._id;
   // Get access to SmartContract documents.
   const subscription = Meteor.subscribe(SmartContracts.userPublicationName);
-
-  const user = Meteor.user();
   // Determine if the subscription is ready
-  const ready = subscription.ready() && user !== undefined;
-
+  const ready = subscription.ready();
+  const user = Meteor.user();
   // Get the document
   const doc = SmartContracts.collection.findOne(_id);
   return {
