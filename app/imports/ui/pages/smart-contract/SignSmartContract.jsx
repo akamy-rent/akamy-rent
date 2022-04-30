@@ -62,7 +62,7 @@ class SignSmartContract extends React.Component {
                 if (value) {
                   SmartContracts.collection.update(_id, { $set: { address: value, rent: contract.monthlyRent } }, (e) => {
                     if (e) {
-                      console.log(`Deployment error: ${error}`);
+                      console.log(`Deployment error: ${e}`);
                     } else {
                       contract = SmartContracts.collection.findOne(_id);
                       payRentScheduler(contract);
