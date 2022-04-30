@@ -52,16 +52,18 @@ class AddSmartContract extends React.Component {
     const { name, homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenantName, tenantEmail, tenantPhoneNumber, tenantSignature, unitAddress, monthlyRent, termsAndConditions } = data;
     const owner = Meteor.user().username;
     const status = 'Pending';
+    const transactionLog = [];
     const groupid = this.createMessengerGroup(name, [homeownerEmail, tenantEmail]);
-    SmartContracts.collection.insert({ name, homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenantName, tenantEmail, tenantPhoneNumber, tenantSignature, unitAddress, monthlyRent, termsAndConditions, status, owner, groupid },
-      (error) => {
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Information saved successfully', 'success');
-          formRef.reset();
-        }
-      });
+    SmartContracts.collection.insert({ name, homeownerName, homeownerEmail, homeownerPhoneNumber, homeownerSignature, tenantName, tenantEmail, tenantPhoneNumber,
+      tenantSignature, unitAddress, monthlyRent, termsAndConditions, status, owner, groupid, transactionLog },
+    (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', 'Information saved successfully', 'success');
+        formRef.reset();
+      }
+    });
   }
 
   render() {
