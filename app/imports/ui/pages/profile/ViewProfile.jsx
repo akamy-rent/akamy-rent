@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { Container, Header, Loader } from 'semantic-ui-react';
+import { Container, Header, Icon, Loader, Popup } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Profiles } from '../../../api/profile/Profile';
 import Profile from '../../components/profile/Profile';
