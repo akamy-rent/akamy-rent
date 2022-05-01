@@ -86,7 +86,7 @@ class AddSmartContract extends React.Component {
               <Segment>
                 <Header as='h4'>
                   Homeowner Details
-                  <InfoPopup color='blue' text='Your profile information is automatically used for the homeowner details as only homeowners can create smart contracts.' />
+                  <InfoPopup color='black' text='Your profile information is automatically used for the homeowner details as only homeowners can create smart contracts.' />
                 </Header>
                 <TextField
                   id={'homeowner-name'}
@@ -110,7 +110,7 @@ class AddSmartContract extends React.Component {
               <Segment>
                 <Header as='h4'>
                   Tenant Details
-                  <InfoPopup color='blue' text='Add the tenant info below. Note that only one tenant is supported at this time.' />
+                  <InfoPopup color='black' text='Add the tenant info below. Note that only one tenant is supported at this time.' />
                 </Header>
                 <TextField id={'tenant-name'} name='tenantName'/>
                 <TextField id={'tenant-email'} name='tenantEmail'/>

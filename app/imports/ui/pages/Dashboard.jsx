@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Button, Container, Grid, Header, Icon, Loader } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Icon, Loader, Popup } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -51,21 +51,23 @@ class Dashboard extends React.Component {
             <Grid.Column>
               <Header as='h1' >{this.totalActive(this.props.smartContracts)}</Header>
               <Header as='h2' >Active Contracts</Header>
+              <Popup content='Here is the total number of your active contracts.' trigger={<Icon size='small' name='question circle outline' />} />
             </Grid.Column>
 
             <Grid.Column>
               <Header as='h1' >$ {this.monthlyIncome(this.props.smartContracts)}</Header>
               <Header as='h2' >Monthly Income</Header>
+              <Popup content='Your monthly income is the total income from the contracts where you are a homeowner.' trigger={<Icon size='small' name='question circle outline' />} />
             </Grid.Column>
 
             <Grid.Column>
               <Header as='h1' > $ {this.monthlyPayment(this.props.smartContracts)}</Header>
               <Header as='h2' >Monthly Payment</Header>
+              <Popup content='Your monthly payment is the total payment from the contracts where you are a tenant.' trigger={<Icon size='small' name='question circle outline' />} />
             </Grid.Column>
           </Grid.Row>
         </Grid>
-
-        <Header style={paddingStyle} as='h2'>Smart Contracts</Header>
+        <Header style={paddingStyle} as='h2'>Smart Contracts<Popup content='This table allows you to view, edit, and sign your smart contracts' trigger={<Icon size='small' name='question circle outline' />} /></Header>
         <SmartContractList smartContracts={this.props.smartContracts} />
         <br/>
         <Grid style={paddingStyle} verticalAlign='middle' textAlign='center' container>

@@ -7,7 +7,7 @@ export default function InfoPopup({ color, text }) {
     <Popup
       inverted
       content={text}
-      trigger={<Button style={{ marginLeft: '3px' }} icon='info' color={color} circular size='massive' />}
+      trigger={<Button style={{ marginLeft: '3px' }} icon='question circle outline' color={color} circular size='massive' />}
     />
   );
 }
