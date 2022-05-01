@@ -17,6 +17,16 @@ import { editProfilePage } from './editprofile.page';
 /** Credentials for one of the sample users defined in settings.development.json. */
 const credentials = { username: 'john@foo.com', password: 'changeme' };
 
+const profTestData = {
+  firstName: 'Joe',
+  lastName: 'Donald',
+  phoneNumber: '808-123-4567',
+  walletAddress: 'abcdefghijklmnopqrstu',
+  imageURL: 'https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_48x48.png',
+  privateKey: 'private key',
+  owner: 'john@foo.com',
+};
+
 fixture('akamy-rent localhost test with default db')
   .page('http://localhost:3004');
 
@@ -39,6 +49,7 @@ test('Test that view and edit profile pages show up', async (testController) => 
   await viewProfilePage.isDisplayed(testController);
   await navBar.gotoEditProfilePage(testController);
   await editProfilePage.isDisplayed(testController);
+  await editProfilePage.fillProfile(testController, profTestData);
 });
 
 test('Test that dashboard page shows up', async (testController) => {

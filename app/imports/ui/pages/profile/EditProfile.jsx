@@ -39,17 +39,17 @@ class EditProfile extends React.Component {
           this.props.profiles[0]} >
           <Grid columns={2}>
             <Grid.Column>
-              <TextField name='firstName' />
+              <TextField id="fname" name='firstName' />
             </Grid.Column>
             <Grid.Column>
-              <TextField name='lastName' />
+              <TextField id="lname" name='lastName' />
             </Grid.Column>
           </Grid>
-          <TextField name='phoneNumber' />
-          <TextField name='walletAddress' />
-          <TextField name='privateKey' />
-          <TextField name='imageURL' />
-          <SubmitField value='Submit'/>
+          <TextField id="phone" name='phoneNumber' />
+          <TextField id="wallet" name='walletAddress' />
+          <TextField id="key" name='privateKey' />
+          <TextField id="image" name='imageURL' />
+          <SubmitField id="submitButton" value='Submit'/>
         </AutoForm>
       </Grid>
     );
