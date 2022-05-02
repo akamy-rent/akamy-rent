@@ -17,13 +17,16 @@ import { editProfilePage } from './editprofile.page';
 /** Credentials for one of the sample users defined in settings.development.json. */
 const credentials = { username: 'john@foo.com', password: 'changeme' };
 
+const randomSha = faker.git.commitSha();
+const randomAddress = faker.random.hexaDecimal(20);
+// const newUserName = faker.
 const profTestData = {
   firstName: 'Joe',
   lastName: 'Donald',
   phoneNumber: '808-123-4567',
-  walletAddress: 'abcdefghijklmnopqrstu',
+  walletAddress: `${randomAddress}`,
   imageURL: 'https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_48x48.png',
-  privateKey: 'private key',
+  privateKey: `${randomSha}`,
   owner: 'john@foo.com',
 };
 
@@ -42,7 +45,7 @@ test('Test that signin and signout work', async (testController) => {
   await signoutPage.isDisplayed(testController);
 });
 
-test('Test that view and edit profile pages show up', async (testController) => {
+test.only('Test that view and edit profile pages show up', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoViewProfilePage(testController);
@@ -50,6 +53,8 @@ test('Test that view and edit profile pages show up', async (testController) => 
   await navBar.gotoEditProfilePage(testController);
   await editProfilePage.isDisplayed(testController);
   await editProfilePage.fillProfile(testController, profTestData);
+  await navBar.logout(testController);
+  await signoutPage.isDisplayed(testController);
 });
 
 test('Test that dashboard page shows up', async (testController) => {
