@@ -44,7 +44,7 @@ function SmartContractItem({ smartContract, user }) {
           </Link>
         }
         <Link to={`/sign/${smartContract._id}`}>
-          <Button compact color='black'>{signButtonText(smartContract)}</Button>
+          <Button compact color='black' id='sign-button'>{signButtonText(smartContract)}</Button>
         </Link>
         <Button style={{ marginTop: '2%' }} compact color='black' onClick={handleOpen}>Transactions</Button>
         {open && <TransactionModal smartContract={smartContract} onClose={handleClose} open={open} />}

@@ -11,11 +11,13 @@ import { testSmartContractPage } from './test.smart.contract.page';
 import { dashboardPage } from './dashboard.page';
 import { viewProfilePage } from './viewprofile.page';
 import { editProfilePage } from './editprofile.page';
+import { signPage } from './sign.smart.contract.tenant.page';
 
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
-const credentials = { username: 'john@foo.com', password: 'changeme' };
+const credentials = { username: 'john@foo.com', password: 'changeme', name: 'John Doe' };
+const janeCredentials = { username: 'jane@foo.com', password: 'changeme', name: 'Jane Smith' };
 
 const profTestData = {
   firstName: 'Joe',
@@ -104,4 +106,29 @@ test('Test that Messenger page shows up and works', async (testController) => {
 // eslint-disable-next-line no-unused-vars
 test('Test that the test page exists with the 4 buttons', async (testController) => {
   await testSmartContractPage.smartContractTesting(testController);
+});
+
+// Test sign page
+// Navigate as tenant to sign page and signs incorrectly
+test.only('Tenant incorrectly signs smart contract', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, janeCredentials.username, janeCredentials.password);
+  await navBar.gotoDashboardPage(testController);
+  await dashboardPage.isDisplayed(testController);
+  await dashboardPage.gotoSignSmartContractPage(testController);
+  await signPage.isDisplayed(testController);
+  await signPage.signIncorrectSignature(testController, credentials.name);
+});
+
+// Test sign page
+// Navigate as tenant to sign page and signs correctly
+test.only('Tenant can change tenantStance and sign smart contract', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, janeCredentials.username, janeCredentials.password);
+  await navBar.gotoDashboardPage(testController);
+  await dashboardPage.isDisplayed(testController);
+  await dashboardPage.gotoSignSmartContractPage(testController);
+  await signPage.isDisplayed(testController);
+  await signPage.agreeTenantStance(testController);
+  await signPage.signSignature(testController, janeCredentials.name);
 });

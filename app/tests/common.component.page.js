@@ -13,6 +13,11 @@ class SweetAlertModal {
     const result = Selector('div > .swal-title');
     await testController.expect(result.innerText).eql('Success');
   }
+
+  async ensureErrorMessage(testController) {
+    const result = Selector('div > .swal-title');
+    await testController.expect(result.innerText).eql('Error');
+  }
 }
 
 export const sweetAlertModal = new SweetAlertModal();

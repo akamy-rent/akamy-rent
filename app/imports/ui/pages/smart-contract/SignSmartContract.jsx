@@ -156,7 +156,7 @@ class SignSmartContract extends React.Component {
   // Render the page once subscriptions have been received.
   renderPage() {
     return (
-      <Grid container centered>
+      <Grid container centered id="sign-smart-contract-page">
         <br/>
         <Header as="h2" textAlign="center">View and Deploy Smart Contract</Header>
         <SignSmartContractItem key={this.props.smartContract._id} smartContract={this.props.smartContract} />
@@ -165,7 +165,7 @@ class SignSmartContract extends React.Component {
             <Segment>
               <AutoForm schema={bridgeTenantStance} onSubmit={data => this.submit(data)} model={this.props.smartContract}>
                 <SelectField name='tenantStance'/>
-                <SubmitField value='Save'/>
+                <SubmitField value='Save' id='save-tenant-stance'/>
                 <ErrorsField/>
               </AutoForm>
             </Segment>}
@@ -173,8 +173,8 @@ class SignSmartContract extends React.Component {
             <Segment>
               <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data, this)}
                 model={this.props.smartContract}>
-                <TextField name='signature'/>
-                <SubmitField value='Save'/>
+                <TextField name='signature' id='signature-field'/>
+                <SubmitField value='Save' id='save-signature'/>
                 <ErrorsField/>
               </AutoForm>
             </Segment>
