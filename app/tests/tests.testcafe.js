@@ -11,24 +11,12 @@ import { testSmartContractPage } from './test.smart.contract.page';
 import { dashboardPage } from './dashboard.page';
 import { viewProfilePage } from './viewprofile.page';
 import { editProfilePage } from './editprofile.page';
+import { signupPage } from './signup.page';
 
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const credentials = { username: 'john@foo.com', password: 'changeme' };
-
-const randomSha = faker.git.commitSha();
-const randomAddress = faker.random.hexaDecimal(20);
-// const newUserName = faker.
-const profTestData = {
-  firstName: 'Joe',
-  lastName: 'Donald',
-  phoneNumber: '808-123-4567',
-  walletAddress: `${randomAddress}`,
-  imageURL: 'https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_48x48.png',
-  privateKey: `${randomSha}`,
-  owner: 'john@foo.com',
-};
 
 fixture('akamy-rent localhost test with default db')
   .page('http://localhost:3004');
@@ -46,6 +34,17 @@ test('Test that signin and signout work', async (testController) => {
 });
 
 test.only('Test that view and edit profile pages show up', async (testController) => {
+  const randomSha = faker.git.commitSha();
+  const randomAddress = faker.datatype.hexaDecimal(20);
+  const profTestData = {
+    firstName: 'Joe',
+    lastName: 'Donald',
+    phoneNumber: '808-123-4567',
+    walletAddress: `${randomAddress}`,
+    imageURL: 'https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_48x48.png',
+    privateKey: `${randomSha}`,
+    owner: 'john@foo.com',
+  };
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoViewProfilePage(testController);
@@ -53,8 +52,28 @@ test.only('Test that view and edit profile pages show up', async (testController
   await navBar.gotoEditProfilePage(testController);
   await editProfilePage.isDisplayed(testController);
   await editProfilePage.fillProfile(testController, profTestData);
-  await navBar.logout(testController);
-  await signoutPage.isDisplayed(testController);
+});
+
+test.only('Test profile pages for sign up', async (testController) => {
+  const newUserName = faker.internet.email();
+  const newPswd = faker.internet.password();
+  const randomSha = faker.git.commitSha();
+  const randomAddress = faker.datatype.hexaDecimal(20);
+  const profTestData = {
+    firstName: 'Joe',
+    lastName: 'Donald',
+    phoneNumber: '808-123-4567',
+    walletAddress: `${randomAddress}`,
+    imageURL: 'https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_48x48.png',
+    privateKey: `${randomSha}`,
+    owner: `${newUserName}`,
+  };
+  await navBar.ensureLogout(testController);
+  await navBar.gotoSignupPage(testController);
+  await signupPage.signupUser(testController, newUserName, newPswd);
+  await editProfilePage.isDisplayed(testController);
+  profTestData.owner = newUserName;
+  await editProfilePage.fillProfile(testController, profTestData);
 });
 
 test('Test that dashboard page shows up', async (testController) => {

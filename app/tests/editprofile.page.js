@@ -21,7 +21,6 @@ class EditProfilePage {
     await testController.typeText('#image', profileData.imageURL, { replace: true });
     await testController.click('#submitButton');
     await navBar.isLoggedIn(testController, profileData.owner);
-    await testController.click();
   }
 }
 
