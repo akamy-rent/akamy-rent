@@ -62,7 +62,7 @@ export default function Messenger() {
     <Grid id="messenger-page" stackable padded >
       <Grid.Row>
         <Grid.Column width={4} >
-          <ChatFeed setGroupFn={handleSetGroup} groups={groups} />
+          <ChatFeed setGroupFn={handleSetGroup} groups={groups} groupid={group?._id} />
         </Grid.Column>
         <Grid.Column width={12} style={{ height: '85vh' }}>
           <ChatDisplay groupid={group?._id} inputSubmitFn={handleInputSubmission}/>
