@@ -110,7 +110,7 @@ test('Test that the test page exists with the 4 buttons', async (testController)
 
 // Test sign page
 // Navigate as tenant to sign page and signs incorrectly
-test.only('Tenant incorrectly signs smart contract', async (testController) => {
+test('Tenant incorrectly signs smart contract', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, janeCredentials.username, janeCredentials.password);
   await navBar.gotoDashboardPage(testController);
@@ -122,7 +122,7 @@ test.only('Tenant incorrectly signs smart contract', async (testController) => {
 
 // Test sign page
 // Navigate as tenant to sign page and signs correctly
-test.only('Tenant can change tenantStance and sign smart contract', async (testController) => {
+test('Tenant can change tenantStance and sign smart contract', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, janeCredentials.username, janeCredentials.password);
   await navBar.gotoDashboardPage(testController);
