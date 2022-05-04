@@ -33,9 +33,9 @@ test('Test that signin and signout work', async (testController) => {
   await signoutPage.isDisplayed(testController);
 });
 
-test.only('Test that view and edit profile pages show up', async (testController) => {
+test('Test that view and edit profile pages show up', async (testController) => {
   const randomSha = faker.git.commitSha();
-  const randomAddress = faker.datatype.hexaDecimal(20);
+  const randomAddress = faker.datatype.hexadecimal(20);
   const profTestData = {
     firstName: 'Joe',
     lastName: 'Donald',
@@ -54,11 +54,11 @@ test.only('Test that view and edit profile pages show up', async (testController
   await editProfilePage.fillProfile(testController, profTestData);
 });
 
-test.only('Test profile pages for sign up', async (testController) => {
+test('Test profile pages for sign up', async (testController) => {
   const newUserName = faker.internet.email();
   const newPswd = faker.internet.password();
   const randomSha = faker.git.commitSha();
-  const randomAddress = faker.datatype.hexaDecimal(20);
+  const randomAddress = faker.datatype.hexadecimal(20);
   const profTestData = {
     firstName: 'Joe',
     lastName: 'Donald',
