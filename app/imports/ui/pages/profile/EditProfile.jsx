@@ -9,7 +9,6 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { Profiles } from '../../../api/profile/Profile';
 
 const bridge = new SimpleSchema2Bridge(Profiles.schema);
-
 /** Renders the Page for editing a single document. */
 class EditProfile extends React.Component {
 
