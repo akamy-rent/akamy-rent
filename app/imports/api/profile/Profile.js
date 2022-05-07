@@ -17,6 +17,7 @@ class ProfileCollection {
       phoneNumber: {
         type: String,
         regEx: SimpleSchema.RegEx.Phone,
+        min: 10,
       },
       walletAddress: {
         type: String,
