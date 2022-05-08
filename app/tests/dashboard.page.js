@@ -33,6 +33,12 @@ class DashboardPage {
     await testController.expect(linkSelector.exists).ok();
     await testController.click(linkSelector);
   }
+
+  /** Expect the user is logged in and then to click on sign. */
+  async gotoSignSmartContractPage(testController) {
+    await testController.expect(Selector('#sign-button').exists).ok();
+    await testController.click('#sign-button');
+  }
 }
 
 export const dashboardPage = new DashboardPage();
