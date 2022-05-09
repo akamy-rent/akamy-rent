@@ -12,9 +12,9 @@
       "firstName": "John",
       "lastName": "Doe",
       "phoneNumber": "808-123-4567",
-      "walletAddress": "0x18ab864362Ea20A9080A120BC340da31840b9D59",
+      "walletAddress": "0x7F91BD1e787121ADf7b75A7FF4eE0944Fa021B16",
       "imageURL": "/images/meteor-logo.png",
-      "privateKey": "485cb19c08ae9231678bbb0301a5e723f6b2d619daa01708dd4311b8f6b23291",
+      "privateKey": "710e37639a018bf07f477a5c2de7809ae8b4dd4adac8b866ef197f6075b32978",
       "owner": "john@foo.com"
     },
     {
@@ -30,9 +30,9 @@
       "firstName": "Jane",
       "lastName": "Smith",
       "phoneNumber": "808-123-4567",
-      "walletAddress": "0x50A483b663dD5c5e18ACc99720d25e43DF7FF363",
+      "walletAddress": "0x975bC1B89EE3C4C36416478F16c3332B43D6be4c",
       "imageURL": "/images/meteor-logo.png",
-      "privateKey": "485cb19c08ae9231678bbb0301a5e723f6b2d619daa01708dd4311b8f6b23291",
+      "privateKey": "532846f72b353c11e2aec2f21e35a441b0d603b268076a9b60eb2c49d2dd310e",
       "owner": "jane@foo.com"
     },
     {

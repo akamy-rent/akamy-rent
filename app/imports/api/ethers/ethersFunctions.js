@@ -1,20 +1,49 @@
+import { Meteor } from 'meteor/meteor';
 import ethers from 'ethers';
 import moment from 'moment';
 import { determineTotalPayments, determineNextPayment, saveTransactionForRecord } from '../utilities/transactionUtils';
 
-export function loadProvider() {
-  const nodeUrl = process.env.GENACHE_URL;
+const ganacheCheck = () => new Promise((resolve, reject) => {
+  Meteor.call('getGanacheURL', function (error, result) {
+    if (error) {
+      return reject(error);
+    }
+    return resolve(result);
+  });
+});
+
+function ganacheCheckSuccess(result) {
+  const nodeUrl = result;
   if (!nodeUrl) {
+    console.log('why here');
     return {
       provider: undefined,
-      genacheExists: false,
+      ganacheExists: false,
     };
   }
   const provider = new ethers.providers.JsonRpcProvider(nodeUrl);
   return {
     provider,
-    genacheExists: true,
+    ganacheExists: true,
   };
+}
+
+function ganacheCheckFail(error) {
+  console.log(error);
+}
+
+export function loadProviderError(error) {
+  console.log(`Provider not loaded ${error}`);
+}
+
+export function loadProviderSuccess(providerObj) {
+  return providerObj;
+}
+
+export async function loadProvider() {
+  const value = await ganacheCheck().then(ganacheCheckSuccess, ganacheCheckFail);
+  console.log(value);
+  return value;
 }
 
 export async function deployContract(contract, provider) {
