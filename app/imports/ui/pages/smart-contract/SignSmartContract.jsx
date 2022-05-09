@@ -46,52 +46,51 @@ class SignSmartContract extends React.Component {
     // check if both signatures are signed
     if (bothSigned(contract)) {
       loadProvider().then(({ provider, ganacheExists }) => {
-
+        console.log(ganacheExists);
+        if (ganacheExists) {
+          // both have signed, let's try to deploy it
+          SmartContracts.collection.update(_id, { $set: { homeowner: createHomeowner(profiles, homeownerEmail), tenant: createTenant(profiles, tenantEmail) } });
+          contract = SmartContracts.collection.findOne(_id);
+          createAndCompileContract(contract).then(response => {
+            const { abi, bytecode } = response.data;
+            if (response.status === 200) {
+              SmartContracts.collection.update(_id, { $set: { status: 'Active', abi: abi, bytecode: bytecode } }, function (error) {
+                if (error) {
+                  swal('Error', error.message, 'Contract was not updated');
+                } else {
+                  contract = SmartContracts.collection.findOne(_id);
+                  const signerType = homeownerEmail === username ? 'homeowner' : 'tenant';
+                  swal('Success', `Smart contract successfully signed by ${signerType}.\nContract creation and deployment initializing`, 'success');
+                  deployContract(contract, provider).then(value => {
+                    if (value) {
+                      SmartContracts.collection.update(_id, { $set: { address: value, rent: contract.monthlyRent } }, (e) => {
+                        if (e) {
+                          console.log(`Deployment error: ${e}`);
+                        } else {
+                          contract = SmartContracts.collection.findOne(_id);
+                          // ToDo: Get this to actually work on the back end
+                          payRentScheduler(contract, provider);
+                        }
+                      });
+                    } else {
+                      SmartContracts.collection.update(_id, { $set: { address: null } });
+                      swal('Error', 'Network Error', 'Contract was not deployed, Contract address is null');
+                    }
+                  });
+                }
+              });
+            } else {
+              swal('Error', 'Network Error', 'Contract was not compiled');
+            }
+          }, error => swal('Error', error, 'Contract was not compiled'));
+        } else { // blockchain is not available
+          const signerType = homeownerEmail === username ? 'homeowner' : 'tenant';
+          SmartContracts.collection.update(_id, { $set: { status: 'Active' } }, (error) => (error ?
+            swal('Error', error.message, 'error') :
+            swal('Success', `Smart contract successfully signed by ${signerType}.\nContract Activated but there's no blockchain`, 'success')));
+        }
       },
       loadProviderError);
-      console.log(ganacheExists);
-      if (ganacheExists) {
-        // both have signed, let's try to deploy it
-        SmartContracts.collection.update(_id, { $set: { homeowner: createHomeowner(profiles, homeownerEmail), tenant: createTenant(profiles, tenantEmail) } });
-        contract = SmartContracts.collection.findOne(_id);
-        createAndCompileContract(contract).then(response => {
-          const { abi, bytecode } = response.data;
-          if (response.status === 200) {
-            SmartContracts.collection.update(_id, { $set: { status: 'Active', abi: abi, bytecode: bytecode } }, function (error) {
-              if (error) {
-                swal('Error', error.message, 'Contract was not updated');
-              } else {
-                contract = SmartContracts.collection.findOne(_id);
-                const signerType = homeownerEmail === username ? 'homeowner' : 'tenant';
-                swal('Success', `Smart contract successfully signed by ${signerType}.\nContract creation and deployment initializing`, 'success');
-                deployContract(contract, provider).then(value => {
-                  if (value) {
-                    SmartContracts.collection.update(_id, { $set: { address: value, rent: contract.monthlyRent } }, (e) => {
-                      if (e) {
-                        console.log(`Deployment error: ${e}`);
-                      } else {
-                        contract = SmartContracts.collection.findOne(_id);
-                        // ToDo: Get this to actually work on the back end
-                        payRentScheduler(contract, provider);
-                      }
-                    });
-                  } else {
-                    SmartContracts.collection.update(_id, { $set: { address: null } });
-                    swal('Error', 'Network Error', 'Contract was not deployed, Contract address is null');
-                  }
-                });
-              }
-            });
-          } else {
-            swal('Error', 'Network Error', 'Contract was not compiled');
-          }
-        }, error => swal('Error', error, 'Contract was not compiled'));
-      } else { // blockchain is not available
-        const signerType = homeownerEmail === username ? 'homeowner' : 'tenant';
-        SmartContracts.collection.update(_id, { $set: { status: 'Active' } }, (error) => (error ?
-          swal('Error', error.message, 'error') :
-          swal('Success', `Smart contract successfully signed by ${signerType}.\nContract Activated but there's no blockchain`, 'success')));
-      }
     } else { // both aren't signed
       const signatureObject = homeownerEmail === username ? { homeownerSignature: signature } : { tenantSignature: signature };
       SmartContracts.collection.update(_id, { $set: signatureObject }, function (error) {
