@@ -90,9 +90,7 @@ function payRent(contract, currentD, provider) {
   const tenantToContract = `Tenant address: ${tenantAddress} paid ${rentEth} wei to contract at: ${contractAddress}`;
   const contractToHomeowner = `Rent paid contract at ${contractAddress} paid ${rentEth} wei to Homeowner: ${homeownerAddress}`;
   //  tenant is new signer of next contract call
-  console.log(`inside pay rent ${provider}`);
   const signer = provider.getSigner(tenant.address);
-  console.log(`after signer is created  ${signer}`);
   // create new contract instance
   const contractInstance = new ethers.Contract(contract.address, contract.abi, signer);
   saveTransactionForRecord(contract.transactionLog, currentD, tenantToContract);
