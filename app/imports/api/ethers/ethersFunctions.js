@@ -15,7 +15,6 @@ const ganacheCheck = () => new Promise((resolve, reject) => {
 function ganacheCheckSuccess(result) {
   const nodeUrl = result;
   if (!nodeUrl) {
-    console.log('why here');
     return {
       provider: undefined,
       ganacheExists: false,
@@ -34,10 +33,6 @@ function ganacheCheckFail(error) {
 
 export function loadProviderError(error) {
   console.log(`Provider not loaded ${error}`);
-}
-
-export function loadProviderSuccess(providerObj) {
-  return providerObj;
 }
 
 export async function loadProvider() {
@@ -95,7 +90,9 @@ function payRent(contract, currentD, provider) {
   const tenantToContract = `Tenant address: ${tenantAddress} paid ${rentEth} wei to contract at: ${contractAddress}`;
   const contractToHomeowner = `Rent paid contract at ${contractAddress} paid ${rentEth} wei to Homeowner: ${homeownerAddress}`;
   //  tenant is new signer of next contract call
+  console.log(`inside pay rent ${provider}`);
   const signer = provider.getSigner(tenant.address);
+  console.log(`after signer is created  ${signer}`);
   // create new contract instance
   const contractInstance = new ethers.Contract(contract.address, contract.abi, signer);
   saveTransactionForRecord(contract.transactionLog, currentD, tenantToContract);
@@ -138,7 +135,7 @@ export async function payRentScheduler(contract, provider) {
       counter++;
       // pay the rent
       console.log(`Transaction ${counter}`);
-      payRent(contract);
+      payRent(contract, currentDate, provider);
       setTimeout(paymentInterval, moment(nextPaymentDate).diff(currentDate));
     } else {
       // final payment, destroy the contract
@@ -148,7 +145,7 @@ export async function payRentScheduler(contract, provider) {
   };
 
   // run the recursive timeout
-  payRent(contract, currentDate);
+  payRent(contract, currentDate, provider);
   console.log(`Transaction ${counter}`);
   nextPaymentDate = determineNextPayment(tenantPayPeriod, currentDate);
   if (nextPaymentDate === null) {
