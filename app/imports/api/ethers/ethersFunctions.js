@@ -1,20 +1,44 @@
+import { Meteor } from 'meteor/meteor';
 import ethers from 'ethers';
 import moment from 'moment';
 import { determineTotalPayments, determineNextPayment, saveTransactionForRecord } from '../utilities/transactionUtils';
 
-export function loadProvider() {
-  const nodeUrl = process.env.GENACHE_URL;
+const ganacheCheck = () => new Promise((resolve, reject) => {
+  Meteor.call('getGanacheURL', function (error, result) {
+    if (error) {
+      return reject(error);
+    }
+    return resolve(result);
+  });
+});
+
+function ganacheCheckSuccess(result) {
+  const nodeUrl = result;
   if (!nodeUrl) {
     return {
       provider: undefined,
-      genacheExists: false,
+      ganacheExists: false,
     };
   }
   const provider = new ethers.providers.JsonRpcProvider(nodeUrl);
   return {
     provider,
-    genacheExists: true,
+    ganacheExists: true,
   };
+}
+
+function ganacheCheckFail(error) {
+  console.log(error);
+}
+
+export function loadProviderError(error) {
+  console.log(`Provider not loaded ${error}`);
+}
+
+export async function loadProvider() {
+  const value = await ganacheCheck().then(ganacheCheckSuccess, ganacheCheckFail);
+  console.log(value);
+  return value;
 }
 
 export async function deployContract(contract, provider) {
@@ -66,7 +90,9 @@ function payRent(contract, currentD, provider) {
   const tenantToContract = `Tenant address: ${tenantAddress} paid ${rentEth} wei to contract at: ${contractAddress}`;
   const contractToHomeowner = `Rent paid contract at ${contractAddress} paid ${rentEth} wei to Homeowner: ${homeownerAddress}`;
   //  tenant is new signer of next contract call
+  console.log(`inside pay rent ${provider}`);
   const signer = provider.getSigner(tenant.address);
+  console.log(`after signer is created  ${signer}`);
   // create new contract instance
   const contractInstance = new ethers.Contract(contract.address, contract.abi, signer);
   saveTransactionForRecord(contract.transactionLog, currentD, tenantToContract);
@@ -109,7 +135,7 @@ export async function payRentScheduler(contract, provider) {
       counter++;
       // pay the rent
       console.log(`Transaction ${counter}`);
-      payRent(contract);
+      payRent(contract, currentDate, provider);
       setTimeout(paymentInterval, moment(nextPaymentDate).diff(currentDate));
     } else {
       // final payment, destroy the contract
@@ -119,7 +145,7 @@ export async function payRentScheduler(contract, provider) {
   };
 
   // run the recursive timeout
-  payRent(contract, currentDate);
+  payRent(contract, currentDate, provider);
   console.log(`Transaction ${counter}`);
   nextPaymentDate = determineNextPayment(tenantPayPeriod, currentDate);
   if (nextPaymentDate === null) {
