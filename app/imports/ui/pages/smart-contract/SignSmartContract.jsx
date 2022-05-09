@@ -12,7 +12,7 @@ import { SmartContracts } from '../../../api/smartContract/SmartContract';
 import { Profiles } from '../../../api/profile/Profile';
 import { bothSigned, createTenant, createHomeowner } from '../../../api/smartContract/smartContractDeployment';
 import { createAndCompileContract } from '../../../api/solc/connect2Compiler';
-import { loadProvider, deployContract, payRentScheduler, loadProviderSuccess, loadProviderError } from '../../../api/ethers/ethersFunctions';
+import { loadProvider, deployContract, payRentScheduler, loadProviderError } from '../../../api/ethers/ethersFunctions';
 
 const contractSchemaSignature = new SimpleSchema({
   signature: String,
@@ -46,7 +46,6 @@ class SignSmartContract extends React.Component {
     // check if both signatures are signed
     if (bothSigned(contract)) {
       loadProvider().then(({ provider, ganacheExists }) => {
-        console.log(ganacheExists);
         if (ganacheExists) {
           // both have signed, let's try to deploy it
           SmartContracts.collection.update(_id, { $set: { homeowner: createHomeowner(profiles, homeownerEmail), tenant: createTenant(profiles, tenantEmail) } });
@@ -172,7 +171,7 @@ class SignSmartContract extends React.Component {
                 <ErrorsField/>
               </AutoForm>
             </Segment>}
-          {
+          {missingSignature(this.props.smartContract, this.props.user.username) &&
             <Segment>
               <AutoForm schema={bridgeSignature} onSubmit={data => this.submitSignature(data, this)}
                 model={this.props.smartContract}>
